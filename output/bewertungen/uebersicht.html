@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ApplyOS – Claudia</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f5f0e8; color: #1a2a3a; padding: 1.5rem;
+    }
+    .subtitle { color: #6b7a8d; font-size: 0.8rem; margin-bottom: 0; }
+
+    /* Filter bar */
+    .filter-bar {
+      display: flex; gap: 0.6rem; align-items: center;
+      margin-bottom: 0.8rem; flex-wrap: wrap;
+    }
+    .filter-bar input {
+      background: #ffffff; border: 1px solid #ddd8d0; color: #1a2a3a;
+      border-radius: 6px; padding: 0.35rem 0.7rem; font-size: 0.78rem;
+      flex: 1; min-width: 180px; font-family: inherit;
+    }
+    .filter-bar input::placeholder { color: #aaa09a; }
+    .filter-bar input:focus { outline: none; border-color: #c47a4a; }
+    .filter-bar select {
+      background: #ffffff; border: 1px solid #ddd8d0; color: #1a2a3a;
+      border-radius: 6px; padding: 0.35rem 0.6rem; font-size: 0.78rem;
+      cursor: pointer; font-family: inherit;
+    }
+    .filter-bar select:focus { outline: none; border-color: #c47a4a; }
+
+    .table-wrap {
+      overflow-x: auto;
+      overflow-y: auto;
+      max-height: calc(100vh - 160px);
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    table {
+      border-collapse: collapse;
+      background: #ffffff;
+      font-size: 0.77rem;
+      white-space: nowrap;
+      width: 100%;
+    }
+    th {
+      background: #1a2a3a; color: #f5f0e8;
+      padding: 8px 7px;
+      text-align: left;
+      font-size: 0.73rem; font-weight: 600;
+      position: sticky; top: 0; z-index: 10;
+      cursor: pointer; user-select: none;
+    }
+    th:hover { background: #253a4e; color: #c47a4a; }
+    th.sorted-asc::after  { content: ' ▲'; color: #c47a4a; font-size: 0.62rem; }
+    th.sorted-desc::after { content: ' ▼'; color: #c47a4a; font-size: 0.62rem; }
+    th.no-sort { cursor: default; }
+    th.no-sort:hover { background: #1a2a3a; color: #f5f0e8; }
+    td {
+      padding: 7px 7px;
+      border-bottom: 1px solid #ddd8d0;
+      vertical-align: middle; color: #1a2a3a;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #f0ede8; }
+    tr[data-status="Überspringen"] { opacity: 0.5; }
+    tr[data-status="Absage"]      { opacity: 0.42; }
+
+    /* Sticky Stelle column */
+    .c-stelle {
+      position: sticky; left: 0; z-index: 5;
+      background: #ffffff;
+      min-width: 190px; max-width: 230px;
+      white-space: normal; word-break: break-word;
+      box-shadow: 2px 0 6px rgba(0,0,0,0.08);
+    }
+    thead .c-stelle { z-index: 20; background: #1a2a3a; }
+    tr:hover .c-stelle { background: #f0ede8; }
+    tr[data-status="Überspringen"] .c-stelle,
+    tr[data-status="Absage"]       .c-stelle { background: #ffffff; }
+    tr[data-status="Überspringen"]:hover .c-stelle,
+    tr[data-status="Absage"]:hover       .c-stelle { background: #f0ede8; }
+
+    .c-firma {
+      display: block; font-size: 0.69rem;
+      color: #6b7a8d; margin-top: 2px;
+      white-space: normal;
+    }
+
+    /* Column widths */
+    .c-sm     { min-width: 62px; max-width: 80px; }
+    .c-sc     { min-width: 52px; max-width: 68px; text-align: center; }
+    .c-modal  { width: 26px; text-align: center; padding: 4px 2px; }
+    .c-status { min-width: 115px; max-width: 130px; }
+    .c-datum  { min-width: 72px; max-width: 82px; color: #6b7a8d; font-size: 0.70rem; }
+    .c-bew    { min-width: 120px; }
+
+    /* Score criteria columns */
+    .c-krit-h {
+      min-width: 36px; max-width: 50px;
+      text-align: center; font-size: 0.66rem;
+      padding: 8px 2px;
+    }
+    .c-krit {
+      min-width: 36px; max-width: 50px;
+      text-align: center;
+      font-size: 0.70rem; font-weight: 600;
+      padding: 5px 2px;
+    }
+    .c-krit-na   { background: #f5f5f5; color: #bbb; }
+    .c-krit-zero { background: #ebebeb; color: #888; }
+    .c-krit-half { background: #fdf0d0; color: #8a6000; }
+    .c-krit-full { background: #d4f0dd; color: #1a6b35; }
+
+    /* Score badge */
+    .score {
+      font-weight: 700; border-radius: 4px;
+      padding: 2px 6px; display: inline-block;
+    }
+    .score-high { background: #d4f0dd; color: #1a6b35; }
+    .score-mid  { background: #fdf0d0; color: #8a6000; }
+    .score-low  { background: #fde8e8; color: #b03030; }
+
+    a { color: #c47a4a; text-decoration: none; }
+    a:hover { color: #a05a30; text-decoration: underline; }
+
+    .bew-link {
+      display: inline-block; font-size: 0.73rem;
+      margin-right: 5px; white-space: nowrap;
+    }
+
+    /* Status dropdown */
+    select.status-sel {
+      font-size: 0.73rem; padding: 3px 4px;
+      border: 1px solid #ddd8d0; border-radius: 4px;
+      background: #ffffff; color: #1a2a3a; cursor: pointer; width: 100%;
+    }
+    select.status-sel[data-status="Interessant"] { border-color: #c47a4a; background: #fdf5ec; color: #8a4a10; }
+    select.status-sel[data-status="Beworben"]    { border-color: #2a9050; background: #edfaf3; color: #1a6b35; }
+    select.status-sel[data-status="Absage"]      { border-color: #c03030; background: #fde8e8; color: #b03030; }
+    select.status-sel[data-status="Überspringen"]{ border-color: #bbb;    background: #f5f5f5; color: #888; }
+
+    /* Buttons */
+    .btn-modal {
+      background: none; border: none; cursor: pointer;
+      font-size: 0.95rem; padding: 0; opacity: 0.65;
+    }
+    .btn-modal:hover { opacity: 1; }
+
+    /* Modal */
+    #modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.42); z-index: 1000;
+    }
+    #modal-box {
+      display: none; position: fixed;
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      background: #ffffff; border: 1px solid #ddd8d0; border-radius: 12px;
+      padding: 1.5rem 1.8rem 1.2rem;
+      min-width: 380px; max-width: min(92vw, 680px);
+      max-height: 85vh; overflow-y: auto;
+      z-index: 1001;
+      box-shadow: 0 10px 36px rgba(0,0,0,0.12);
+    }
+    #modal-title {
+      font-size: 0.98rem; font-weight: 700;
+      color: #1a2a3a; margin-bottom: 0.15rem;
+      white-space: normal;
+    }
+    #modal-meta {
+      font-size: 0.75rem; color: #6b7a8d;
+      margin-bottom: 1rem;
+    }
+    .modal-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem;
+    }
+    .modal-pro h4 { color: #1a6b35; font-size: 0.80rem; margin-bottom: 0.4rem; }
+    .modal-con h4 { color: #b03030; font-size: 0.80rem; margin-bottom: 0.4rem; }
+    .modal-pro ul, .modal-con ul {
+      padding-left: 1.1rem; margin: 0;
+      font-size: 0.76rem; color: #1a2a3a; line-height: 1.45;
+    }
+    .modal-pro li, .modal-con li { margin-bottom: 0.45rem; white-space: normal; }
+    #modal-close {
+      margin-top: 1.1rem; padding: 0.35rem 1.2rem;
+      border: none; background: #c47a4a; color: #ffffff;
+      border-radius: 6px; cursor: pointer; font-size: 0.78rem; font-weight: 600;
+    }
+    #modal-close:hover { background: #a85e30; }
+
+    /* Header Bar */
+    .header-bar {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; margin-bottom: 0.8rem; gap: 1rem;
+    }
+    .header-brand {
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .header-brand .subtitle { margin-bottom: 0; margin-top: 0.2rem; }
+    #header-stats {
+      font-size: 0.78rem; color: #6b7a8d;
+      display: flex; align-items: center; white-space: nowrap;
+    }
+    .btn-add-stelle {
+      background: #1a2a3a; color: #f5f0e8; border: none;
+      border-radius: 6px; padding: 0.4rem 0.9rem;
+      font-size: 0.80rem; cursor: pointer; white-space: nowrap;
+      flex-shrink: 0; margin-top: 0.15rem; font-weight: 600;
+    }
+    .btn-add-stelle:hover { background: #253d52; }
+
+    /* Generieren button */
+    .btn-gen {
+      background: none; border: 1px solid #ddd8d0; border-radius: 4px;
+      cursor: pointer; font-size: 0.73rem; padding: 2px 8px;
+      color: #6b7a8d; white-space: nowrap;
+    }
+    .btn-gen:hover { background: #f0ede8; border-color: #c47a4a; color: #c47a4a; }
+    .btn-gen:disabled { opacity: 0.5; cursor: default; }
+
+    /* Add-Stelle Modal */
+    #add-modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.42); z-index: 1000;
+    }
+    #add-modal-box {
+      display: none; position: fixed;
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      background: #ffffff; border: 1px solid #ddd8d0; border-radius: 12px;
+      padding: 1.5rem 1.8rem 1.2rem;
+      width: min(92vw, 560px); max-height: 90vh; overflow-y: auto;
+      z-index: 1001; box-shadow: 0 10px 36px rgba(0,0,0,0.12);
+    }
+    #add-modal-box h2 { font-size: 1rem; color: #1a2a3a; margin-bottom: 1rem; font-weight: 700; }
+    .add-form label {
+      display: block; font-size: 0.78rem; font-weight: 600;
+      margin-bottom: 0.2rem; color: #4a5a6a;
+    }
+    .add-form input, .add-form textarea {
+      width: 100%; border: 1px solid #ddd8d0; border-radius: 5px;
+      padding: 0.4rem 0.6rem; font-size: 0.78rem;
+      margin-bottom: 0.8rem; font-family: inherit;
+      background: #ffffff; color: #1a2a3a; box-sizing: border-box;
+    }
+    .add-form textarea { resize: vertical; }
+    .add-form input:focus, .add-form textarea:focus { outline: none; border-color: #c47a4a; }
+    .add-form-actions { display: flex; gap: 0.6rem; margin-top: 0.4rem; }
+    .btn-primary {
+      background: #c47a4a; color: #ffffff; border: none;
+      border-radius: 6px; padding: 0.4rem 1.1rem;
+      font-size: 0.80rem; cursor: pointer; font-weight: 600;
+    }
+    .btn-primary:hover { background: #a85e30; }
+    .btn-primary:disabled { opacity: 0.5; cursor: default; }
+    .btn-secondary {
+      background: #f0ede8; color: #1a2a3a; border: 1px solid #ddd8d0;
+      border-radius: 6px; padding: 0.4rem 1.1rem;
+      font-size: 0.80rem; cursor: pointer;
+    }
+    .btn-secondary:hover { background: #e5e0d8; }
+    #add-result { margin-top: 0.8rem; font-size: 0.80rem; }
+    .add-loading { color: #6b7a8d; }
+    .add-error { color: #b03030; }
+    .add-result-box {
+      background: #edfaf3; border: 1px solid #b0ddc0;
+      border-radius: 6px; padding: 0.8rem; color: #1a2a3a;
+    }
+    .add-result-box p { margin-bottom: 0.35rem; }
+
+    /* Suchlauf */
+    .header-actions {
+      display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    #btn-suchlauf:disabled { opacity: 0.7; cursor: default; }
+    #suchlauf-banner {
+      display: none; background: #e8f0fa;
+      border: 1px solid #b8d0ea; border-radius: 6px;
+      padding: 0.5rem 1rem; font-size: 0.80rem; color: #1a2a3a;
+      margin-bottom: 0.8rem;
+    }
+    #suchlauf-banner.fertig { background: #edfaf3; border-color: #b0ddc0; color: #1a6b35; }
+
+    /* Trotzdem bewerben */
+    .btn-trotzdem {
+      background: none; border: 1px solid #c47a4a; border-radius: 4px;
+      cursor: pointer; font-size: 0.73rem; padding: 2px 8px;
+      color: #c47a4a; white-space: nowrap;
+    }
+    .btn-trotzdem:hover { background: #fdf5ec; }
+    .btn-trotzdem:disabled { opacity: 0.5; cursor: default; }
+
+    /* Confirm popup */
+    #confirm-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.42); z-index: 2000;
+    }
+    #confirm-box {
+      display: none; position: fixed;
+      top: 50%; left: 50%; transform: translate(-50%,-50%);
+      background: #ffffff; border: 1px solid #ddd8d0; border-radius: 12px;
+      padding: 1.5rem 1.8rem 1.2rem;
+      width: min(92vw, 400px);
+      z-index: 2001; box-shadow: 0 10px 36px rgba(0,0,0,0.12);
+    }
+    #confirm-box p { font-size: 0.90rem; color: #1a2a3a; margin-bottom: 1.2rem; white-space: normal; }
+    .confirm-actions { display: flex; gap: 0.6rem; justify-content: flex-end; }
+  </style>
+</head>
+<body>
+  <div class="header-bar">
+    <div class="header-brand">
+      <img src="/Logo/applyos-wordmark.svg" alt="ApplyOS" style="height:64px;width:auto;display:block">
+      <div id="header-stats"></div>
+    </div>
+    <div class="header-actions">
+      <button id="btn-suchlauf" class="btn-add-stelle" onclick="startSuchlauf()">🔍 Suchlauf starten</button>
+      <button class="btn-add-stelle" onclick="openAddModal()">➕ Stelle hinzufügen</button>
+    </div>
+  </div>
+  <div id="suchlauf-banner"><span id="suchlauf-banner-text"></span></div>
+
+  <div class="filter-bar">
+    <input id="filter-text" type="text" placeholder="Firma oder Stelle suchen …" oninput="applyFilters()">
+    <select id="filter-status" onchange="applyFilters()">
+      <option value="">Alle Status</option>
+      <option>Offen</option>
+      <option>Interessant</option>
+      <option>Beworben</option>
+      <option>Absage</option>
+      <option>Überspringen</option>
+    </select>
+    <select id="filter-score" onchange="applyFilters()">
+      <option value="0">Alle Scores</option>
+      <option value="5">Score ≥ 5</option>
+      <option value="6">Score ≥ 6</option>
+      <option value="7">Score ≥ 7</option>
+      <option value="8">Score ≥ 8</option>
+    </select>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal-overlay" onclick="closeModal()"></div>
+  <div id="modal-box">
+    <div id="modal-title"></div>
+    <div id="modal-meta"></div>
+    <div class="modal-grid">
+      <div class="modal-pro"><h4>✅ Pro</h4><ul id="modal-pros"></ul></div>
+      <div class="modal-con"><h4>❌ Con</h4><ul id="modal-cons"></ul></div>
+    </div>
+    <button id="modal-close" onclick="closeModal()">Schließen</button>
+  </div>
+
+  <!-- Bestätigungs-Popup -->
+  <div id="confirm-overlay" onclick="closeConfirm()"></div>
+  <div id="confirm-box">
+    <p id="confirm-text"></p>
+    <div class="confirm-actions">
+      <button class="btn-secondary" onclick="closeConfirm()">Abbrechen</button>
+      <button class="btn-primary" onclick="confirmBewerben()">Ja, erstellen</button>
+    </div>
+  </div>
+
+  <!-- Add-Stelle Modal -->
+  <div id="add-modal-overlay" onclick="closeAddModal()"></div>
+  <div id="add-modal-box">
+    <h2>➕ Stelle hinzufügen</h2>
+    <form id="add-form" class="add-form" onsubmit="event.preventDefault(); stelleHinzufuegen();">
+      <label for="add-firma">Firmenname *</label>
+      <input id="add-firma" type="text" placeholder="z. B. Siemens AG" required>
+      <label for="add-titel">Stellentitel *</label>
+      <input id="add-titel" type="text" placeholder="z. B. Senior Product Owner (m/w/d)" required>
+      <label for="add-url">URL (optional)</label>
+      <input id="add-url" type="text" placeholder="https://...">
+      <label for="add-text">Stellentext</label>
+      <textarea id="add-text" rows="10" placeholder="Anzeigentext hier reinkopieren …"></textarea>
+      <div class="add-form-actions">
+        <button id="add-submit" type="submit" class="btn-primary">Analysieren &amp; Anschreiben erstellen</button>
+        <button type="button" class="btn-secondary" onclick="closeAddModal()">Abbrechen</button>
+      </div>
+    </form>
+    <div id="add-result"></div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="c-sm" data-col="0" data-sort="text" onclick="sortTable(this)">Datum</th>
+          <th class="c-stelle" data-col="1" data-sort="text" onclick="sortTable(this)">Stelle / Unternehmen</th>
+          <th class="c-sc" data-col="2" data-sort="num" onclick="sortTable(this)">Score</th>
+          <th class="c-krit-h no-sort" title="E2E">E2E</th><th class="c-krit-h no-sort" title="Roadmap">Roadmap</th><th class="c-krit-h no-sort" title="Auto">Auto</th><th class="c-krit-h no-sort" title="AgentAI">AgentAI</th><th class="c-krit-h no-sort" title="Stakeholder">Stakeholder</th><th class="c-krit-h no-sort" title="Cross">Cross</th><th class="c-krit-h no-sort" title="Engineering">Engineering</th><th class="c-krit-h no-sort" title="Agile">Agile</th><th class="c-krit-h no-sort" title="B2B">B2B</th><th class="c-krit-h no-sort" title="Behörden">Behörden</th><th class="c-krit-h no-sort" title="Sozial">Sozial</th><th class="c-krit-h no-sort" title="Standort">Standort</th><th class="c-krit-h no-sort" title="Gehalt">Gehalt</th>
+          <th class="c-modal no-sort" title="Pro &amp; Con">💬</th>
+          <th class="c-status no-sort">Status</th>
+          <th class="c-datum no-sort">Geändert</th>
+          <th class="c-bew no-sort">Bewerbung</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr data-status="Offen">
+        <td class="c-sm">2026-05-11</td>
+        <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-product-manager-ai-strategy-innovation-150398666" target="_blank">Product Manager – AI Strategy &amp; Innovation (w/m/d)</a><small class="c-firma">SupplyOn AG · 35 Min</small></td>
+        <td class="c-sc"><span class="score score-high">8/10</span></td>
+<td class="c-krit c-krit-full" title="E2E: 2/2">2/2</td><td class="c-krit c-krit-full" title="Roadmap: 2/2">2/2</td><td class="c-krit c-krit-half" title="Auto: 1/2">1/2</td><td class="c-krit c-krit-full" title="AgentAI: 2/2">2/2</td><td class="c-krit c-krit-full" title="Stakeholder: 1/1">1/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-half" title="Agile: 1/2">1/2</td><td class="c-krit c-krit-full" title="B2B: 1/1">1/1</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="0" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-11_SupplyOn AG_Product Manager – AI Strategy " data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_SupplyOn AG_Product Manager – AI Strategy "></span></td>
+        <td class="c-bew"><a href="../bewerbungen/2026-05-11_SupplyOn_AG_Product_Manager_–_AI_Strategy_&amp;_Innovati_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-11_SupplyOn_AG_Product_Manager_–_AI_Strategy_&amp;_Innovati_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
+      </tr>
+      <tr data-status="Offen">
+        <td class="c-sm">2026-05-11</td>
+        <td class="c-stelle"><a href="https://enopai.jobs.personio.com/job/2573717" target="_blank">Senior Product Owner (all genders)</a><small class="c-firma">EnopAI · 12 Min</small></td>
+        <td class="c-sc"><span class="score score-high">8/10</span></td>
+<td class="c-krit c-krit-full" title="E2E: 2/2">2/2</td><td class="c-krit c-krit-full" title="Roadmap: 2/2">2/2</td><td class="c-krit c-krit-half" title="Auto: 1/2">1/2</td><td class="c-krit c-krit-half" title="AgentAI: 1/2">1/2</td><td class="c-krit c-krit-full" title="Stakeholder: 1/1">1/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-full" title="Engineering: 2/2">2/2</td><td class="c-krit c-krit-full" title="Agile: 2/2">2/2</td><td class="c-krit c-krit-full" title="B2B: 1/1">1/1</td><td class="c-krit c-krit-zero" title="Behörden: 0/0.5">0/0.5</td><td class="c-krit c-krit-zero" title="Sozial: 0/0.5">0/0.5</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="1" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-11_EnopAI_Senior Product Owner (all gend" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_EnopAI_Senior Product Owner (all gend"></span></td>
+        <td class="c-bew"><a href="../bewerbungen/2026-05-11_EnopAI_Senior_Product_Owner_(all_genders)_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-11_EnopAI_Senior_Product_Owner_(all_genders)_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
+      </tr>
+      <tr data-status="Offen">
+        <td class="c-sm">2026-05-11</td>
+        <td class="c-stelle"><a href="https://join.com/companies/vispiron-gmbh/16139017-product-owner-m-w-d-fleet-tech-plattform" target="_blank">Product Owner (M/W/D) Fleet Tech Plattform</a><small class="c-firma">CARSYNC / VISPIRON GmbH · 25 Min</small></td>
+        <td class="c-sc"><span class="score score-high">8/10</span></td>
+<td class="c-krit c-krit-full" title="E2E: 2/2">2/2</td><td class="c-krit c-krit-full" title="Roadmap: 2/2">2/2</td><td class="c-krit c-krit-full" title="Auto: 2/2">2/2</td><td class="c-krit c-krit-half" title="AgentAI: 1.5/2">1.5/2</td><td class="c-krit c-krit-full" title="Stakeholder: 1/1">1/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-half" title="Agile: 1/2">1/2</td><td class="c-krit c-krit-full" title="B2B: 1/1">1/1</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="2" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-11_CARSYNC / VISPIRON GmbH_Product Owner (M/W/D) Fleet Te" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_CARSYNC / VISPIRON GmbH_Product Owner (M/W/D) Fleet Te"></span></td>
+        <td class="c-bew"><a href="../bewerbungen/2026-05-11_CARSYNC_VISPIRON_GmbH_Product_Owner_(MWD)_Fleet_Tech_Plattform_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-11_CARSYNC_VISPIRON_GmbH_Product_Owner_(MWD)_Fleet_Tech_Plattform_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
+      </tr>
+      <tr data-status="Offen">
+        <td class="c-sm">2026-05-11</td>
+        <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-lead-product-management-genders-151644541" target="_blank">Lead Product Management (all genders)</a><small class="c-firma">DieProduktMacher GmbH · 25 Min</small></td>
+        <td class="c-sc"><span class="score score-high">7/10</span></td>
+<td class="c-krit c-krit-half" title="E2E: 1/2">1/2</td><td class="c-krit c-krit-full" title="Roadmap: 2/2">2/2</td><td class="c-krit c-krit-half" title="Auto: 0.5/2">0.5/2</td><td class="c-krit c-krit-half" title="AgentAI: 0.5/2">0.5/2</td><td class="c-krit c-krit-full" title="Stakeholder: 1/1">1/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-half" title="Agile: 1/2">1/2</td><td class="c-krit c-krit-half" title="B2B: 0.5/1">0.5/1</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="3" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-11_DieProduktMacher GmbH_Lead Product Management (all g" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_DieProduktMacher GmbH_Lead Product Management (all g"></span></td>
+        <td class="c-bew"><a href="../bewerbungen/2026-05-11_DieProduktMacher_GmbH_Lead_Product_Management_(all_genders)_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-11_DieProduktMacher_GmbH_Lead_Product_Management_(all_genders)_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
+      </tr>
+      <tr data-status="Offen">
+        <td class="c-sm">2026-05-11</td>
+        <td class="c-stelle"><a href="https://www.bikeleasing.de/karriere/detail/2021384-digital-product-manager-gn" target="_blank">Digital Product Manager (gn)</a><small class="c-firma">Bikeleasing-Service GmbH &amp; Co. KG · Remote</small></td>
+        <td class="c-sc"><span class="score score-high">7/10</span></td>
+<td class="c-krit c-krit-full" title="E2E: 2/2">2/2</td><td class="c-krit c-krit-half" title="Roadmap: 1/2">1/2</td><td class="c-krit c-krit-half" title="Auto: 1/2">1/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-full" title="Stakeholder: 1/1">1/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-half" title="Agile: 1/2">1/2</td><td class="c-krit c-krit-full" title="B2B: 1/1">1/1</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="4" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-11_Bikeleasing-Service GmbH &amp; Co. KG_Digital Product Manager (gn)" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_Bikeleasing-Service GmbH &amp; Co. KG_Digital Product Manager (gn)"></span></td>
+        <td class="c-bew"><a href="../bewerbungen/2026-05-11_Bikeleasing-Service_GmbH_&amp;_Co._KG_Digital_Product_Manager_(gn)_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-11_Bikeleasing-Service_GmbH_&amp;_Co._KG_Digital_Product_Manager_(gn)_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
+      </tr>
+      <tr data-status="Offen">
+        <td class="c-sm">2026-05-11</td>
+        <td class="c-stelle"><a href="https://job.teoresigroup.com/lavoro/product-owner-m-w-d-digitale-b2b-cloud-services/" target="_blank">Product Owner (m/w/d) – Digitale B2B-Cloud-Services</a><small class="c-firma">Teoresi GmbH · Remote</small></td>
+        <td class="c-sc"><span class="score score-high">7/10</span></td>
+<td class="c-krit c-krit-half" title="E2E: 1/2">1/2</td><td class="c-krit c-krit-full" title="Roadmap: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Auto: 0/2">0/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-full" title="Stakeholder: 1/1">1/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-full" title="Agile: 2/2">2/2</td><td class="c-krit c-krit-full" title="B2B: 1/1">1/1</td><td class="c-krit c-krit-zero" title="Behörden: 0/0.5">0/0.5</td><td class="c-krit c-krit-zero" title="Sozial: 0/0.5">0/0.5</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="5" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-11_Teoresi GmbH_Product Owner (m/w/d) – Digita" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_Teoresi GmbH_Product Owner (m/w/d) – Digita"></span></td>
+        <td class="c-bew"><a href="../bewerbungen/2026-05-11_Teoresi_GmbH_Product_Owner_(mwd)_–_Digitale_B2B-Cloud_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-11_Teoresi_GmbH_Product_Owner_(mwd)_–_Digitale_B2B-Cloud_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
+      </tr>
+      <tr data-status="Offen">
+        <td class="c-sm">2026-05-11</td>
+        <td class="c-stelle"><a href="https://karriere.doctarigroup.com/offer/senior-product-owner-m-w-d/54571133-677f-4d31-b626-a7b2be5aea31?showApplicationForm=false" target="_blank">Senior Product Owner (m/w/d)</a><small class="c-firma">Planerio GmbH · 20 Min</small></td>
+        <td class="c-sc"><span class="score score-high">7/10</span></td>
+<td class="c-krit c-krit-half" title="E2E: 1/2">1/2</td><td class="c-krit c-krit-full" title="Roadmap: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Auto: 0/2">0/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-full" title="Stakeholder: 1/1">1/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-full" title="Engineering: 2/2">2/2</td><td class="c-krit c-krit-full" title="Agile: 2/2">2/2</td><td class="c-krit c-krit-full" title="B2B: 1/1">1/1</td><td class="c-krit c-krit-zero" title="Behörden: 0/0.5">0/0.5</td><td class="c-krit c-krit-zero" title="Sozial: 0/0.5">0/0.5</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="6" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-11_Planerio GmbH_Senior Product Owner (m/w/d)" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_Planerio GmbH_Senior Product Owner (m/w/d)"></span></td>
+        <td class="c-bew"><a href="../bewerbungen/2026-05-11_Planerio_GmbH_Senior_Product_Owner_(mwd)_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-11_Planerio_GmbH_Senior_Product_Owner_(mwd)_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
+      </tr>
+      <tr data-status="Offen">
+        <td class="c-sm">2026-05-11</td>
+        <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-product-owner-product-manager-digital-tools-153387611" target="_blank">Product Owner / Product Manager Digital Tools (m/w/d)</a><small class="c-firma">meplan GmbH · 20 Min</small></td>
+        <td class="c-sc"><span class="score score-mid">6/10</span></td>
+<td class="c-krit c-krit-half" title="E2E: 1/2">1/2</td><td class="c-krit c-krit-half" title="Roadmap: 1/2">1/2</td><td class="c-krit c-krit-half" title="Auto: 0.5/2">0.5/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-full" title="Stakeholder: 1/1">1/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-half" title="Agile: 1/2">1/2</td><td class="c-krit c-krit-half" title="B2B: 0.5/1">0.5/1</td><td class="c-krit c-krit-zero" title="Behörden: 0/0.5">0/0.5</td><td class="c-krit c-krit-zero" title="Sozial: 0/0.5">0/0.5</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="7" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-11_meplan GmbH_Product Owner / Product Manage" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_meplan GmbH_Product Owner / Product Manage"></span></td>
+        <td class="c-bew"><a href="../bewerbungen/2026-05-11_meplan_GmbH_Product_Owner_Product_Manager_Digital_To_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-11_meplan_GmbH_Product_Owner_Product_Manager_Digital_To_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
+      </tr>
+      <tr data-status="Offen">
+        <td class="c-sm">2026-05-11</td>
+        <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-senior-product-manager-153319234" target="_blank">Senior Product Manager (w/m/d)</a><small class="c-firma">SupplyOn AG · 35 Min</small></td>
+        <td class="c-sc"><span class="score score-mid">6/10</span></td>
+<td class="c-krit c-krit-half" title="E2E: 1/2">1/2</td><td class="c-krit c-krit-half" title="Roadmap: 1/2">1/2</td><td class="c-krit c-krit-half" title="Auto: 1/2">1/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-full" title="Stakeholder: 1/1">1/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-half" title="Agile: 1/2">1/2</td><td class="c-krit c-krit-full" title="B2B: 1/1">1/1</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="8" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-11_SupplyOn AG_Senior Product Manager (w/m/d)" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_SupplyOn AG_Senior Product Manager (w/m/d)"></span></td>
+        <td class="c-bew"><a href="../bewerbungen/2026-05-11_SupplyOn_AG_Senior_Product_Manager_(wmd)_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-11_SupplyOn_AG_Senior_Product_Manager_(wmd)_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
+      </tr>
+      <tr data-status="Offen">
+        <td class="c-sm">2026-05-11</td>
+        <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-product-manager-all-genders-developer-platform-system-integrations-153304269" target="_blank">Product Manager (all genders) - Developer Platform &amp; System Integrations</a><small class="c-firma">ValueNet · 20 Min</small></td>
+        <td class="c-sc"><span class="score score-mid">6/10</span></td>
+<td class="c-krit c-krit-half" title="E2E: 1/2">1/2</td><td class="c-krit c-krit-half" title="Roadmap: 1/2">1/2</td><td class="c-krit c-krit-zero" title="Auto: 0/2">0/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-full" title="Stakeholder: 1/1">1/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-half" title="Agile: 1/2">1/2</td><td class="c-krit c-krit-full" title="B2B: 1/1">1/1</td><td class="c-krit c-krit-zero" title="Behörden: 0/0.5">0/0.5</td><td class="c-krit c-krit-zero" title="Sozial: 0/0.5">0/0.5</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="9" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-11_ValueNet_Product Manager (all genders) " data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_ValueNet_Product Manager (all genders) "></span></td>
+        <td class="c-bew"><a href="../bewerbungen/2026-05-11_ValueNet_Product_Manager_(all_genders)_-_Develope_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-11_ValueNet_Product_Manager_(all_genders)_-_Develope_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
+      </tr>
+      <tr data-status="Offen">
+        <td class="c-sm">2026-05-11</td>
+        <td class="c-stelle"><a href="https://careers.epam.com/en/vacancy/senior-product-manager-m-f-d-digital-data-ai-solutions-blt12dzul2qmrzmsjiz_en" target="_blank">Senior Product Manager (m/f/d) Digital, Data &amp; AI Solutions</a><small class="c-firma">EPAM Systems · Remote</small></td>
+        <td class="c-sc"><span class="score score-mid">6/10</span></td>
+<td class="c-krit c-krit-zero" title="E2E: 0/2">0/2</td><td class="c-krit c-krit-half" title="Roadmap: 0.5/2">0.5/2</td><td class="c-krit c-krit-half" title="Auto: 1/2">1/2</td><td class="c-krit c-krit-half" title="AgentAI: 1/2">1/2</td><td class="c-krit c-krit-half" title="Stakeholder: 0.5/1">0.5/1</td><td class="c-krit c-krit-half" title="Cross: 0.5/1">0.5/1</td><td class="c-krit c-krit-zero" title="Engineering: 0/2">0/2</td><td class="c-krit c-krit-zero" title="Agile: 0/2">0/2</td><td class="c-krit c-krit-half" title="B2B: 0.5/1">0.5/1</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="10" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-11_EPAM Systems_Senior Product Manager (m/f/d)" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_EPAM Systems_Senior Product Manager (m/f/d)"></span></td>
+        <td class="c-bew"><a href="../bewerbungen/2026-05-11_EPAM_Systems_Senior_Product_Manager_(mfd)_Digital,_Da_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-11_EPAM_Systems_Senior_Product_Manager_(mfd)_Digital,_Da_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
+      </tr>
+      <tr data-status="Offen">
+        <td class="c-sm">2026-05-11</td>
+        <td class="c-stelle"><a href="https://www.bluemetering.de/karriere/jobs/senior-solution-owner-m-w-d.php" target="_blank">Senior Solution Owner (m/w/d)</a><small class="c-firma">BlueMetering GmbH · Remote</small></td>
+        <td class="c-sc"><span class="score score-mid">6/10</span></td>
+<td class="c-krit c-krit-half" title="E2E: 1/2">1/2</td><td class="c-krit c-krit-half" title="Roadmap: 1/2">1/2</td><td class="c-krit c-krit-full" title="Auto: 2/2">2/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-half" title="Stakeholder: 0.5/1">0.5/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-full" title="Agile: 2/2">2/2</td><td class="c-krit c-krit-full" title="B2B: 1/1">1/1</td><td class="c-krit c-krit-zero" title="Behörden: 0/0.5">0/0.5</td><td class="c-krit c-krit-zero" title="Sozial: 0/0.5">0/0.5</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="11" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-11_BlueMetering GmbH_Senior Solution Owner (m/w/d)" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_BlueMetering GmbH_Senior Solution Owner (m/w/d)"></span></td>
+        <td class="c-bew"><a href="../bewerbungen/2026-05-11_BlueMetering_GmbH_Senior_Solution_Owner_(mwd)_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-11_BlueMetering_GmbH_Senior_Solution_Owner_(mwd)_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
+      </tr>
+      <tr data-status="Offen">
+        <td class="c-sm">2026-05-11</td>
+        <td class="c-stelle"><a href="https://karriere.doctarigroup.com/category/it-product-technologies/aa1d59e2-e198-5a6b-90db-71c4d43d51e0" target="_blank">Senior Product Manager (m/w/d)</a><small class="c-firma">Planerio GmbH · 25 Min</small></td>
+        <td class="c-sc"><span class="score score-mid">6/10</span></td>
+<td class="c-krit c-krit-zero" title="E2E: 0/2">0/2</td><td class="c-krit c-krit-zero" title="Roadmap: 0/2">0/2</td><td class="c-krit c-krit-half" title="Auto: 1/2">1/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-zero" title="Stakeholder: 0/1">0/1</td><td class="c-krit c-krit-half" title="Cross: 0.5/1">0.5/1</td><td class="c-krit c-krit-half" title="Engineering: 0.5/2">0.5/2</td><td class="c-krit c-krit-zero" title="Agile: 0/2">0/2</td><td class="c-krit c-krit-full" title="B2B: 1/1">1/1</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-full" title="Sozial: 0.5/0.5">0.5/0.5</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="12" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-11_Planerio GmbH_Senior Product Manager (m/w/d)" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_Planerio GmbH_Senior Product Manager (m/w/d)"></span></td>
+        <td class="c-bew"><a href="../bewerbungen/2026-05-11_Planerio_GmbH_Senior_Product_Manager_(mwd)_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-11_Planerio_GmbH_Senior_Product_Manager_(mwd)_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
+      </tr>
+      <tr data-status="Offen">
+        <td class="c-sm">2026-05-11</td>
+        <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-senior-product-manager-energy-emobility-all-genders-reev-151024078" target="_blank">(Senior) Product Manager - Energy x eMobility (all genders) für Reev</a><small class="c-firma">Future Energy Ventures · 25 Min</small></td>
+        <td class="c-sc"><span class="score score-mid">6/10</span></td>
+<td class="c-krit c-krit-full" title="E2E: 2/2">2/2</td><td class="c-krit c-krit-full" title="Roadmap: 2/2">2/2</td><td class="c-krit c-krit-half" title="Auto: 0.5/2">0.5/2</td><td class="c-krit c-krit-half" title="AgentAI: 0.5/2">0.5/2</td><td class="c-krit c-krit-half" title="Stakeholder: 0.5/1">0.5/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-full" title="Engineering: 2/2">2/2</td><td class="c-krit c-krit-half" title="Agile: 1/2">1/2</td><td class="c-krit c-krit-full" title="B2B: 1/1">1/1</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-half" title="Standort: 1/2">1/2</td><td class="c-krit c-krit-full" title="Gehalt: 1/1">1/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="13" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-11_Future Energy Ventures_(Senior) Product Manager - Ene" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_Future Energy Ventures_(Senior) Product Manager - Ene"></span></td>
+        <td class="c-bew"><a href="../bewerbungen/2026-05-11_Future_Energy_Ventures_(Senior)_Product_Manager_-_Energy_x_eMob_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-11_Future_Energy_Ventures_(Senior)_Product_Manager_-_Energy_x_eMob_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
+      </tr>
+      <tr data-status="Offen">
+        <td class="c-sm">2026-05-11</td>
+        <td class="c-stelle"><a href="https://www.fabasoft.com/de/karriere/jobs/product-owner-fabasoft-xpublisher" target="_blank">Product Owner - Fabasoft Xpublisher (w/m/d)</a><small class="c-firma">Fabasoft · 15 Min</small></td>
+        <td class="c-sc"><span class="score score-mid">5/10</span></td>
+<td class="c-krit c-krit-half" title="E2E: 1/2">1/2</td><td class="c-krit c-krit-full" title="Roadmap: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Auto: 0/2">0/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-full" title="Stakeholder: 1/1">1/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-full" title="Engineering: 2/2">2/2</td><td class="c-krit c-krit-full" title="Agile: 2/2">2/2</td><td class="c-krit c-krit-full" title="B2B: 1/1">1/1</td><td class="c-krit c-krit-zero" title="Behörden: 0/0.5">0/0.5</td><td class="c-krit c-krit-zero" title="Sozial: 0/0.5">0/0.5</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="14" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-11_Fabasoft_Product Owner - Fabasoft Xpubl" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_Fabasoft_Product Owner - Fabasoft Xpubl"></span></td>
+        <td class="c-bew"><button class="btn-trotzdem" data-key="Product Owner - Fabasoft Xpublisher (w/m/d)|Fabasoft" data-score="5" onclick="trotzdemBewerben(this.dataset.key, this.dataset.score, this)">📄 Generieren</button></td>
+      </tr>
+      <tr data-status="Offen">
+        <td class="c-sm">2026-05-11</td>
+        <td class="c-stelle"><a href="https://jobs.ashbyhq.com/munich-electrification/7a10f170-0636-4601-af80-1923a9af588c" target="_blank">Software Product Owner (f/m/d)</a><small class="c-firma">Munich Electrification · 25 Min</small></td>
+        <td class="c-sc"><span class="score score-mid">5/10</span></td>
+<td class="c-krit c-krit-half" title="E2E: 1/2">1/2</td><td class="c-krit c-krit-full" title="Roadmap: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Auto: 0/2">0/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-full" title="Stakeholder: 1/1">1/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-full" title="Agile: 2/2">2/2</td><td class="c-krit c-krit-zero" title="B2B: 0/1">0/1</td><td class="c-krit c-krit-zero" title="Behörden: 0/0.5">0/0.5</td><td class="c-krit c-krit-zero" title="Sozial: 0/0.5">0/0.5</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="15" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-11_Munich Electrification_Software Product Owner (f/m/d)" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_Munich Electrification_Software Product Owner (f/m/d)"></span></td>
+        <td class="c-bew"><button class="btn-trotzdem" data-key="Software Product Owner (f/m/d)|Munich Electrification" data-score="5" onclick="trotzdemBewerben(this.dataset.key, this.dataset.score, this)">📄 Generieren</button></td>
+      </tr>
+      <tr data-status="Offen">
+        <td class="c-sm">2026-05-13</td>
+        <td class="c-stelle"><a href="https://www.pilot.de/job/head-of-product-go-to-market-m-w-d-x/" target="_blank">Head of Product &amp; Go-to-Market (m/w/d/x)</a><small class="c-firma">pilot Agenturgruppe · 25 Min</small></td>
+        <td class="c-sc"><span class="score score-mid">5/10</span></td>
+<td class="c-krit c-krit-half" title="E2E: 1/2">1/2</td><td class="c-krit c-krit-half" title="Roadmap: 1/2">1/2</td><td class="c-krit c-krit-zero" title="Auto: 0/2">0/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-full" title="Stakeholder: 1/1">1/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-zero" title="Engineering: 0/2">0/2</td><td class="c-krit c-krit-zero" title="Agile: 0/2">0/2</td><td class="c-krit c-krit-half" title="B2B: 0.5/1">0.5/1</td><td class="c-krit c-krit-zero" title="Behörden: 0/0.5">0/0.5</td><td class="c-krit c-krit-zero" title="Sozial: 0/0.5">0/0.5</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="16" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-13_pilot Agenturgruppe_Head of Product &amp; Go-to-Market" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-13_pilot Agenturgruppe_Head of Product &amp; Go-to-Market"></span></td>
+        <td class="c-bew"><button class="btn-trotzdem" data-key="Head of Product &amp; Go-to-Market (m/w/d/x)|pilot Agenturgruppe" data-score="5" onclick="trotzdemBewerben(this.dataset.key, this.dataset.score, this)">📄 Generieren</button></td>
+      </tr>
+      <tr data-status="Offen">
+        <td class="c-sm">2026-05-11</td>
+        <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-head-product-asset-flexibility-commercialization-152551374" target="_blank">Head of Product (m/f/d) Asset Flexibility Commercialization</a><small class="c-firma">The Mobility House · 25 Min</small></td>
+        <td class="c-sc"><span class="score score-low">4/10</span></td>
+<td class="c-krit c-krit-half" title="E2E: 1/2">1/2</td><td class="c-krit c-krit-half" title="Roadmap: 1/2">1/2</td><td class="c-krit c-krit-zero" title="Auto: 0/2">0/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-full" title="Stakeholder: 1/1">1/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-half" title="Agile: 0.5/2">0.5/2</td><td class="c-krit c-krit-half" title="B2B: 0.5/1">0.5/1</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-half" title="Standort: 1/2">1/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="17" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-11_The Mobility House_Head of Product (m/f/d) Asset " data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_The Mobility House_Head of Product (m/f/d) Asset "></span></td>
+        <td class="c-bew"><button class="btn-trotzdem" data-key="Head of Product (m/f/d) Asset Flexibility Commercialization|The Mobility House" data-score="4" onclick="trotzdemBewerben(this.dataset.key, this.dataset.score, this)">📄 Generieren</button></td>
+      </tr>
+      <tr data-status="Offen">
+        <td class="c-sm">2026-05-11</td>
+        <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-product-manager-all-genders-154098076" target="_blank">Product Manager (all genders)</a><small class="c-firma">Finanztip Verbraucherinformation GmbH · 25 Min</small></td>
+        <td class="c-sc"><span class="score score-low">4/10</span></td>
+<td class="c-krit c-krit-half" title="E2E: 1/2">1/2</td><td class="c-krit c-krit-half" title="Roadmap: 1/2">1/2</td><td class="c-krit c-krit-zero" title="Auto: 0/2">0/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-zero" title="Stakeholder: 0/1">0/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-half" title="Agile: 0.5/2">0.5/2</td><td class="c-krit c-krit-zero" title="B2B: 0/1">0/1</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-full" title="Sozial: 0.5/0.5">0.5/0.5</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="18" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-11_Finanztip Verbraucherinformation GmbH_Product Manager (all genders)" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_Finanztip Verbraucherinformation GmbH_Product Manager (all genders)"></span></td>
+        <td class="c-bew"><button class="btn-trotzdem" data-key="Product Manager (all genders)|Finanztip Verbraucherinformation GmbH" data-score="4" onclick="trotzdemBewerben(this.dataset.key, this.dataset.score, this)">📄 Generieren</button></td>
+      </tr>
+      <tr data-status="Offen">
+        <td class="c-sm">2026-05-11</td>
+        <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-product-manager-153687678" target="_blank">Product Manager (f/m/x)</a><small class="c-firma">Tanso · 30 Min</small></td>
+        <td class="c-sc"><span class="score score-low">4/10</span></td>
+<td class="c-krit c-krit-full" title="E2E: 2/2">2/2</td><td class="c-krit c-krit-full" title="Roadmap: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Auto: 0/2">0/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-half" title="Stakeholder: 0.5/1">0.5/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-half" title="Agile: 0.5/2">0.5/2</td><td class="c-krit c-krit-full" title="B2B: 1/1">1/1</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="19" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-11_Tanso_Product Manager (f/m/x)" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_Tanso_Product Manager (f/m/x)"></span></td>
+        <td class="c-bew"><button class="btn-trotzdem" data-key="Product Manager (f/m/x)|Tanso" data-score="4" onclick="trotzdemBewerben(this.dataset.key, this.dataset.score, this)">📄 Generieren</button></td>
+      </tr>
+      <tr data-status="Offen">
+        <td class="c-sm">2026-05-13</td>
+        <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-product-manager-porduct-owner-vgi-154090839" target="_blank">Product Manager / Product Owner (m/f/d) VGI</a><small class="c-firma">The Mobility House · 20 Min</small></td>
+        <td class="c-sc"><span class="score score-low">4/10</span></td>
+<td class="c-krit c-krit-half" title="E2E: 1/2">1/2</td><td class="c-krit c-krit-half" title="Roadmap: 1/2">1/2</td><td class="c-krit c-krit-zero" title="Auto: 0/2">0/2</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="20" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-13_The Mobility House_Product Manager / Product Owne" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-13_The Mobility House_Product Manager / Product Owne"></span></td>
+        <td class="c-bew"><button class="btn-trotzdem" data-key="Product Manager / Product Owner (m/f/d) VGI|The Mobility House" data-score="4" onclick="trotzdemBewerben(this.dataset.key, this.dataset.score, this)">📄 Generieren</button></td>
+      </tr>
+      <tr data-status="Offen">
+        <td class="c-sm">2026-05-13</td>
+        <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-mobile-app-product-owner-154270673" target="_blank">Mobile App Product Owner (m/f/d)</a><small class="c-firma">limango GmbH · 20 Min</small></td>
+        <td class="c-sc"><span class="score score-low">4/10</span></td>
+<td class="c-krit c-krit-half" title="E2E: 1/2">1/2</td><td class="c-krit c-krit-half" title="Roadmap: 1/2">1/2</td><td class="c-krit c-krit-zero" title="Auto: 0/2">0/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-zero" title="Stakeholder: 0/1">0/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-half" title="Agile: 1/2">1/2</td><td class="c-krit c-krit-zero" title="B2B: 0/1">0/1</td><td class="c-krit c-krit-zero" title="Behörden: 0/0.5">0/0.5</td><td class="c-krit c-krit-zero" title="Sozial: 0/0.5">0/0.5</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="21" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-13_limango GmbH_Mobile App Product Owner (m/f/" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-13_limango GmbH_Mobile App Product Owner (m/f/"></span></td>
+        <td class="c-bew"><button class="btn-trotzdem" data-key="Mobile App Product Owner (m/f/d)|limango GmbH" data-score="4" onclick="trotzdemBewerben(this.dataset.key, this.dataset.score, this)">📄 Generieren</button></td>
+      </tr>
+      <tr data-status="Offen">
+        <td class="c-sm">2026-05-11</td>
+        <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-head-of-product-154131107" target="_blank">Head of Product (w/m/d)</a><small class="c-firma">Skalar · 20 Min</small></td>
+        <td class="c-sc"><span class="score score-low">3/10</span></td>
+<td class="c-krit c-krit-zero" title="E2E: 0/2">0/2</td><td class="c-krit c-krit-zero" title="Roadmap: 0/2">0/2</td><td class="c-krit c-krit-zero" title="Auto: 0/2">0/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-zero" title="Stakeholder: 0/1">0/1</td><td class="c-krit c-krit-zero" title="Cross: 0/1">0/1</td><td class="c-krit c-krit-zero" title="Engineering: 0/2">0/2</td><td class="c-krit c-krit-zero" title="Agile: 0/2">0/2</td><td class="c-krit c-krit-zero" title="B2B: 0/1">0/1</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="22" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-11_Skalar_Head of Product (w/m/d)" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_Skalar_Head of Product (w/m/d)"></span></td>
+        <td class="c-bew"><button class="btn-trotzdem" data-key="Head of Product (w/m/d)|Skalar" data-score="3" onclick="trotzdemBewerben(this.dataset.key, this.dataset.score, this)">📄 Generieren</button></td>
+      </tr>
+      <tr data-status="Offen">
+        <td class="c-sm">2026-05-11</td>
+        <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-product-manager-muenchen-product-design-146751614" target="_blank">Product Manager (f/m/d) Munich – Product &amp; Design</a><small class="c-firma">Avi Medical Operations GmbH · Remote</small></td>
+        <td class="c-sc"><span class="score score-low">2/10</span></td>
+<td class="c-krit c-krit-zero" title="E2E: 0/2">0/2</td><td class="c-krit c-krit-zero" title="Roadmap: 0/2">0/2</td><td class="c-krit c-krit-zero" title="Auto: 0/2">0/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-zero" title="Stakeholder: 0/1">0/1</td><td class="c-krit c-krit-zero" title="Cross: 0/1">0/1</td><td class="c-krit c-krit-zero" title="Engineering: 0/2">0/2</td><td class="c-krit c-krit-zero" title="Agile: 0/2">0/2</td><td class="c-krit c-krit-zero" title="B2B: 0/1">0/1</td><td class="c-krit c-krit-zero" title="Behörden: 0/0.5">0/0.5</td><td class="c-krit c-krit-zero" title="Sozial: 0/0.5">0/0.5</td><td class="c-krit c-krit-zero" title="Standort: 0/2">0/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="23" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-11_Avi Medical Operations GmbH_Product Manager (f/m/d) Munich" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_Avi Medical Operations GmbH_Product Manager (f/m/d) Munich"></span></td>
+        <td class="c-bew"><button class="btn-trotzdem" data-key="Product Manager (f/m/d) Munich – Product &amp; Design|Avi Medical Operations GmbH" data-score="2" onclick="trotzdemBewerben(this.dataset.key, this.dataset.score, this)">📄 Generieren</button></td>
+      </tr>
+      <tr data-status="Offen">
+        <td class="c-sm">2026-05-11</td>
+        <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-product-manager-space-152795885" target="_blank">Product Manager - Space</a><small class="c-firma">Helsing · Remote</small></td>
+        <td class="c-sc"><span class="score score-low">2/10</span></td>
+<td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="24" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-11_Helsing_Product Manager - Space" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_Helsing_Product Manager - Space"></span></td>
+        <td class="c-bew"><button class="btn-trotzdem" data-key="Product Manager - Space|Helsing" data-score="2" onclick="trotzdemBewerben(this.dataset.key, this.dataset.score, this)">📄 Generieren</button></td>
+      </tr>
+      <tr data-status="Offen">
+        <td class="c-sm">2026-05-13</td>
+        <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-product-manager-ai-platform-149489454" target="_blank">Product Manager - AI Platform (m/f/x)</a><small class="c-firma">Scalable GmbH · 25 Min</small></td>
+        <td class="c-sc"><span class="score score-low">2/10</span></td>
+<td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-zero" title="Standort: 0/2">0/2</td><td class="c-krit c-krit-na">–</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="25" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-13_Scalable GmbH_Product Manager - AI Platform " data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-13_Scalable GmbH_Product Manager - AI Platform "></span></td>
+        <td class="c-bew"><button class="btn-trotzdem" data-key="Product Manager - AI Platform (m/f/x)|Scalable GmbH" data-score="2" onclick="trotzdemBewerben(this.dataset.key, this.dataset.score, this)">📄 Generieren</button></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    var MD = {
+  "0": {
+    "stelle": "Product Manager – AI Strategy & Innovation (w/m/d)",
+    "firma": "SupplyOn AG",
+    "fz": "35 Min",
+    "pro1": "AI Strategy & Innovation als Kernthema passt perfekt zu Claudias hands-on AI-Erfahrung (Agentic AI, Multi-Agent) und Zertifizierung als AI-Powered PO.",
+    "pro2": "B2B-Plattform mit End-to-End Produktverantwortung – deckt sich exakt mit Claudias Stärken und Wunschprofil (Discovery bis Launch, Roadmap-Ownership).",
+    "pro3": "Cross-funktionale Zusammenarbeit mit Engineering, Stakeholder-Management auf Senior-Ebene – beides nachweislich gelebt bei Accor in internationalen Teams.",
+    "con1": "Kein explizites Gehalt genannt – XING-Schätzung (71.000–98.500 €) deutet auf Erreichbarkeit hin, aber keine Sicherheit für Claudias 80K-Minimum.",
+    "con2": "Standort Hallbergmoos (Hauptsitz) – liegt nahe München, Fahrtzeit per MVV aber an oberer Grenze; Hybrid-Modell unklar in Details.",
+    "con3": "Branchenfokus Supply Chain / Industrie ist neu für Claudia – kein direkter Domänennachweis, könnte im Gespräch eine Hürde sein."
+  },
+  "1": {
+    "stelle": "Senior Product Owner (all genders)",
+    "firma": "EnopAI",
+    "fz": "12 Min",
+    "pro1": "B2B SaaS mit AI/ML-Produktverantwortung trifft Claudias Kernkompetenz und Wunschprofil exakt",
+    "pro2": "Standort Goetheplatz ist ~12 Min. von Laim/Westend — ideal",
+    "pro3": "Home-Office-Flexibilität explizit genannt, Hybrid-Modell akzeptiert",
+    "con1": "Energiebranche ist Claudia fremd — kein Domain-Know-how nachweisbar, könnte als Schwäche gesehen werden",
+    "con2": "Gehalt nicht explizit genannt — Erfüllung der 80.000 €-Grenze unklar",
+    "con3": "Automation/Digitalisierung und Agentic AI nicht explizit erwähnt — nur implizit über ML/AI ableitbar"
+  },
+  "2": {
+    "stelle": "Product Owner (M/W/D) Fleet Tech Plattform",
+    "firma": "CARSYNC / VISPIRON GmbH",
+    "fz": "25 Min",
+    "pro1": "KI-gestützte SaaS-Plattform mit Automatisierungsfokus trifft exakt Claudias AI/Automation-Schwerpunkt und aktives Hands-on-Wissen.",
+    "pro2": "Vollständige End-to-End-Produktverantwortung inkl. Roadmap und Produktvision — deckt sich mit Wunschjob und Erfahrung.",
+    "pro3": "Hybrid in München, ca. 25 Min. von Laim — standorttechnisch ideal.",
+    "con1": "Mobility-/Flottenbranche ist neu für Claudia — kein direkter Domänen-Fit, Einarbeitung nötig.",
+    "con2": "Gehalt nicht explizit genannt — offen, ob ≥ 80.000 € erreichbar.",
+    "con3": "Stellenanzeige sehr kurz/zusammengefasst — Tiefe der Engineering-Zusammenarbeit und Agilität unklar."
+  },
+  "3": {
+    "stelle": "Lead Product Management (all genders)",
+    "firma": "DieProduktMacher GmbH",
+    "fz": "25 Min",
+    "pro1": "Lead-Rolle mit Roadmap-Ownership, Produktvision und Beratungsverantwortung für diverse Klienten – passt zu Claudias End-to-End-Anspruch.",
+    "pro2": "Cross-funktionale Zusammenarbeit und Stakeholder-Management auf Senior-Ebene explizit gefordert – exakter Match zum Profil.",
+    "pro3": "München Hybrid – erfüllt Standort- und Arbeitsmodell-Anforderung vollständig.",
+    "con1": "Consulting-Agentur ohne klar erkennbares eigenes digitales SaaS-Produkt – Produktverantwortung liegt bei Klienten, nicht intern.",
+    "con2": "Kein expliziter AI/Automation-Fokus erkennbar – zentrales Wunschkriterium von Claudia nur schwach erfüllt.",
+    "con3": "Gehalt nur XING-geschätzt (75.500–98.500 €), nicht vom Arbeitgeber bestätigt – Mindestgehalt von 80.000 € nicht gesichert."
+  },
+  "4": {
+    "stelle": "Digital Product Manager (gn)",
+    "firma": "Bikeleasing-Service GmbH & Co. KG",
+    "fz": "Remote",
+    "pro1": "End-to-End-Verantwortung von Discovery bis Go-Live explizit genannt – passt exakt zur Wunschrolle",
+    "pro2": "Remote möglich – kein Standortnachteil, volle Flexibilität",
+    "pro3": "B2B-Fokus mit Stakeholder-Management und KPI-Ownership – deckt sich mit Claudias Kernprofil",
+    "con1": "Kein Gehalt genannt – Einordnung ab 80.000 € unklar, Risiko nach unten",
+    "con2": "Kein expliziter AI/Automation-Fokus erkennbar – Custom Portals und Websites kein starkes AI-Signal",
+    "con3": "Neu entstehendes Team – möglicherweise wenig Struktur, kein klares Engineering-Team-Setup beschrieben"
+  },
+  "5": {
+    "stelle": "Product Owner (m/w/d) – Digitale B2B-Cloud-Services",
+    "firma": "Teoresi GmbH",
+    "fz": "Remote",
+    "pro1": "End-to-End-Verantwortung für Strategie, Vision und Weiterentwicklung digitaler B2B-Services – exakt Claudias Stärke",
+    "pro2": "Remote/Home-Office möglich – kein Standort-Nachteil, volle Flexibilität",
+    "pro3": "Agile Entwicklungsteams und Business Cases passen direkt zu CSPO-Zertifizierung und PO-Erfahrung",
+    "con1": "Kein Gehalt genannt – ob ≥ 80.000 € erreicht wird, ist völlig unklar",
+    "con2": "Kein Hinweis auf AI, Automation oder Agentic AI – zentrales Differenzierungsmerkmal von Claudia bleibt ungenutzt",
+    "con3": "Stellenanzeige sehr knapp – Mandat, Teamgröße, Produkttiefe und Branche von Teoresi unklar"
+  },
+  "6": {
+    "stelle": "Senior Product Owner (m/w/d)",
+    "firma": "Planerio GmbH",
+    "fz": "20 Min",
+    "pro1": "Klare PO-Rolle im B2B-SaaS mit Roadmap-Ownership, Backlog-Priorisierung und Delivery-Verantwortung – passt exakt zum Wunschprofil.",
+    "pro2": "Enge Zusammenarbeit mit Engineering, Sales, CS und externen Partnern – deckt Claudias cross-funktionale Stärken vollständig ab.",
+    "pro3": "München-Standort mit flexiblen Arbeitszeitmodellen – Pendelziel erfüllt, Hybrid-Arbeitsmodell impliziert.",
+    "con1": "Kein Gehalt genannt – ob ≥ 80.000 € erreicht wird, ist vollständig unklar, kein Punkt vergeben.",
+    "con2": "Kein expliziter AI/Automation-Fokus erkennbar – Claudias stärkste Differenzierung (Agentic AI, Multi-Agent) bleibt ungenutzt.",
+    "con3": "Keine End-to-End-Vision/Discovery explizit erwähnt – Rolle wirkt eher execution-seitig als strategisch-visionär."
+  },
+  "7": {
+    "stelle": "Product Owner / Product Manager Digital Tools (m/w/d)",
+    "firma": "meplan GmbH",
+    "fz": "20 Min",
+    "pro1": "München Hybrid – Standort und Arbeitsmodell passen perfekt zu Claudias Präferenz",
+    "pro2": "Cross-funktionale Zusammenarbeit mit Engineering, Design und Business explizit im Beratungskontext erkennbar",
+    "pro3": "Digital Tools / interne Plattformen im Fokus – passt zu Claudias Erfahrung mit digitalen Produkten und SaaS",
+    "con1": "Kein Gehalt explizit genannt – XING-Schätzung 58k–80k liegt teils unter Claudias Mindestgehalt von 80k",
+    "con2": "Consulting-Kontext unklar – kein eigenes digitales Produkt oder klares PO-Mandat eindeutig erkennbar",
+    "con3": "Kein Hinweis auf AI, Automation oder Agentic AI – Claudias Kernkompetenz findet keinen Widerhall"
+  },
+  "8": {
+    "stelle": "Senior Product Manager (w/m/d)",
+    "firma": "SupplyOn AG",
+    "fz": "35 Min",
+    "pro1": "B2B SaaS-Plattform für industrielle Supply Chains – passt zu Claudias Wunschprofil digitale Plattformen & Tools",
+    "pro2": "Standort Hallbergmoos/München mit Hybrid – innerhalb der Pendelgrenze erreichbar",
+    "pro3": "Senior-Level mit geschätztem Gehaltsband bis 94.500 € – passt zum Mindestgehalt",
+    "con1": "Kein expliziter AI/Agentic AI Fokus erkennbar – Kernkompetenz von Claudia bleibt ungenutzt",
+    "con2": "Gehalt nicht explizit genannt (nur XING-Schätzung) – kein Punkt nach Scoring-Kriterien",
+    "con3": "Automation/Digitalisierung nur impliziert, Supply-Chain-Domäne ist fachfremd für Claudia"
+  },
+  "9": {
+    "stelle": "Product Manager (all genders) - Developer Platform & System Integrations",
+    "firma": "ValueNet",
+    "fz": "20 Min",
+    "pro1": "B2B-Plattformprodukt mit Developer-Focus – passt zu Claudias Erfahrung in digitalen Plattformen und technischer Integration",
+    "pro2": "Standort München Hybrid – klar akzeptiert, keine Einschränkung",
+    "pro3": "Geschätztes Gehalt bis 82.000 € – bewegt sich knapp im Zielbereich",
+    "con1": "Kein Gehalt explizit genannt – nur XING-Schätzung (61k–82k), damit kein Punkt für Gehalt ≥ 80k",
+    "con2": "Kein erkennbarer AI/Automation-Fokus in der Stellenbeschreibung – zwei wichtige Kriterien (Agentic AI, Automatisierung) unklar oder nicht adressiert",
+    "con3": "Stellenanzeige stark gekürzt – vollständige Bewertung von End-to-End-Mandat, Roadmap-Ownership und agiler Arbeitsweise nur eingeschränkt möglich"
+  },
+  "10": {
+    "stelle": "Senior Product Manager (m/f/d) Digital, Data & AI Solutions",
+    "firma": "EPAM Systems",
+    "fz": "Remote",
+    "pro1": "AI-Fokus (GenAI-Produktopportunitäten) passt direkt zu Claudias AI-Zertifizierungen und praktischer Multi-Agent-Erfahrung.",
+    "pro2": "Hybrid in Deutschland (München explizit genannt) – Standort vollständig kompatibel.",
+    "pro3": "Senior-Level mit mind. 10 Jahren Erfahrung passt zu Claudias Profil und schließt Junior-Ausschluss aus.",
+    "con1": "Pre-Sales und Business Development deuten auf starke Sales-Komponente hin – nahe am Ausschlusskriterium \"Reine Sales-Rolle\".",
+    "con2": "Kein Produkt-Ownership oder Roadmap-Mandat erkennbar – eher Consulting/Advisory als End-to-End-Produktverantwortung.",
+    "con3": "Kein Gehalt genannt – ob ≥ 80.000 € erfüllt ist, bleibt unklar."
+  },
+  "11": {
+    "stelle": "Senior Solution Owner (m/w/d)",
+    "firma": "BlueMetering GmbH",
+    "fz": "Remote",
+    "pro1": "Agile Backlog-Ownership und Anforderungsmanagement decken sich direkt mit Claudias CSPO-Zertifizierung und Praxiserfahrung.",
+    "pro2": "B2B-Umfeld mit Digitalisierungsfokus (Smart Metering) passt zur Branchen- und Produktpräferenz.",
+    "pro3": "Remote/Hybrid möglich – Standortkriterium erfüllt, kein Abzug.",
+    "con1": "Kein erkennbarer AI/Agentic-AI-Bezug – zentrales Wunschkriterium von Claudia nicht abgedeckt.",
+    "con2": "\"Solution Owner\" statt Product Owner – Mandat und End-to-End-Verantwortung (Discovery bis Launch) unklar bzw. nur impliziert.",
+    "con3": "Gehalt nicht genannt – Mindestgrenze von 80.000 € nicht verifizierbar."
+  },
+  "12": {
+    "stelle": "Senior Product Manager (m/w/d)",
+    "firma": "Planerio GmbH",
+    "fz": "25 Min",
+    "pro1": "Senior Product Owner & Senior Product Manager Stellen in München – direkt passend zum angestrebten Level und Rollentyp.",
+    "pro2": "Planerio ist ein digitales B2B-SaaS-Produkt im Gesundheits-/Personalplanungsbereich – trifft Claudias Branchenpräferenz (digital, plattformbasiert, sozial relevant).",
+    "pro3": "Münchner Standort mit Hinweis auf mobiles/flexibles Arbeiten – Hybrid-Modell wahrscheinlich, Fahrzeit unter 30 Min. von Laim.",
+    "con1": "Stellenanzeige enthält keine Stellenbeschreibung – keine Aussage zu Roadmap-Ownership, Discovery, AI oder Automation möglich; alle inhaltlichen Kriterien unklar.",
+    "con2": "Kein Gehalt genannt – ob ≥ 80.000 € erreicht wird, ist völlig offen.",
+    "con3": "Kein Hinweis auf AI, Automation oder Agentic AI – zwei der stärksten Matching-Kriterien bleiben unbewertet."
+  },
+  "13": {
+    "stelle": "(Senior) Product Manager - Energy x eMobility (all genders) für Reev",
+    "firma": "Future Energy Ventures",
+    "fz": "25 Min",
+    "pro1": "B2B SaaS-Plattform mit klarer End-to-End Produktverantwortung von Discovery bis Delivery — passt exakt zu Claudias Wunschprofil.",
+    "pro2": "München-Standort innerhalb der Pendelgrenze, Gehaltsspanne bis 96.500 € überschreitet die Mindestgrenze.",
+    "pro3": "Cross-funktionale Zusammenarbeit mit Engineering und AI-Tooling explizit gefordert — deckt sich mit Claudias Skills.",
+    "con1": "Stelle ist \"Vor Ort\" ohne Remote-Erwähnung — Hybrid nicht bestätigt, potenziell 5-Tage-Office.",
+    "con2": "Domänenwissen eMobility / Energiewirtschaft nicht in Claudias Profil vorhanden — fachliche Lücke.",
+    "con3": "Kein Automation- oder Agentic-AI-Fokus erkennbar — AI nur als \"Tooling\" erwähnt, kein eigenständiges KI-Produktmandat."
+  },
+  "14": {
+    "stelle": "Product Owner - Fabasoft Xpublisher (w/m/d)",
+    "firma": "Fabasoft",
+    "fz": "15 Min",
+    "pro1": "Klare Product-Owner-Rolle mit Backlog-Ownership und fachlicher Verantwortung für ein etabliertes B2B-SaaS-Produkt in München",
+    "pro2": "Enge Zusammenarbeit mit Scrum-Team, Entwicklung und Stakeholdern – passt zu Claudias cross-funktionalem Arbeitsstil",
+    "pro3": "Standort München Hackerbrücke – ca. 15 Min. von Laim, Homeoffice-Option vorhanden",
+    "con1": "Anforderung \"mehrjährige Erfahrung in der Softwareentwicklung & OOP (Java)\" – Claudia hat keinen technischen Entwicklungshintergrund, das ist ein erheblicher Mismatch",
+    "con2": "Kein AI/Automation-Fokus erkennbar – Publishing-System ohne KI-Komponente, Claudias Kernstärke AI/Agentic bleibt ungenutzt",
+    "con3": "Gehalt nicht genannt – kein Punkt vergeben, Risiko unter 80.000 € unklar"
+  },
+  "15": {
+    "stelle": "Software Product Owner (f/m/d)",
+    "firma": "Munich Electrification",
+    "fz": "25 Min",
+    "pro1": "Roadmap-Ownership und Backlog-Verantwortung explizit genannt — trifft Claudias Kernkompetenz.",
+    "pro2": "Agile Lieferung und Stakeholder-Kommunikation entsprechen ihrem Erfahrungsprofil.",
+    "pro3": "Hybrides Arbeitsmodell in München — Standort passt.",
+    "con1": "Kein digitales B2B-SaaS oder Plattformprodukt — BMS-Software ist Embedded/Hardware-nah, sehr fachfremd.",
+    "con2": "Kein AI-, Automation- oder Digitalisierungsfokus erkennbar — zentrale Wunschkriterien nicht erfüllt.",
+    "con3": "Gehalt nicht genannt; Automotive-Domänenkenntnisse fehlen komplett, Einstiegshürde hoch."
+  },
+  "16": {
+    "stelle": "Head of Product & Go-to-Market (m/w/d/x)",
+    "firma": "pilot Agenturgruppe",
+    "fz": "25 Min",
+    "pro1": "Hybrid-Modell mit Münchner Standort erfüllt Standortkriterium problemlos.",
+    "pro2": "B2B-Kontext und Portfoliosteuerung passen zu Claudias End-to-End-Produkterfahrung.",
+    "pro3": "GTM-Erfahrung aus Accor (Partner-Onboarding, Vertriebsaufbau, internationale Märkte) ist direkt anwendbar.",
+    "con1": "Medien-/Werbeumfeld ist branchenfremd – kein SaaS, keine digitale Plattform, kein AI-Fokus erkennbar.",
+    "con2": "\"Head of\"-Rolle impliziert Personalführung als Kernaufgabe – kein klares PO-Mandat, kein Engineering-Fokus.",
+    "con3": "Kein Gehalt genannt; 60% Büropflicht liegt über Claudias bevorzugtem Hybrid-Modell (2–3 Tage Office)."
+  },
+  "17": {
+    "stelle": "Head of Product (m/f/d) Asset Flexibility Commercialization",
+    "firma": "The Mobility House",
+    "fz": "25 Min",
+    "pro1": "München-basiert, Vollzeit vor Ort, gut erreichbar von Laim/Westend",
+    "pro2": "Head of Product Rolle mit Roadmap-Verantwortung und cross-funktionaler Zusammenarbeit",
+    "pro3": "Wachsendes, innovatives Unternehmen mit klarem Technologiefokus (EV-Ladeinfrastruktur, Energiemarkt)",
+    "con1": "100% Vor Ort – kein Remote/Hybrid erkennbar, entspricht nicht Claudias Mindestanforderung (2 Tage HO)",
+    "con2": "Gehalt geschätzt 73.000–89.000 € (XING-Schätzung) – explizites Gehalt ≥ 80.000 € nicht bestätigt, Mindestgehalt möglicherweise unterschritten",
+    "con3": "Kein AI/Automation-Fokus erkennbar; Energie-/Flexibilitätsmarkt ist fachfremdes Domänenwissen für Claudia"
+  },
+  "18": {
+    "stelle": "Product Manager (all genders)",
+    "firma": "Finanztip Verbraucherinformation GmbH",
+    "fz": "25 Min",
+    "pro1": "München-Standort, gut erreichbar von Laim per MVV (ca. 25 Min.)",
+    "pro2": "Cross-funktionale Zusammenarbeit mit UX, Entwicklung und QA klar beschrieben",
+    "pro3": "Gesellschaftlich orientiertes Unternehmen (gemeinnützige Stiftung) trifft Claudias Impact-Wunsch",
+    "con1": "Finanztip ist ein Finanzratgeber – inhaltlich FinTech-nah, harte Ausschluss-Grenze wird berührt",
+    "con2": "Gehalt laut XING-Schätzung max. 82.000 € – kein explizit bestätigtes Gehalt über 80.000 €, untere Bandbreite (60k) klar unter Schwelle",
+    "con3": "Keine Erwähnung von AI, Automation oder Agentic AI – Kernwunsch-Kriterien nicht erfüllt"
+  },
+  "19": {
+    "stelle": "Product Manager (f/m/x)",
+    "firma": "Tanso",
+    "fz": "30 Min",
+    "pro1": "München-Standort, End-to-End-Verantwortung von Discovery bis Delivery explizit genannt.",
+    "pro2": "Cross-funktionale Zusammenarbeit mit Engineering, Design und Business klar beschrieben.",
+    "pro3": "B2B SaaS-Plattform im Sustainability-Bereich – kein FinTech, gesellschaftlich relevant.",
+    "con1": "Gehalt laut XING-Schätzung 56.500–72.000 € – deutlich unter Claudias Minimum von 80.000 €.",
+    "con2": "Stelle ist \"Vor Ort\" ohne erkennbare Remote- oder Hybrid-Option – nur 2 Punkte Standort, kein Abzug aber eingeschränkte Flexibilität.",
+    "con3": "Kein Hinweis auf Automation, Agentic AI oder KI-Produkte – Claudias stärkste Differenzierungsmerkmale bleiben ungenutzt."
+  },
+  "20": {
+    "stelle": "Product Manager / Product Owner (m/f/d) VGI",
+    "firma": "The Mobility House",
+    "fz": "20 Min",
+    "pro1": "München-Standort mit Mobile Working – Standortkriterium erfüllt",
+    "pro2": "Cross-funktionale Zusammenarbeit mit Engineering und Partnern impliziert",
+    "pro3": "Impact-orientiertes Unternehmen (emissionsfreie Mobilität / Energiewende)",
+    "con1": "Geschätztes Gehalt max. ~75.500 € – unter Claudias Mindestwunsch, kein expliziter Wert genannt",
+    "con2": "Kein AI/Automation-Fokus erkennbar – zentrales Kriterium aus Claudias Profil nicht erfüllt",
+    "con3": "VGI-Produkt hardware- und energietechnisch sehr nischig – kein B2B SaaS / digitale Plattform"
+  },
+  "21": {
+    "stelle": "Mobile App Product Owner (m/f/d)",
+    "firma": "limango GmbH",
+    "fz": "20 Min",
+    "pro1": "Standort München, hybrid – optimal erreichbar von Laim/Westend.",
+    "pro2": "Product-Owner-Rolle mit Backlog-Ownership und cross-funktionaler Zusammenarbeit impliziert.",
+    "pro3": "Familienorientiertes Unternehmen mit klarer Produktfokus-Kultur und internationalem Kontext.",
+    "con1": "Gehalt laut XING-Schätzung nur 57.500–69.500 € – deutlich unter Claudias Mindestgehalt von 80.000 €, hartes Ausschlusskriterium.",
+    "con2": "Kein Hinweis auf AI, Automation oder Agentic AI – Claudias Kernkompetenz und Wunschfeld nicht adressiert.",
+    "con3": "Mobile App Fokus (Consumer/B2C) – kein B2B SaaS / Plattform / Tool, passt nicht zum Wunschprofil."
+  },
+  "22": {
+    "stelle": "Head of Product (w/m/d)",
+    "firma": "Skalar",
+    "fz": "20 Min",
+    "pro1": "Explizit genanntes Gehalt (84.000–97.500 €) liegt über Claudias Mindestgrenze von 80.000 €.",
+    "pro2": "End-to-End Produktverantwortung von Vision bis Launch klar beschrieben – passt zum Wunschprofil.",
+    "pro3": "AI-nativer Produktfokus und B2B-Umfeld decken sich mit Claudias AI- und Automatisierungserfahrung.",
+    "con1": "FinTech/Finance/Tax-Branche ist ein hartes Ausschlusskriterium – Stelle explizit in Steuerberatung/FinTech positioniert.",
+    "con2": "Rolle ist \"Vor Ort\" ohne Remote-Option – Standort München zwar akzeptiert, aber kein hybrides Modell erkennbar.",
+    "con3": "\"Head of Product\" als erste PM-Stelle ist ein Mismatch – Claudia sucht Senior PO/PM, nicht Führungsebene ohne PM-Grundlage."
+  },
+  "23": {
+    "stelle": "Product Manager (f/m/d) Munich – Product & Design",
+    "firma": "Avi Medical Operations GmbH",
+    "fz": "Remote",
+    "pro1": "Keine erkennbaren Vorteile für Claudias Profil",
+    "pro2": "–",
+    "pro3": "–",
+    "con1": "Kein konkreter Job, keine Stellenanzeige — nur eine generische Karriereseite ohne offene Position",
+    "con2": "US-amerikanisches Unternehmen mit Fokus auf Homeland Security / Defense — kein passender Branchenmatch",
+    "con3": "Kein Standort, kein Arbeitsmodell, kein Gehalt, keine Rollendetails erkennbar"
+  },
+  "24": {
+    "stelle": "Product Manager - Space",
+    "firma": "Helsing",
+    "fz": "Remote",
+    "pro1": "Standort München, Hybrid-Modell verfügbar",
+    "pro2": "AI-Bezug im Unternehmen vorhanden",
+    "pro3": "Produktverantwortung mit Vision und Roadmap erkennbar",
+    "con1": "Rüstungsunternehmen / Defence-Bereich – nicht mit Claudias Werteprofil vereinbar (Impact-orientiert, sozial engagiert)",
+    "con2": "Gehalt geschätzt 50.000–65.000 € – deutlich unter Mindestanforderung von 80.000 €, harte Ausschlussbedingung",
+    "con3": "Space/SAR-Satellit-Domäne ohne erkennbaren B2B SaaS / Plattform-Bezug"
+  },
+  "25": {
+    "stelle": "Product Manager - AI Platform (m/f/x)",
+    "firma": "Scalable GmbH",
+    "fz": "25 Min",
+    "pro1": "Starker AI-Fokus der Rolle passt zu Claudias AI-Produktkompetenz",
+    "pro2": "München-Standort, gut erreichbar von Laim",
+    "pro3": "Senior-Level-Rolle mit Plattformverantwortung",
+    "con1": "Hartes Ausschlusskriterium: Scalable Capital ist explizit eine Banking- und FinTech-Plattform",
+    "con2": "Krypto/Trading/Brokerage direkt im Produktportfolio erwähnt — eindeutiger FinTech-Ausschluss",
+    "con3": "Keine Remote-Option erkennbar, nur On-Site"
+  }
+};
+
+    function openModal(idx) {
+      var d = MD[idx];
+      if (!d) return;
+      document.getElementById('modal-title').textContent = d.stelle;
+      document.getElementById('modal-meta').textContent  = d.firma + ' · ' + d.fz;
+      var pros = document.getElementById('modal-pros');
+      var cons = document.getElementById('modal-cons');
+      pros.innerHTML = ''; cons.innerHTML = '';
+      [d.pro1, d.pro2, d.pro3].forEach(function(t) {
+        if (t && t !== '–') { var li = document.createElement('li'); li.textContent = t; pros.appendChild(li); }
+      });
+      [d.con1, d.con2, d.con3].forEach(function(t) {
+        if (t && t !== '–') { var li = document.createElement('li'); li.textContent = t; cons.appendChild(li); }
+      });
+      document.getElementById('modal-overlay').style.display = 'block';
+      document.getElementById('modal-box').style.display    = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('modal-overlay').style.display = 'none';
+      document.getElementById('modal-box').style.display    = 'none';
+    }
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { closeModal(); closeAddModal(); closeConfirm(); } });
+
+    function pad(n) { return n < 10 ? '0' + n : '' + n; }
+    function heuteDatum() {
+      var d = new Date();
+      return pad(d.getDate()) + '.' + pad(d.getMonth() + 1) + '.' + d.getFullYear();
+    }
+
+    function saveStatus(sel) {
+      var key    = sel.dataset.key;
+      var status = sel.value;
+      var datum  = heuteDatum();
+      sel.dataset.status = status;
+      var row = sel.closest('tr');
+      if (row) row.dataset.status = status;
+      var datumEl = document.getElementById('datum_' + key);
+      if (datumEl) datumEl.textContent = datum;
+      localStorage.setItem('bew_' + key, JSON.stringify({ status: status, datum: datum }));
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.status-sel').forEach(function(sel) {
+        var key   = sel.dataset.key;
+        var saved = localStorage.getItem('bew_' + key);
+        if (saved) {
+          try {
+            var data = JSON.parse(saved);
+            if (data.status) sel.value = data.status;
+            var el = document.getElementById('datum_' + key);
+            if (el && data.datum) el.textContent = data.datum;
+          } catch (e) { sel.value = saved; }
+        }
+        sel.dataset.status = sel.value;
+        var row = sel.closest('tr');
+        if (row) row.dataset.status = sel.value;
+      });
+      updateStats();
+    });
+
+    // ── Add-Stelle Modal ──
+    function openAddModal() {
+      document.getElementById('add-modal-overlay').style.display = 'block';
+      document.getElementById('add-modal-box').style.display     = 'block';
+      document.getElementById('add-firma').focus();
+    }
+    function closeAddModal() {
+      document.getElementById('add-modal-overlay').style.display = 'none';
+      document.getElementById('add-modal-box').style.display     = 'none';
+      document.getElementById('add-result').innerHTML = '';
+      document.getElementById('add-form').reset();
+    }
+
+    function stelleHinzufuegen() {
+      var firma = document.getElementById('add-firma').value.trim();
+      var titel = document.getElementById('add-titel').value.trim();
+      var url   = document.getElementById('add-url').value.trim();
+      var text  = document.getElementById('add-text').value.trim();
+      if (!firma || !titel) {
+        document.getElementById('add-result').innerHTML = '<p class="add-error">Bitte Firma und Titel ausfüllen.</p>';
+        return;
+      }
+      var btn = document.getElementById('add-submit');
+      btn.disabled = true;
+      document.getElementById('add-result').innerHTML = '<p class="add-loading">⏳ Analyse läuft … ca. 30 Sekunden</p>';
+      fetch('/stelle-hinzufuegen', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({firma: firma, titel: titel, url: url, stellentext: text})
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        btn.disabled = false;
+        if (data.fehler) {
+          document.getElementById('add-result').innerHTML = '<p class="add-error">❌ ' + data.fehler + '</p>';
+          return;
+        }
+        var scoreKls = data.score >= 7 ? 'score-high' : (data.score >= 5 ? 'score-mid' : 'score-low');
+        var html = '<div class="add-result-box">';
+        html += '<p><span class="score ' + scoreKls + '">' + data.score + '/10</span>&nbsp; <strong>' + data.empfehlung + '</strong></p>';
+        if (data.anschreiben_link) {
+          html += '<a href="' + data.anschreiben_link + '" target="_blank" class="bew-link">📄 Anschreiben</a> ';
+        }
+        if (data.cv_link) {
+          html += '<a href="' + data.cv_link + '" target="_blank" class="bew-link">📋 CV</a>';
+        }
+        html += '<p style="margin-top:0.6rem;color:#666;font-size:0.74rem;">✅ Gespeichert – Seite wird in 3 s neu geladen …</p>';
+        html += '</div>';
+        document.getElementById('add-result').innerHTML = html;
+        setTimeout(function() { location.reload(); }, 3000);
+      })
+      .catch(function(err) {
+        btn.disabled = false;
+        document.getElementById('add-result').innerHTML = '<p class="add-error">❌ Verbindungsfehler: ' + err.message + '</p>';
+      });
+    }
+
+    // ── ⚡ Generieren ──
+    function generiereUnterlagen(stelleKey, btn, fehlerLabel) {
+      var restoreText = fehlerLabel || '⚡ Generieren';
+      btn.disabled = true;
+      btn.textContent = '⏳ Erstelle Docs...';
+      var existErr = btn.parentNode ? btn.parentNode.querySelector('.gen-error') : null;
+      if (existErr) existErr.remove();
+      fetch('/generieren', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({stelle_key: stelleKey})
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.fehler) {
+          btn.disabled = false;
+          btn.textContent = restoreText;
+          var errEl = document.createElement('span');
+          errEl.className = 'gen-error';
+          errEl.style.cssText = 'display:block;color:#c00;font-size:0.70rem;margin-top:2px;white-space:normal;';
+          errEl.textContent = '❌ ' + data.fehler;
+          if (btn.parentNode) btn.parentNode.insertBefore(errEl, btn.nextSibling);
+          return;
+        }
+        var cell = btn.closest('td');
+        var html = '';
+        if (data.anschreiben_link) {
+          html += '<a href="' + data.anschreiben_link + '" target="_blank" class="bew-link">📄 Anschreiben</a>';
+        }
+        if (data.cv_link) {
+          html += '<a href="' + data.cv_link + '" target="_blank" class="bew-link">📋 CV</a>';
+        }
+        if (html) { cell.innerHTML = html; }
+        else { btn.disabled = false; btn.textContent = restoreText; }
+      })
+      .catch(function(err) {
+        btn.disabled = false;
+        btn.textContent = restoreText;
+        var errEl = document.createElement('span');
+        errEl.className = 'gen-error';
+        errEl.style.cssText = 'display:block;color:#c00;font-size:0.70rem;margin-top:2px;';
+        errEl.textContent = '❌ Verbindungsfehler: ' + err.message;
+        if (btn.parentNode) btn.parentNode.insertBefore(errEl, btn.nextSibling);
+      });
+    }
+
+    // ── 🔍 Suchlauf starten ──
+    var _suchlaufPollTimer  = null;
+    var _suchlaufClockTimer = null;
+    var _suchlaufStartMs    = null;
+
+    function startSuchlauf() {
+      var btn = document.getElementById('btn-suchlauf');
+      btn.disabled = true;
+      _suchlaufStartMs = Date.now();
+      fetch('/suchlauf-starten', { method: 'POST' })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data.fehler) {
+            btn.disabled = false;
+            btn.textContent = '🔍 Suchlauf starten';
+            return;
+          }
+          _suchlaufClockTimer = setInterval(_updateSuchlauf, 1000);
+          _suchlaufPollTimer  = setInterval(_pollSuchlauf,   5000);
+          _updateSuchlauf();
+        })
+        .catch(function() {
+          btn.disabled = false;
+          btn.textContent = '🔍 Suchlauf starten';
+        });
+    }
+
+    function _updateSuchlauf() {
+      if (!_suchlaufStartMs) return;
+      var sek = Math.floor((Date.now() - _suchlaufStartMs) / 1000);
+      var min = Math.floor(sek / 60);
+      var s   = sek % 60;
+      var zeit = min + ':' + (s < 10 ? '0' + s : s);
+      document.getElementById('btn-suchlauf').textContent = '⏳ Läuft... (' + zeit + ')';
+      var banner = document.getElementById('suchlauf-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        banner.className = '';
+        document.getElementById('suchlauf-banner-text').textContent =
+          '🔍 Suchlauf läuft – Stellen werden gesucht und bewertet... (' + zeit + ')';
+      }
+    }
+
+    function _pollSuchlauf() {
+      fetch('/suchlauf-status')
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (!data.laeuft) {
+            clearInterval(_suchlaufPollTimer);
+            clearInterval(_suchlaufClockTimer);
+            _suchlaufPollTimer = _suchlaufClockTimer = null;
+            var btn = document.getElementById('btn-suchlauf');
+            btn.disabled = false;
+            btn.textContent = '🔍 Suchlauf starten';
+            var banner = document.getElementById('suchlauf-banner');
+            if (banner) {
+              banner.className = 'fertig';
+              banner.style.display = 'block';
+              var neu = data.neue_stellen !== undefined ? data.neue_stellen : 0;
+              var dauer = data.dauer || '';
+              document.getElementById('suchlauf-banner-text').innerHTML =
+                '✅ Suchlauf abgeschlossen (' + dauer + ') — <strong>' + neu +
+                ' neue Stelle(n)</strong> gefunden. ' +
+                '<button class="btn-secondary" onclick="location.reload()" ' +
+                'style="margin-left:0.5rem;padding:2px 10px;font-size:0.76rem;">🔄 Seite neu laden</button>';
+            }
+          }
+        });
+    }
+
+    // ── 📄 Generieren (Low-Score) ──
+    var _confirmKey = null;
+    var _confirmBtn = null;
+
+    function trotzdemBewerben(stelleKey, score, btn) {
+      _confirmKey = stelleKey;
+      _confirmBtn = btn;
+      document.getElementById('confirm-text').textContent =
+        'Score ist ' + score + '/10 — Anschreiben + CV erstellen?';
+      document.getElementById('confirm-overlay').style.display = 'block';
+      document.getElementById('confirm-box').style.display     = 'block';
+    }
+
+    function closeConfirm() {
+      document.getElementById('confirm-overlay').style.display = 'none';
+      document.getElementById('confirm-box').style.display     = 'none';
+      _confirmKey = null;
+      _confirmBtn = null;
+    }
+
+    function confirmBewerben() {
+      var key = _confirmKey;
+      var btn = _confirmBtn;
+      closeConfirm();
+      if (key && btn) {
+        generiereUnterlagen(key, btn, '📄 Generieren');
+      }
+    }
+
+    // ── Sortierung ──
+    var _sortCol = null, _sortAsc = true;
+
+    function sortTable(th) {
+      var col  = parseInt(th.dataset.col);
+      var type = th.dataset.sort;
+      if (_sortCol === col) { _sortAsc = !_sortAsc; }
+      else { _sortCol = col; _sortAsc = true; }
+      document.querySelectorAll('thead th').forEach(function(h) {
+        h.classList.remove('sorted-asc', 'sorted-desc');
+      });
+      th.classList.add(_sortAsc ? 'sorted-asc' : 'sorted-desc');
+      var tbody = document.querySelector('tbody');
+      var rows  = Array.from(tbody.querySelectorAll('tr'));
+      rows.sort(function(a, b) {
+        var aCell = a.cells[col], bCell = b.cells[col];
+        if (!aCell || !bCell) return 0;
+        var aVal = aCell.textContent.trim();
+        var bVal = bCell.textContent.trim();
+        var cmp;
+        if (type === 'num') {
+          cmp = (parseFloat(aVal) || 0) - (parseFloat(bVal) || 0);
+        } else {
+          cmp = aVal < bVal ? -1 : aVal > bVal ? 1 : 0;
+        }
+        return _sortAsc ? cmp : -cmp;
+      });
+      rows.forEach(function(r) { tbody.appendChild(r); });
+      updateStats();
+    }
+
+    // ── Filter ──
+    function applyFilters() {
+      var text     = (document.getElementById('filter-text').value || '').toLowerCase();
+      var status   = document.getElementById('filter-status').value;
+      var minScore = parseInt(document.getElementById('filter-score').value) || 0;
+      document.querySelectorAll('tbody tr').forEach(function(row) {
+        var stelle    = row.cells[1] ? row.cells[1].textContent.toLowerCase() : '';
+        var scoreText = row.cells[2] ? row.cells[2].textContent : '0';
+        var score     = parseFloat(scoreText) || 0;
+        var rowStatus = row.dataset.status || '';
+        var textOk    = !text   || stelle.includes(text);
+        var statusOk  = !status || rowStatus === status;
+        var scoreOk   = score >= minScore;
+        row.style.display = (textOk && statusOk && scoreOk) ? '' : 'none';
+      });
+      updateStats();
+    }
+
+    // ── Header-Statistiken ──
+    function updateStats() {
+      var rows      = document.querySelectorAll('tbody tr');
+      var visible   = 0;
+      var beworben  = 0;
+      rows.forEach(function(row) {
+        if (row.style.display === 'none') return;
+        visible++;
+        if ((row.dataset.status || '') === 'Beworben') beworben++;
+      });
+      var el = document.getElementById('header-stats');
+      if (el) {
+        el.textContent =
+          'Stand ' + heuteDatum() +
+          ' · ' + visible + ' Stellen' +
+          ' · ' + beworben + ' beworben';
+      }
+    }
+  </script>
+</body>
+</html>
