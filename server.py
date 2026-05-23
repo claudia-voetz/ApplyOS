@@ -149,7 +149,7 @@ def suchlauf_starten():
     if os.getenv("DEMO_MODE") == "true":
         return jsonify({
             "status": "demo_modus",
-            "nachricht": "Liebe Firma – Ihr Interesse freut uns! 🎉 Dieses Feature konnten wir leider nicht live schalten, da Claudia ihre Tokens zum Lernen und Coden braucht. Bei echtem Interesse: claudia.voetz@yahoo.de"
+            "nachricht": "Liebe Firma – Ihr Interesse freut uns! 🎉 Dieses Feature konnten wir leider nicht live schalten, da Claudia ihre Tokens zum Lernen und Coden braucht."
         })
     if _suchlauf_proc is not None and _suchlauf_proc.poll() is None:
         return jsonify({"status": "laeuft_bereits", "laufzeit_sek": int(time.time() - _suchlauf_start)})
