@@ -1,0 +1,8 @@
+profil.txt
+.env
+photo.jpg
+server_log.txt
+output/
+__pycache__/
+.claude/
+stelle.txt
