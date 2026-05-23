@@ -307,6 +307,30 @@
     }
     #confirm-box p { font-size: 0.90rem; color: #1a2a3a; margin-bottom: 1.2rem; white-space: normal; }
     .confirm-actions { display: flex; gap: 0.6rem; justify-content: flex-end; }
+
+    /* Demo-Modus Modal */
+    #demo-modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.42); z-index: 3000;
+    }
+    #demo-modal-box {
+      display: none; position: fixed;
+      top: 50%; left: 50%; transform: translate(-50%,-50%);
+      background: #ffffff; border: 1px solid #ddd8d0; border-radius: 14px;
+      padding: 2rem 2.2rem 1.6rem;
+      width: min(92vw, 520px);
+      z-index: 3001; box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+      text-align: center;
+    }
+    #demo-modal-box .demo-icon { font-size: 2.6rem; margin-bottom: 0.7rem; }
+    #demo-modal-box .demo-msg {
+      font-size: 0.92rem; color: #1a2a3a; line-height: 1.65;
+      margin-bottom: 1.4rem; white-space: normal;
+    }
+    #demo-modal-box .demo-hint {
+      font-size: 0.76rem; color: #6b7a8d; margin-bottom: 1.2rem;
+    }
+    #demo-modal-box .demo-hint a { color: #c47a4a; }
   </style>
 </head>
 <body>
@@ -361,6 +385,15 @@
       <button class="btn-secondary" onclick="closeConfirm()">Abbrechen</button>
       <button class="btn-primary" onclick="confirmBewerben()">Ja, erstellen</button>
     </div>
+  </div>
+
+  <!-- Demo-Modus Modal -->
+  <div id="demo-modal-overlay" onclick="closeDemoModal()"></div>
+  <div id="demo-modal-box">
+    <div class="demo-icon">👋</div>
+    <p class="demo-msg" id="demo-modal-msg"></p>
+    <p class="demo-hint">Interesse geweckt? <a id="demo-modal-mail" href="mailto:claudia.voetz@yahoo.de">claudia.voetz@yahoo.de</a></p>
+    <button class="btn-primary" onclick="closeDemoModal()">Verstanden</button>
   </div>
 
   <!-- Add-Stelle Modal -->
@@ -1129,6 +1162,12 @@
       fetch('/suchlauf-starten', { method: 'POST' })
         .then(function(r) { return r.json(); })
         .then(function(data) {
+          if (data.status === 'demo_modus') {
+            btn.disabled = false;
+            btn.textContent = '🔍 Suchlauf starten';
+            openDemoModal(data.nachricht);
+            return;
+          }
           if (data.fehler) {
             btn.disabled = false;
             btn.textContent = '🔍 Suchlauf starten';
@@ -1185,6 +1224,17 @@
             }
           }
         });
+    }
+
+    // ── Demo-Modus Modal ──
+    function openDemoModal(msg) {
+      document.getElementById('demo-modal-msg').textContent = msg || '';
+      document.getElementById('demo-modal-overlay').style.display = 'block';
+      document.getElementById('demo-modal-box').style.display     = 'block';
+    }
+    function closeDemoModal() {
+      document.getElementById('demo-modal-overlay').style.display = 'none';
+      document.getElementById('demo-modal-box').style.display     = 'none';
     }
 
     // ── 📄 Generieren (Low-Score) ──

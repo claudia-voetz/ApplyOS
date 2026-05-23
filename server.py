@@ -14,7 +14,7 @@ PROFIL_PFAD     = Path("profil.txt")
 BEWERBUNGEN_DIR = Path("output/bewerbungen")
 UEBERSICHT_HTML = Path("output/bewertungen/uebersicht.html")
 UEBERSICHT_CSV  = Path("output/bewertungen/uebersicht.csv")
-LOGO_DIR        = Path(__file__).parent / "Logo"
+LOGO_DIR        = Path(__file__).parent / "logo"
 SCORE_SCHWELLE  = 6
 
 _suchlauf_proc:    subprocess.Popen | None = None
