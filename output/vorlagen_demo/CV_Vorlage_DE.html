@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claudia – ApplyOS Demo · Lebenslauf</title>
+
+<!--
+════════════════════════════════════════════════════════════════════
+  WRITER-AGENT VORLAGE – Lebenslauf DE
+  Nur 4 Platzhalter – alles andere ist hartcodiert.
+════════════════════════════════════════════════════════════════════
+
+  {{JOBTITEL_HEADER}}
+    → Rollenbezeichnung im blauen Header, passend zur Stelle
+    → Kurz, max. 6 Wörter, z. B. "Product Manager · AI Strategy"
+
+  {{TAGLINE}}
+    → 2–3 Sätze, authentisch, stellenspezifisch, keine Floskeln
+    → Zeigt was Claudia einbringt – konkret, nicht generisch
+    → Nur Text, kein HTML
+
+  {{CV_HIGHLIGHT_1}}
+    → Wichtigster Erfolg für diese Stelle – eine Zeile, mit Zahlen
+    → Beispiel: "Paneuropäisches B2B-Produkt skaliert: 20+ Märkte, 1.500+ Standorte, signifikante Steigerung des Transaktionsvolumens"
+
+  {{CV_HIGHLIGHT_2}}
+    → Zweitwichtigster Erfolg – eine Zeile, mit Zahlen
+    → Beispiel: "Ausgezeichnetes B2B-SaaS-Analytics-Tool konzipiert & als Jahreslizenz an 100+ Geschäftskunden vertrieben"
+
+════════════════════════════════════════════════════════════════════
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+@media print {
+  body { background: white; }
+  .page { box-shadow: none; margin: 0; page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+}
+
+body {
+  background: #2a2a2a;
+  font-family: 'DM Sans', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  gap: 32px;
+}
+
+.page {
+  width: 794px;
+  background: #f8f7f5;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── HEADER ── */
+.header {
+  background: #1a2a3a;
+  padding: 40px 52px 36px;
+  display: flex;
+  gap: 28px;
+  align-items: center;
+}
+
+.photo {
+  width: 92px; height: 92px;
+  border-radius: 50%;
+  object-fit: cover; object-position: center top;
+  border: 3px solid #c47a4a;
+  flex-shrink: 0;
+}
+
+.photo-mono {
+  display: flex; align-items: center; justify-content: center;
+  background: #f5f0e8; color: #1a2a3a;
+  font-family: 'DM Serif Display', serif;
+  font-size: 40px; line-height: 1;
+}
+
+.header-text { flex: 1; }
+
+.name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 42px; font-weight: 400;
+  color: #f5f0e8;
+  letter-spacing: -0.02em; line-height: 1;
+}
+
+.role {
+  font-size: 10.5px; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: #c47a4a; margin-top: 10px;
+}
+
+.header-contact {
+  display: flex; flex-direction: column;
+  align-items: flex-end; gap: 5px;
+}
+.contact-item { font-size: 11px; color: #8fa5b8; line-height: 1.4; }
+
+/* ── TAGLINE ── */
+.tagline-wrap {
+  padding: 20px 52px;
+  background: #f0ede8;
+  border-bottom: 1px solid #e4dfd8;
+}
+.tagline {
+  font-size: 12.5px; color: #3a4550; line-height: 1.72;
+  border-left: 3px solid #c47a4a;
+  padding-left: 16px; font-style: italic;
+}
+
+/* ── BODY ── */
+.body { padding: 32px 52px 48px; }
+
+/* ── SECTION ── */
+.sec-title {
+  font-size: 8px; font-weight: 700;
+  letter-spacing: 0.24em; text-transform: uppercase;
+  color: #c47a4a;
+  border-bottom: 1px solid #e4dfd8;
+  padding-bottom: 7px; margin-bottom: 14px; margin-top: 24px;
+}
+.sec-title:first-child { margin-top: 0; }
+
+/* ── ERFOLGE ── */
+.highlights {
+  display: flex; flex-direction: column; gap: 6px;
+}
+.highlight-item {
+  font-size: 11.5px; color: #3a3530; line-height: 1.6;
+  padding-left: 16px; position: relative;
+}
+.highlight-item::before {
+  content: '★'; position: absolute; left: 0;
+  color: #c47a4a; font-size: 8px; top: 3px;
+}
+
+/* ── JOB ── */
+.job { margin-bottom: 16px; }
+.job-row {
+  display: flex; justify-content: space-between;
+  align-items: baseline; gap: 8px;
+}
+.job-title { font-size: 13px; font-weight: 600; color: #111; line-height: 1.3; }
+.job-date {
+  font-size: 9.5px; color: #fff; background: #1a2a3a;
+  padding: 2px 10px; border-radius: 100px;
+  white-space: nowrap; font-weight: 500; flex-shrink: 0;
+}
+.job-company { font-size: 10.5px; color: #c47a4a; font-weight: 500; margin: 3px 0 8px; }
+
+.bullets { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+.bullets li {
+  font-size: 11px; color: #3a3530; line-height: 1.57;
+  padding-left: 14px; position: relative; text-wrap: pretty;
+}
+.bullets li::before {
+  content: '▸'; position: absolute; left: 0;
+  color: #c47a4a; font-size: 8.5px; top: 2px;
+}
+.job-divider { height: 1px; background: #ede8e2; margin: 14px 0; }
+
+/* ── SKILLS ── */
+.skill-block { margin-bottom: 12px; }
+.skill-label {
+  font-size: 8px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.16em;
+  color: #c47a4a; margin-bottom: 4px;
+}
+.skill-text { font-size: 11px; color: #3a3530; line-height: 1.6; }
+
+/* ── AI TAGS ── */
+.tag-row { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+.tag {
+  font-size: 9.5px; background: #1a2a3a; color: #8fa5b8;
+  padding: 2px 8px; border-radius: 100px;
+  font-weight: 500; font-family: 'IBM Plex Mono', monospace;
+}
+.tag-light {
+  font-size: 9.5px; background: #f0ede8; color: #6a6460;
+  border: 1px solid #ddd8d0; padding: 2px 8px; border-radius: 100px;
+}
+
+/* ── STRENGTHS ── */
+.strengths-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px 16px;
+}
+.strength-name { font-size: 9.5px; font-weight: 700; color: #1a2a3a; letter-spacing: 0.06em; }
+.strength-desc { font-size: 9.5px; color: #6a6460; line-height: 1.5; margin-top: 2px; }
+
+/* ── AWARD ── */
+.award {
+  display: inline-flex; gap: 12px; align-items: center;
+  background: #fff6f0; border: 1px solid #f0d0b8;
+  border-radius: 5px; padding: 10px 16px;
+}
+.award-title { font-size: 11px; font-weight: 600; color: #111; }
+.award-sub { font-size: 9.5px; color: #c47a4a; margin-top: 2px; }
+
+.note { font-size: 9.5px; color: #9a9088; font-style: italic; margin-top: 8px; }
+.page-label {
+  position: absolute; bottom: 14px; right: 20px;
+  font-size: 9px; color: #c4bdb5;
+}
+
+.meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 40px;
+}
+
+.edu-item { margin-bottom: 9px; }
+.edu-degree { font-size: 11.5px; font-weight: 600; color: #111; }
+.edu-year { font-size: 10px; color: #6a6460; margin-top: 1px; }
+
+.cert-item {
+  font-size: 10.5px; color: #3a3530; margin-bottom: 4px;
+  line-height: 1.5; padding-left: 11px; position: relative;
+}
+.cert-item::before { content: '→'; position: absolute; left: 0; color: #c47a4a; font-size: 9px; }
+
+/* ── TOOLBAR ── */
+.toolbar {
+  width: 794px; background: #1a2a3a;
+  border-radius: 8px 8px 0 0; padding: 10px 20px;
+  display: flex; gap: 10px; align-items: center;
+}
+.toolbar-btn {
+  padding: 7px 18px; border: none; border-radius: 5px;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; transition: opacity 0.2s;
+}
+.toolbar-btn:hover { opacity: 0.85; }
+.btn-edit  { background: #c47a4a; color: white; }
+.btn-print { background: #f5f0e8; color: #1a2a3a; }
+.toolbar-hint { font-size: 11px; color: #8fa5b8; margin-left: 8px; }
+.editable-on [contenteditable="true"] {
+  outline: 2px dashed #c47a4a; border-radius: 3px;
+  padding: 2px 4px; min-height: 1em; cursor: text;
+}
+@media print {
+  @page { size: A4; margin: 0; }
+  body { background: white; padding: 0; }
+  .toolbar { display: none !important; }
+  .page { box-shadow: none; margin: 0; width: 210mm; border-radius: 0; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <button class="toolbar-btn btn-edit" onclick="toggleEdit()">✏️ Bearbeiten</button>
+  <button class="toolbar-btn btn-print" onclick="window.print()">🖨️ Als PDF drucken</button>
+  <span class="toolbar-hint" id="hint">Klick auf "Bearbeiten" um Texte direkt anzupassen</span>
+</div>
+
+<script>
+let editMode = false;
+const SELECTORS = '.job-title, .job-company, .bullets li, .skill-text, .tag, .tag-light, .strength-desc, .strength-name, .edu-degree, .edu-year, .note, .award-title, .award-sub, .editable';
+
+function toggleEdit() {
+  editMode = !editMode;
+  const btn = document.querySelector('.btn-edit');
+  const hint = document.getElementById('hint');
+  document.querySelectorAll('.page').forEach(p => {
+    if (editMode) p.classList.add('editable-on');
+    else p.classList.remove('editable-on');
+  });
+  if (editMode) {
+    btn.textContent = '✅ Fertig';
+    hint.textContent = 'Klicke auf einen Text um ihn zu bearbeiten';
+    document.querySelectorAll(SELECTORS).forEach(el => el.setAttribute('contenteditable', 'true'));
+  } else {
+    btn.textContent = '✏️ Bearbeiten';
+    hint.textContent = 'Änderungen gespeichert – bereit zum Drucken';
+    document.querySelectorAll(SELECTORS).forEach(el => el.removeAttribute('contenteditable'));
+  }
+}
+</script>
+
+<!-- ═══════════════ PAGE 1 ═══════════════ -->
+<div class="page">
+  <div class="header">
+    <div class="photo photo-mono">C</div>
+    <div class="header-text">
+      <div class="name">Claudia – ApplyOS Demo</div>
+      <div class="role editable">{{JOBTITEL_HEADER}}</div>
+    </div>
+    <div class="header-contact">
+      <div class="contact-item">claudia.demo@example.com</div>
+      <div class="contact-item">München</div>
+    </div>
+  </div>
+
+  <div class="tagline-wrap">
+    <!-- STANDARD: "Produktprofi mit End-to-End-Erfahrung in digitalen Produkten – von Discovery bis Launch – in internationalen, cross-funktionalen Teams. Pragmatisch, datengetrieben, AI-affin. Aktuell vertiefe ich mein Know-how in Advanced Product Ownership, UX und KI-getriebener Entwicklung. Mein erstes Multi-Agent-System automatisiert bereits täglich operative Prozesse." -->
+    <div class="tagline editable">{{TAGLINE}}</div>
+  </div>
+
+  <div class="body">
+
+    <div class="sec-title">Erfolge</div>
+    <div class="highlights">
+      <div class="highlight-item editable">{{CV_HIGHLIGHT_1}}</div>
+      <div class="highlight-item editable">{{CV_HIGHLIGHT_2}}</div>
+    </div>
+
+    <div class="sec-title">Berufserfahrung</div>
+
+    <div class="job">
+      <div class="job-row">
+        <div class="job-title">Senior Product Owner – Digital Products</div>
+        <div class="job-date">2023 – heute</div>
+      </div>
+      <div class="job-company">Internationale Travel- &amp; Hospitality-Gruppe | Europa</div>
+      <ul class="bullets">
+        <li>Skalierung eines paneuropäischen digitalen B2B-Produkts über 20+ Märkte und 1.500+ Standorte – signifikante Steigerung des Transaktionsvolumens</li>
+        <li>Definition von Value-Hypothesen, Produktvision und Go-to-Market-Strategie; Übersetzung von Business-, Compliance- und Partneranforderungen in Delivery-Roadmaps</li>
+        <li>Aufbau eines End-to-End-B2B-Prozesses sowie Anbindung strategischer Distributionspartner – von Research und Verhandlung bis zum Onboarding</li>
+        <li>Stakeholder-Management auf Senior- und Executive-Ebene in internationalen Teams (IT, Legal, Finance, Operations) und mit externen Engineering-Partnern</li>
+      </ul>
+    </div>
+
+    <div class="job-divider"></div>
+
+    <div class="job">
+      <div class="job-row">
+        <div class="job-title">eCommerce &amp; Digital Product Manager</div>
+        <div class="job-date">2021 – 2023</div>
+      </div>
+      <div class="job-company">B2B-SaaS-Scale-up | DACH</div>
+      <ul class="bullets">
+        <li>Gestaltung und Optimierung digitaler Produkt- und Supportprozesse mit Fokus auf Skalierbarkeit und Effizienz</li>
+        <li>Konzeption und Einführung eines standardisierten Onboarding-Prozesses für neue Geschäftskunden</li>
+        <li>Entwicklung kostenpflichtiger digitaler Zusatzprodukte zur Steigerung digitaler Umsätze und Conversion-Raten</li>
+      </ul>
+    </div>
+
+    <div class="job-divider"></div>
+
+    <div class="job">
+      <div class="job-row">
+        <div class="job-title">Business Analyst Customer Touchpoints</div>
+        <div class="job-date">2020</div>
+      </div>
+      <div class="job-company">B2B-SaaS-Scale-up | DACH</div>
+      <ul class="bullets">
+        <li>Konzeption und Aufbau interaktiver Dashboards und Reports auf Basis von Analytics-Daten</li>
+      </ul>
+    </div>
+
+    <div class="job-divider"></div>
+
+    <div class="job">
+      <div class="job-row">
+        <div class="job-title">Project Manager Revenue &amp; Analytics</div>
+        <div class="job-date">2015 – 2019</div>
+      </div>
+      <div class="job-company">Internationale Hospitality-Gruppe</div>
+      <ul class="bullets">
+        <li>Konzeption und Entwicklung eines ausgezeichneten SaaS-Analytics-Tools in Zusammenarbeit mit externen Partnern – vertrieben als Jahreslizenz an 100+ Geschäftskunden</li>
+        <li>End-to-End-Verantwortung für die Einführung mehrerer Revenue-Management-Systeme inkl. Datenmigration, Testing, Go-Live und Change Management</li>
+        <li>Entwicklung und Durchführung von Trainings für operative Teams</li>
+      </ul>
+    </div>
+
+  </div>
+  <div class="page-label">1 / 2</div>
+</div>
+
+
+<!-- ═══════════════ PAGE 2 ═══════════════ -->
+<div class="page">
+  <div class="body">
+
+    <div class="sec-title" style="margin-top:0;">Skills &amp; Methoden</div>
+
+    <div class="skill-block">
+      <div class="skill-label">Produkt &amp; Delivery</div>
+      <div class="skill-text">Product Discovery · Produktvision · Roadmapping · Requirements Engineering · Go-to-Market-Strategie · B2B-Prozessaufbau · Change Management · Stakeholder-Management auf Executive-Ebene · Steuerung externer IT-Dienstleister · Miro</div>
+    </div>
+
+    <div class="skill-block">
+      <div class="skill-label">Agile Methoden &amp; UX</div>
+      <div class="skill-text">Scrum · CSPO · A-CSPO · CPUX-F · AI-Powered Product Owner</div>
+    </div>
+
+    <div class="skill-block">
+      <div class="skill-label">Analytics &amp; Tools</div>
+      <div class="skill-text">Google Analytics · BI-Dashboards · KPI-Frameworks · Data-driven Decision Making</div>
+    </div>
+
+    <div class="skill-block">
+      <div class="skill-label">AI &amp; Automation</div>
+      <div class="skill-text" style="margin-bottom:6px;">Praktische Erfahrung:</div>
+      <div class="tag-row">
+        <span class="tag">Agentic AI</span>
+        <span class="tag">Multi-Agent-Systeme</span>
+        <span class="tag">Vibe Coding</span>
+      </div>
+      <div class="skill-text" style="margin-top:8px; margin-bottom:5px;">Grundlagen:</div>
+      <div class="tag-row">
+        <span class="tag-light">n8n</span>
+        <span class="tag-light">Python</span>
+        <span class="tag-light">Prompt Engineering</span>
+        <span class="tag-light">VS Code</span>
+        <span class="tag-light">Low Code</span>
+      </div>
+    </div>
+
+    <div class="sec-title">Stärken (Gallup)</div>
+    <div class="strengths-grid">
+      <div class="strength-item">
+        <div class="strength-name">LEARNER</div>
+        <div class="strength-desc">Neugier und Begeisterung für neue Themen und Technologien</div>
+      </div>
+      <div class="strength-item">
+        <div class="strength-name">IDEATION</div>
+        <div class="strength-desc">Verbindung von Ideen und Entwicklung neuer Ansätze</div>
+      </div>
+      <div class="strength-item">
+        <div class="strength-name">RELATOR</div>
+        <div class="strength-desc">Aufbau starker Beziehungen zu Teams und Stakeholdern</div>
+      </div>
+      <div class="strength-item">
+        <div class="strength-name">FOCUS</div>
+        <div class="strength-desc">Strukturierung von Projekten und Umsetzung von Ideen in die Praxis</div>
+      </div>
+      <div class="strength-item">
+        <div class="strength-name">ANALYTICAL</div>
+        <div class="strength-desc">Analyse komplexer Herausforderungen und Entwicklung von Lösungen</div>
+      </div>
+    </div>
+
+    <div class="sec-title">Ausbildung &amp; Sprachen</div>
+    <div class="meta-grid">
+      <div>
+        <div class="edu-item">
+          <div class="edu-degree">Betriebswirtschaft (Wirtschaftsdiplom)</div>
+          <div class="edu-year">2007 – 2010</div>
+        </div>
+      </div>
+      <div>
+        <div class="skill-text" style="line-height:1.8;">
+          Deutsch · Muttersprache<br>
+          Englisch · fließend
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-title">Award</div>
+    <div class="award">
+      <div>
+        <div class="award-title">Industry Innovation Award 2018</div>
+        <div class="award-sub">Auszeichnung für ein selbst konzipiertes B2B-SaaS-Analytics-Tool</div>
+      </div>
+    </div>
+
+  </div>
+  <div class="page-label">2 / 2</div>
+</div>
+
+</body>
+</html>

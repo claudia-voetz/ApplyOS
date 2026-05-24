@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claudia – ApplyOS Demo · Cover Letter</title>
+
+<!--
+════════════════════════════════════════════════════════════════════
+  WRITER-AGENT TEMPLATE – Cover Letter EN
+  All placeholders: {{UPPERCASE_IN_DOUBLE_BRACES}}
+  Each placeholder appears EXACTLY ONCE.
+════════════════════════════════════════════════════════════════════
+
+  PLACEHOLDER OVERVIEW:
+  ─────────────────────────────────────────────────────────────────
+  {{JOBTITLE_HEADER}}      → Role label in blue header (short, e.g. "Senior Product Owner · FinTech")
+  {{RECIPIENT_COMPANY}}    → Company name in address block
+  {{RECIPIENT_PERSON}}     → Contact person, e.g. "Attn: Ms. Smith" – or leave empty
+  {{RECIPIENT_EMAIL}}      → Recruiter email address – or leave empty
+  {{DATE}}                 → e.g. "Munich, May 2026"
+  {{JOB_TITLE}}            → Full job title for subject line
+  {{OPENING}}              → 3–4 sentences, hook – no "I am applying for..."
+  {{ACHIEVEMENTS}}         → 3–5 sentences, concrete results relevant to this role
+  {{MOTIVATION}}           → 3–4 sentences, why this role + what I bring
+  {{CLOSING}}              → 2–3 sentences, confident close, no clichés
+  ─────────────────────────────────────────────────────────────────
+
+  STYLE GUIDE FOR THE WRITER AGENT:
+  ─────────────────────────────────────────────────────────────────
+  ✅ DO:
+    - Lead with the company or role – not with "I"
+    - Use concrete numbers from the profile (20+ markets, transaction growth, 100+ clients...)
+    - Short, punchy sentences. Max 2–3 lines per sentence.
+    - Bold (<strong>) exactly once per paragraph – for the strongest line
+    - Cover letter complements the CV – new angle, not a repetition
+    - Authentic voice: pragmatic, direct, no buzzword bingo
+
+  ❌ NEVER:
+    - "I am writing to express my interest in..."
+    - "I am a highly motivated team player with extensive experience..."
+    - "I look forward to hearing from you at your earliest convenience"
+    - Adjectives without proof: "passionate", "dynamic", "results-driven"
+    - Inventing facts not found in profil.txt
+
+  STYLE EXAMPLES (tone reference – do not copy):
+  ─────────────────────────────────────────────────────────────────
+  OPENING EXAMPLE:
+    "Three years. 20+ markets. One product to scale.
+     That's not a side project – that's end-to-end product ownership in practice.
+     The reason this role caught my attention: you're asking for exactly that kind of
+     ownership, and it happens to be how I work."
+
+  ACHIEVEMENTS EXAMPLE:
+    "I scaled a pan-European digital B2B product across 20+ markets and 1,500+
+     locations – across currencies and legal frameworks. No blueprint, no big team.
+     <strong>Just a clear roadmap and the ability to move fast without breaking
+     things.</strong> Earlier I co-built an award-winning SaaS tool from scratch,
+     sold as an annual licence to 100+ business clients."
+
+  MOTIVATION EXAMPLE:
+    "What draws me to this role isn't the technology itself –
+     it's the question of where AI actually moves the needle and where it doesn't.
+     <strong>I bring the product instinct to tell the difference.</strong>"
+
+  CLOSING EXAMPLE:
+    "Happy to get into specifics in a conversation.
+     Available immediately. Just reach out."
+  ─────────────────────────────────────────────────────────────────
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+@media print {
+  body { background: white; }
+  .page { box-shadow: none; margin: 0; }
+}
+
+body {
+  background: #2a2a2a;
+  font-family: 'DM Sans', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+.page {
+  width: 794px;
+  min-height: 1123px;
+  background: #f8f7f5;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── HEADER ── */
+.header {
+  background: #1a2a3a;
+  padding: 36px 52px 32px;
+  display: flex;
+  gap: 28px;
+  align-items: center;
+}
+
+.photo {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  object-fit: cover; object-position: center top;
+  border: 3px solid #c47a4a;
+  flex-shrink: 0;
+}
+
+.photo-mono {
+  display: flex; align-items: center; justify-content: center;
+  background: #f5f0e8; color: #1a2a3a;
+  font-family: 'DM Serif Display', serif;
+  font-size: 32px; line-height: 1;
+}
+
+.header-text { flex: 1; }
+
+.name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 34px; font-weight: 400;
+  color: #f5f0e8;
+  letter-spacing: -0.02em; line-height: 1;
+}
+
+.role {
+  font-size: 9.5px; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: #c47a4a; margin-top: 8px;
+}
+
+.header-contact {
+  display: flex; flex-direction: column;
+  align-items: flex-end; gap: 4px;
+}
+.contact-item { font-size: 10.5px; color: #8fa5b8; line-height: 1.4; }
+
+/* ── BODY ── */
+.body {
+  padding: 48px 72px 56px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Recipient */
+.recipient { margin-bottom: 36px; }
+.recipient-block {
+  font-size: 11.5px; color: #3a3530;
+  line-height: 1.8;
+}
+
+/* Date */
+.date {
+  font-size: 11px; color: #9a9088;
+  margin-bottom: 28px;
+  text-align: right;
+}
+
+/* Subject */
+.subject {
+  font-size: 14px; font-weight: 700;
+  color: #1a2a3a;
+  margin-bottom: 28px;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+.subject-accent { color: #c47a4a; }
+
+/* Letter body */
+.letter-body {
+  font-size: 12px;
+  color: #3a3530;
+  line-height: 1.82;
+  flex: 1;
+}
+.letter-body p { margin-bottom: 18px; }
+.letter-body p:last-of-type { margin-bottom: 0; }
+
+strong { font-weight: 600; color: #1a2a3a; }
+
+/* Brief blocks with title */
+.brief-block { margin-bottom: 14px; }
+.brief-block-titel {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: #c47a4a; margin-bottom: 5px;
+}
+.brief-block ul { list-style: none; padding: 0; margin: 0; }
+.brief-block ul li {
+  font-size: 12px; color: #3a3530;
+  line-height: 1.7; padding-left: 14px;
+  position: relative;
+}
+.brief-block ul li::before {
+  content: '·'; position: absolute; left: 0;
+  color: #c47a4a; font-weight: 700;
+}
+.closing { margin-top: 24px; }
+.closing-text { font-size: 12px; color: #3a3530; line-height: 1.8; }
+
+/* Footer line */
+.footer-line {
+  height: 3px;
+  background: linear-gradient(90deg, #1a2a3a 0%, #c47a4a 100%);
+  margin-top: 48px;
+}
+
+/* ── TOOLBAR ── */
+.toolbar {
+  width: 794px; background: #1a2a3a;
+  border-radius: 8px 8px 0 0; padding: 10px 20px;
+  display: flex; gap: 10px; align-items: center;
+}
+.toolbar-btn {
+  padding: 7px 18px; border: none; border-radius: 5px;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; transition: opacity 0.2s;
+}
+.toolbar-btn:hover { opacity: 0.85; }
+.btn-edit  { background: #c47a4a; color: white; }
+.btn-print { background: #f5f0e8; color: #1a2a3a; }
+.toolbar-hint { font-size: 11px; color: #8fa5b8; margin-left: 8px; }
+.editable-on [contenteditable="true"] {
+  outline: 2px dashed #c47a4a; border-radius: 3px;
+  padding: 2px 4px; min-height: 1em; cursor: text;
+}
+@media print {
+  @page { size: A4; margin: 0; }
+  body { background: white; padding: 0; }
+  .toolbar { display: none !important; }
+  .page { box-shadow: none; margin: 0; width: 210mm; min-height: 297mm; border-radius: 0; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <button class="toolbar-btn btn-edit" onclick="toggleEdit()">✏️ Edit</button>
+  <button class="toolbar-btn btn-print" onclick="window.print()">🖨️ Save as PDF</button>
+  <span class="toolbar-hint" id="hint">Click "Edit" to adjust text directly</span>
+</div>
+
+<script>
+let editMode = false;
+function toggleEdit() {
+  editMode = !editMode;
+  const btn = document.querySelector('.btn-edit');
+  const hint = document.getElementById('hint');
+  const page = document.querySelector('.page');
+  if (editMode) {
+    btn.textContent = '✅ Done';
+    hint.textContent = 'Click on any text to edit it';
+    page.classList.add('editable-on');
+    document.querySelectorAll('.editable').forEach(el => el.setAttribute('contenteditable', 'true'));
+  } else {
+    btn.textContent = '✏️ Edit';
+    hint.textContent = 'Ready to print';
+    page.classList.remove('editable-on');
+    document.querySelectorAll('.editable').forEach(el => el.removeAttribute('contenteditable'));
+  }
+}
+</script>
+
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="photo photo-mono">C</div>
+    <div class="header-text">
+      <div class="name">Claudia – ApplyOS Demo</div>
+      <div class="role">{{JOBTITLE_HEADER}}</div>
+    </div>
+    <div class="header-contact">
+      <div class="contact-item">claudia.demo@example.com</div>
+      <div class="contact-item">Munich</div>
+    </div>
+  </div>
+
+  <div class="body">
+
+    <!-- Recipient -->
+    <div class="recipient">
+      <div class="recipient-block editable">
+        {{RECIPIENT_COMPANY}}<br>
+        {{RECIPIENT_PERSON}}<br>
+        {{RECIPIENT_EMAIL}}
+      </div>
+    </div>
+
+    <!-- Date -->
+    <div class="date editable">{{DATE}}</div>
+
+    <!-- Subject line -->
+    <div class="subject">
+      Application for <span class="subject-accent editable">{{JOB_TITLE}}</span>
+    </div>
+
+    <!-- Letter -->
+    <div class="letter-body">
+      <p class="editable">{{EINSTIEG}}</p>
+
+      <div class="brief-block">
+        <div class="brief-block-titel">Focus &amp; Development</div>
+        <div class="editable">{{FOKUS_ENTWICKLUNG}}</div>
+      </div>
+
+      <div class="brief-block">
+        <div class="brief-block-titel">Experience &amp; Strengths</div>
+        <div class="editable">{{ERFAHRUNG_STAERKE}}</div>
+      </div>
+
+      <div class="brief-block">
+        <div class="brief-block-titel">Working Style &amp; Team</div>
+        <div class="editable">{{ARBEITSWEISE_TEAM}}</div>
+      </div>
+
+      <p><strong>Fit for this role:</strong> {{FIT_ROLLE}}</p>
+
+      <p>{{SCHLUSS}}</p>
+    </div>
+
+    <!-- Sign-off -->
+    <div class="closing">
+      <div class="closing-text">Kind regards,<br><strong>Claudia – ApplyOS Demo</strong></div>
+    </div>
+
+  </div>
+
+  <div class="footer-line"></div>
+</div>
+</body>
+</html>
