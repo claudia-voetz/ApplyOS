@@ -1,5 +1,6 @@
 import argparse
 import csv
+import os
 import re
 import sys
 from pathlib import Path
@@ -11,7 +12,7 @@ from agents import writer_agent, output_agent
 from agents.context import JobContext
 
 STELLEN_PFAD    = Path("stelle.txt")
-PROFIL_PFAD     = Path("profil.txt")
+PROFIL_PFAD     = Path("profil_demo.txt") if os.environ.get("DEMO_MODE") == "true" else Path("profil.txt")
 BEWERBUNGEN_DIR = Path("output/bewerbungen")
 BEWERTUNGEN_DIR = Path("output/bewertungen")
 

@@ -11,7 +11,7 @@ from flask import Flask, jsonify, request, send_from_directory
 
 app = Flask(__name__)
 
-PROFIL_PFAD     = Path("profil.txt")
+PROFIL_PFAD     = Path("profil_demo.txt") if os.environ.get("DEMO_MODE") == "true" else Path("profil.txt")
 BEWERBUNGEN_DIR = Path("output/bewerbungen")
 UEBERSICHT_HTML = Path("output/bewertungen/uebersicht.html")
 UEBERSICHT_CSV  = Path("output/bewertungen/uebersicht.csv")

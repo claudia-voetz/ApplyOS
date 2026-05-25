@@ -1,10 +1,11 @@
+import os
 from pathlib import Path
 
 from agents.context import JobContext
 from agents import analyst_agent, writer_agent, output_agent
 
 SCORE_SCHWELLENWERT = 6
-PROFIL_PFAD = Path("profil.txt")
+PROFIL_PFAD = Path("profil_demo.txt") if os.environ.get("DEMO_MODE") == "true" else Path("profil.txt")
 
 
 def suche_und_bewerte(max_stellen: int = 10) -> list[JobContext]:
