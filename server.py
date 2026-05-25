@@ -18,6 +18,13 @@ UEBERSICHT_CSV  = Path("output/bewertungen/uebersicht.csv")
 LOGO_DIR        = Path(__file__).parent / "logo"
 SCORE_SCHWELLE  = 6
 
+# --- Startup-Setup (Demo-Modus / Ordner) ---
+import shutil
+if os.environ.get("DEMO_MODE") == "true" and not Path("output/vorlagen").exists():
+    shutil.copytree("output/vorlagen_demo", "output/vorlagen")
+Path("output/bewerbungen").mkdir(parents=True, exist_ok=True)
+Path("output/bewertungen").mkdir(parents=True, exist_ok=True)
+
 _suchlauf_proc:    subprocess.Popen | None = None
 _suchlauf_start:   float = 0.0
 _suchlauf_csv_vor: int   = 0
