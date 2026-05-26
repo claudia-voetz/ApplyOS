@@ -20,7 +20,6 @@ SCORE_SCHWELLE  = 6
 
 # --- Startup-Setup (Demo-Modus / Ordner) ---
 import shutil
-print("STARTUP-CHECK: vorlagen=", sorted(p.name for p in Path("output/vorlagen").glob("*.html")) if Path("output/vorlagen").exists() else "FEHLT", "vorlagen_demo=", Path("output/vorlagen_demo").exists())
 if os.environ.get("DEMO_MODE") == "true" and not Path("output/vorlagen").exists():
     shutil.copytree("output/vorlagen_demo", "output/vorlagen")
 Path("output/bewerbungen").mkdir(parents=True, exist_ok=True)
@@ -84,7 +83,6 @@ def stelle_hinzufuegen():
 
 @app.route("/generieren", methods=["POST"])
 def generieren():
-    print("GENERIEREN-CHECK: vorlagen=", sorted(p.name for p in Path("output/vorlagen").glob("*.html")) if Path("output/vorlagen").exists() else "FEHLT")
     data       = request.get_json(force=True) or {}
     stelle_key = str(data.get("stelle_key", ""))
 
