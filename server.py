@@ -36,7 +36,7 @@ DEMO_OVERLAY = """
   <button class="dmo-btn" onclick="document.getElementById('dmo').classList.remove('on')">Verstanden</button>
 </div></div>
 <script>
-(function(){var f=window.fetch;window.fetch=function(u,o){var p=f.call(this,u,o);if(typeof u==='string'&&u.includes('suchlauf-starten')){return p.then(function(r){return r.clone().json().then(function(d){if(d.status==='demo_modus'){document.getElementById('dmo-msg').textContent=d.nachricht||'';document.getElementById('dmo').classList.add('on');}return r;}).catch(function(){return r;});});}return p;};})();
+(function(){var f=window.fetch;window.fetch=function(u,o){var p=f.call(this,u,o);if(typeof u==='string'&&u.includes('suchlauf-starten')){return p.then(function(r){return r.clone().json().then(function(d){if(d.status==='demo_modus'){document.getElementById('dmo-msg').textContent=d.nachricht||'';document.getElementById('dmo').classList.add('on');return new Promise(function(){});}return r;}).catch(function(){return r;});});}return p;};})();
 </script>"""
 
 # --- Startup-Setup (Demo-Modus / Ordner) ---
