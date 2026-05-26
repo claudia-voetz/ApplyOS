@@ -3,101 +3,76 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ApplyOS – Claudia</title>
+  <title>Bewerbungsübersicht – Claudia</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #f5f0e8; color: #1a2a3a; padding: 1.5rem;
+      background: #f0f2f5; color: #222; padding: 1.5rem;
     }
-    .subtitle { color: #6b7a8d; font-size: 0.8rem; margin-bottom: 0; }
-
-    /* Filter bar */
-    .filter-bar {
-      display: flex; gap: 0.6rem; align-items: center;
-      margin-bottom: 0.8rem; flex-wrap: wrap;
-    }
-    .filter-bar input {
-      background: #ffffff; border: 1px solid #ddd8d0; color: #1a2a3a;
-      border-radius: 6px; padding: 0.35rem 0.7rem; font-size: 0.78rem;
-      flex: 1; min-width: 180px; font-family: inherit;
-    }
-    .filter-bar input::placeholder { color: #aaa09a; }
-    .filter-bar input:focus { outline: none; border-color: #c47a4a; }
-    .filter-bar select {
-      background: #ffffff; border: 1px solid #ddd8d0; color: #1a2a3a;
-      border-radius: 6px; padding: 0.35rem 0.6rem; font-size: 0.78rem;
-      cursor: pointer; font-family: inherit;
-    }
-    .filter-bar select:focus { outline: none; border-color: #c47a4a; }
+    h1 { color: #1a1a2e; margin-bottom: 0.2rem; font-size: 1.3rem; }
+    .subtitle { color: #888; font-size: 0.8rem; margin-bottom: 1.2rem; }
 
     .table-wrap {
       overflow-x: auto;
       overflow-y: auto;
-      max-height: calc(100vh - 160px);
+      max-height: calc(100vh - 80px);
       border-radius: 10px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.09);
     }
     table {
       border-collapse: collapse;
-      background: #ffffff;
+      background: white;
       font-size: 0.77rem;
       white-space: nowrap;
-      width: 100%;
     }
     th {
-      background: #1a2a3a; color: #f5f0e8;
+      background: #1a1a2e; color: white;
       padding: 8px 7px;
       text-align: left;
       font-size: 0.73rem; font-weight: 600;
       position: sticky; top: 0; z-index: 10;
-      cursor: pointer; user-select: none;
     }
-    th:hover { background: #253a4e; color: #c47a4a; }
-    th.sorted-asc::after  { content: ' ▲'; color: #c47a4a; font-size: 0.62rem; }
-    th.sorted-desc::after { content: ' ▼'; color: #c47a4a; font-size: 0.62rem; }
-    th.no-sort { cursor: default; }
-    th.no-sort:hover { background: #1a2a3a; color: #f5f0e8; }
     td {
       padding: 7px 7px;
-      border-bottom: 1px solid #ddd8d0;
-      vertical-align: middle; color: #1a2a3a;
+      border-bottom: 1px solid #f0f0f0;
+      vertical-align: middle; color: #333;
     }
     tr:last-child td { border-bottom: none; }
-    tr:hover td { background: #f0ede8; }
+    tr:hover td { background: #f7f9ff; }
     tr[data-status="Überspringen"] { opacity: 0.5; }
     tr[data-status="Absage"]      { opacity: 0.42; }
 
-    /* Sticky Stelle column */
+    /* ── Sticky Stelle-Spalte ── */
     .c-stelle {
       position: sticky; left: 0; z-index: 5;
-      background: #ffffff;
+      background: white;
       min-width: 190px; max-width: 230px;
       white-space: normal; word-break: break-word;
-      box-shadow: 2px 0 6px rgba(0,0,0,0.08);
+      box-shadow: 2px 0 5px rgba(0,0,0,0.07);
     }
-    thead .c-stelle { z-index: 20; background: #1a2a3a; }
-    tr:hover .c-stelle { background: #f0ede8; }
+    thead .c-stelle { z-index: 20; background: #1a1a2e; }
+    tr:hover .c-stelle { background: #f7f9ff; }
     tr[data-status="Überspringen"] .c-stelle,
-    tr[data-status="Absage"]       .c-stelle { background: #ffffff; }
+    tr[data-status="Absage"]       .c-stelle { background: white; }
     tr[data-status="Überspringen"]:hover .c-stelle,
-    tr[data-status="Absage"]:hover       .c-stelle { background: #f0ede8; }
+    tr[data-status="Absage"]:hover       .c-stelle { background: #f7f9ff; }
 
     .c-firma {
       display: block; font-size: 0.69rem;
-      color: #6b7a8d; margin-top: 2px;
+      color: #999; margin-top: 2px;
       white-space: normal;
     }
 
-    /* Column widths */
+    /* Spaltenbreiten */
     .c-sm     { min-width: 62px; max-width: 80px; }
     .c-sc     { min-width: 52px; max-width: 68px; text-align: center; }
     .c-modal  { width: 26px; text-align: center; padding: 4px 2px; }
     .c-status { min-width: 115px; max-width: 130px; }
-    .c-datum  { min-width: 72px; max-width: 82px; color: #6b7a8d; font-size: 0.70rem; }
+    .c-datum  { min-width: 72px; max-width: 82px; color: #999; font-size: 0.70rem; }
     .c-bew    { min-width: 120px; }
 
-    /* Score criteria columns */
+    /* Score-Kriterium-Spalten */
     .c-krit-h {
       min-width: 36px; max-width: 50px;
       text-align: center; font-size: 0.66rem;
@@ -109,38 +84,38 @@
       font-size: 0.70rem; font-weight: 600;
       padding: 5px 2px;
     }
-    .c-krit-na   { background: #f5f5f5; color: #bbb; }
-    .c-krit-zero { background: #ebebeb; color: #888; }
-    .c-krit-half { background: #fdf0d0; color: #8a6000; }
-    .c-krit-full { background: #d4f0dd; color: #1a6b35; }
+    .c-krit-na   { background: #f2f2f2; color: #ccc; }
+    .c-krit-zero { background: #ebebeb; color: #aaa; }
+    .c-krit-half { background: #fff3cd; color: #856404; }
+    .c-krit-full { background: #d4edda; color: #155724; }
 
-    /* Score badge */
+    /* Score-Badge */
     .score {
       font-weight: 700; border-radius: 4px;
       padding: 2px 6px; display: inline-block;
     }
-    .score-high { background: #d4f0dd; color: #1a6b35; }
-    .score-mid  { background: #fdf0d0; color: #8a6000; }
-    .score-low  { background: #fde8e8; color: #b03030; }
+    .score-high { background: #d4edda; color: #155724; }
+    .score-mid  { background: #fff3cd; color: #856404; }
+    .score-low  { background: #f8d7da; color: #721c24; }
 
-    a { color: #c47a4a; text-decoration: none; }
-    a:hover { color: #a05a30; text-decoration: underline; }
+    a { color: #0055cc; text-decoration: none; }
+    a:hover { text-decoration: underline; }
 
     .bew-link {
       display: inline-block; font-size: 0.73rem;
       margin-right: 5px; white-space: nowrap;
     }
 
-    /* Status dropdown */
+    /* Status-Dropdown */
     select.status-sel {
       font-size: 0.73rem; padding: 3px 4px;
-      border: 1px solid #ddd8d0; border-radius: 4px;
-      background: #ffffff; color: #1a2a3a; cursor: pointer; width: 100%;
+      border: 1px solid #ccc; border-radius: 4px;
+      background: white; cursor: pointer; width: 100%;
     }
-    select.status-sel[data-status="Interessant"] { border-color: #c47a4a; background: #fdf5ec; color: #8a4a10; }
-    select.status-sel[data-status="Beworben"]    { border-color: #2a9050; background: #edfaf3; color: #1a6b35; }
-    select.status-sel[data-status="Absage"]      { border-color: #c03030; background: #fde8e8; color: #b03030; }
-    select.status-sel[data-status="Überspringen"]{ border-color: #bbb;    background: #f5f5f5; color: #888; }
+    select.status-sel[data-status="Interessant"] { border-color: #f0a500; background: #fffbf0; }
+    select.status-sel[data-status="Beworben"]    { border-color: #28a745; background: #f0faf4; }
+    select.status-sel[data-status="Absage"]      { border-color: #dc3545; background: #fff0f0; color: #721c24; }
+    select.status-sel[data-status="Überspringen"]{ border-color: #bbb;    background: #f5f5f5; color: #999; }
 
     /* Buttons */
     .btn-modal {
@@ -149,7 +124,7 @@
     }
     .btn-modal:hover { opacity: 1; }
 
-    /* Modal */
+    /* ── Modal ── */
     #modal-overlay {
       display: none; position: fixed; inset: 0;
       background: rgba(0,0,0,0.42); z-index: 1000;
@@ -157,70 +132,63 @@
     #modal-box {
       display: none; position: fixed;
       top: 50%; left: 50%; transform: translate(-50%, -50%);
-      background: #ffffff; border: 1px solid #ddd8d0; border-radius: 12px;
+      background: white; border-radius: 12px;
       padding: 1.5rem 1.8rem 1.2rem;
       min-width: 380px; max-width: min(92vw, 680px);
       max-height: 85vh; overflow-y: auto;
       z-index: 1001;
-      box-shadow: 0 10px 36px rgba(0,0,0,0.12);
+      box-shadow: 0 10px 36px rgba(0,0,0,0.22);
     }
     #modal-title {
       font-size: 0.98rem; font-weight: 700;
-      color: #1a2a3a; margin-bottom: 0.15rem;
+      color: #1a1a2e; margin-bottom: 0.15rem;
       white-space: normal;
     }
     #modal-meta {
-      font-size: 0.75rem; color: #6b7a8d;
+      font-size: 0.75rem; color: #aaa;
       margin-bottom: 1rem;
     }
     .modal-grid {
       display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem;
     }
-    .modal-pro h4 { color: #1a6b35; font-size: 0.80rem; margin-bottom: 0.4rem; }
-    .modal-con h4 { color: #b03030; font-size: 0.80rem; margin-bottom: 0.4rem; }
+    .modal-pro h4 { color: #155724; font-size: 0.80rem; margin-bottom: 0.4rem; }
+    .modal-con h4 { color: #721c24; font-size: 0.80rem; margin-bottom: 0.4rem; }
     .modal-pro ul, .modal-con ul {
       padding-left: 1.1rem; margin: 0;
-      font-size: 0.76rem; color: #1a2a3a; line-height: 1.45;
+      font-size: 0.76rem; color: #333; line-height: 1.45;
     }
     .modal-pro li, .modal-con li { margin-bottom: 0.45rem; white-space: normal; }
     #modal-close {
       margin-top: 1.1rem; padding: 0.35rem 1.2rem;
-      border: none; background: #c47a4a; color: #ffffff;
-      border-radius: 6px; cursor: pointer; font-size: 0.78rem; font-weight: 600;
+      border: none; background: #1a1a2e; color: white;
+      border-radius: 6px; cursor: pointer; font-size: 0.78rem;
     }
-    #modal-close:hover { background: #a85e30; }
+    #modal-close:hover { background: #2d2d5e; }
 
-    /* Header Bar */
+    /* ── Header Bar ── */
     .header-bar {
       display: flex; align-items: flex-start;
-      justify-content: space-between; margin-bottom: 0.8rem; gap: 1rem;
+      justify-content: space-between; margin-bottom: 1.2rem;
     }
-    .header-brand {
-      display: flex; align-items: center; gap: 0.8rem;
-    }
-    .header-brand .subtitle { margin-bottom: 0; margin-top: 0.2rem; }
-    #header-stats {
-      font-size: 0.78rem; color: #6b7a8d;
-      display: flex; align-items: center; white-space: nowrap;
-    }
+    .header-bar .subtitle { margin-bottom: 0; }
     .btn-add-stelle {
-      background: #1a2a3a; color: #f5f0e8; border: none;
+      background: #1a1a2e; color: white; border: none;
       border-radius: 6px; padding: 0.4rem 0.9rem;
       font-size: 0.80rem; cursor: pointer; white-space: nowrap;
-      flex-shrink: 0; margin-top: 0.15rem; font-weight: 600;
+      flex-shrink: 0; margin-top: 0.15rem;
     }
-    .btn-add-stelle:hover { background: #253d52; }
+    .btn-add-stelle:hover { background: #2d2d5e; }
 
-    /* Generieren button */
+    /* ── ⚡ Generieren Button ── */
     .btn-gen {
-      background: none; border: 1px solid #ddd8d0; border-radius: 4px;
+      background: none; border: 1px solid #ccc; border-radius: 4px;
       cursor: pointer; font-size: 0.73rem; padding: 2px 8px;
-      color: #6b7a8d; white-space: nowrap;
+      color: #555; white-space: nowrap;
     }
-    .btn-gen:hover { background: #f0ede8; border-color: #c47a4a; color: #c47a4a; }
+    .btn-gen:hover { background: #f0f0f0; border-color: #999; }
     .btn-gen:disabled { opacity: 0.5; cursor: default; }
 
-    /* Add-Stelle Modal */
+    /* ── Add-Stelle Modal ── */
     #add-modal-overlay {
       display: none; position: fixed; inset: 0;
       background: rgba(0,0,0,0.42); z-index: 1000;
@@ -228,71 +196,70 @@
     #add-modal-box {
       display: none; position: fixed;
       top: 50%; left: 50%; transform: translate(-50%, -50%);
-      background: #ffffff; border: 1px solid #ddd8d0; border-radius: 12px;
+      background: white; border-radius: 12px;
       padding: 1.5rem 1.8rem 1.2rem;
       width: min(92vw, 560px); max-height: 90vh; overflow-y: auto;
-      z-index: 1001; box-shadow: 0 10px 36px rgba(0,0,0,0.12);
+      z-index: 1001; box-shadow: 0 10px 36px rgba(0,0,0,0.22);
     }
-    #add-modal-box h2 { font-size: 1rem; color: #1a2a3a; margin-bottom: 1rem; font-weight: 700; }
+    #add-modal-box h2 { font-size: 1rem; color: #1a1a2e; margin-bottom: 1rem; font-weight: 700; }
     .add-form label {
       display: block; font-size: 0.78rem; font-weight: 600;
-      margin-bottom: 0.2rem; color: #4a5a6a;
+      margin-bottom: 0.2rem; color: #444;
     }
     .add-form input, .add-form textarea {
-      width: 100%; border: 1px solid #ddd8d0; border-radius: 5px;
+      width: 100%; border: 1px solid #ccc; border-radius: 5px;
       padding: 0.4rem 0.6rem; font-size: 0.78rem;
-      margin-bottom: 0.8rem; font-family: inherit;
-      background: #ffffff; color: #1a2a3a; box-sizing: border-box;
+      margin-bottom: 0.8rem; font-family: inherit; box-sizing: border-box;
     }
     .add-form textarea { resize: vertical; }
-    .add-form input:focus, .add-form textarea:focus { outline: none; border-color: #c47a4a; }
+    .add-form input:focus, .add-form textarea:focus { outline: none; border-color: #1a1a2e; }
     .add-form-actions { display: flex; gap: 0.6rem; margin-top: 0.4rem; }
     .btn-primary {
-      background: #c47a4a; color: #ffffff; border: none;
-      border-radius: 6px; padding: 0.4rem 1.1rem;
-      font-size: 0.80rem; cursor: pointer; font-weight: 600;
-    }
-    .btn-primary:hover { background: #a85e30; }
-    .btn-primary:disabled { opacity: 0.5; cursor: default; }
-    .btn-secondary {
-      background: #f0ede8; color: #1a2a3a; border: 1px solid #ddd8d0;
+      background: #1a1a2e; color: white; border: none;
       border-radius: 6px; padding: 0.4rem 1.1rem;
       font-size: 0.80rem; cursor: pointer;
     }
-    .btn-secondary:hover { background: #e5e0d8; }
+    .btn-primary:hover { background: #2d2d5e; }
+    .btn-primary:disabled { opacity: 0.5; cursor: default; }
+    .btn-secondary {
+      background: #f0f0f0; color: #444; border: none;
+      border-radius: 6px; padding: 0.4rem 1.1rem;
+      font-size: 0.80rem; cursor: pointer;
+    }
+    .btn-secondary:hover { background: #e0e0e0; }
     #add-result { margin-top: 0.8rem; font-size: 0.80rem; }
-    .add-loading { color: #6b7a8d; }
-    .add-error { color: #b03030; }
+    .add-loading { color: #666; }
+    .add-error { color: #c00; }
     .add-result-box {
-      background: #edfaf3; border: 1px solid #b0ddc0;
-      border-radius: 6px; padding: 0.8rem; color: #1a2a3a;
+      background: #f8fff8; border: 1px solid #c3e6cb;
+      border-radius: 6px; padding: 0.8rem;
     }
     .add-result-box p { margin-bottom: 0.35rem; }
 
-    /* Suchlauf */
+    /* ── Suchlauf ── */
     .header-actions {
       display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
       justify-content: flex-end;
     }
     #btn-suchlauf:disabled { opacity: 0.7; cursor: default; }
     #suchlauf-banner {
-      display: none; background: #e8f0fa;
-      border: 1px solid #b8d0ea; border-radius: 6px;
-      padding: 0.5rem 1rem; font-size: 0.80rem; color: #1a2a3a;
+      display: none; background: #f0f7ff;
+      border: 1px solid #b8d8f8; border-radius: 6px;
+      padding: 0.5rem 1rem; font-size: 0.80rem; color: #1a1a2e;
       margin-bottom: 0.8rem;
     }
-    #suchlauf-banner.fertig { background: #edfaf3; border-color: #b0ddc0; color: #1a6b35; }
+    #suchlauf-banner.fertig { background: #f0fff4; border-color: #b0e0c0; color: #155724; }
 
-    /* Trotzdem bewerben */
+    /* ── Trotzdem bewerben ── */
     .btn-trotzdem {
-      background: none; border: 1px solid #c47a4a; border-radius: 4px;
+      background: none; border: 1px solid #f0a500; border-radius: 4px;
       cursor: pointer; font-size: 0.73rem; padding: 2px 8px;
-      color: #c47a4a; white-space: nowrap;
+      color: #856404; white-space: nowrap;
     }
-    .btn-trotzdem:hover { background: #fdf5ec; }
+    .btn-trotzdem:hover { background: #fffbf0; }
     .btn-trotzdem:disabled { opacity: 0.5; cursor: default; }
 
-    /* Confirm popup */
+    /* ── Bestätigungs-Popup ── */
     #confirm-overlay {
       display: none; position: fixed; inset: 0;
       background: rgba(0,0,0,0.42); z-index: 2000;
@@ -300,44 +267,20 @@
     #confirm-box {
       display: none; position: fixed;
       top: 50%; left: 50%; transform: translate(-50%,-50%);
-      background: #ffffff; border: 1px solid #ddd8d0; border-radius: 12px;
+      background: white; border-radius: 12px;
       padding: 1.5rem 1.8rem 1.2rem;
       width: min(92vw, 400px);
-      z-index: 2001; box-shadow: 0 10px 36px rgba(0,0,0,0.12);
+      z-index: 2001; box-shadow: 0 10px 36px rgba(0,0,0,0.22);
     }
-    #confirm-box p { font-size: 0.90rem; color: #1a2a3a; margin-bottom: 1.2rem; white-space: normal; }
+    #confirm-box p { font-size: 0.90rem; color: #333; margin-bottom: 1.2rem; white-space: normal; }
     .confirm-actions { display: flex; gap: 0.6rem; justify-content: flex-end; }
-
-    /* Demo-Modus Modal */
-    #demo-modal-overlay {
-      display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,0.42); z-index: 3000;
-    }
-    #demo-modal-box {
-      display: none; position: fixed;
-      top: 50%; left: 50%; transform: translate(-50%,-50%);
-      background: #ffffff; border: 1px solid #ddd8d0; border-radius: 14px;
-      padding: 2rem 2.2rem 1.6rem;
-      width: min(92vw, 520px);
-      z-index: 3001; box-shadow: 0 12px 40px rgba(0,0,0,0.18);
-      text-align: center;
-    }
-    #demo-modal-box .demo-icon { font-size: 2.6rem; margin-bottom: 0.7rem; }
-    #demo-modal-box .demo-msg {
-      font-size: 0.92rem; color: #1a2a3a; line-height: 1.65;
-      margin-bottom: 1.4rem; white-space: normal;
-    }
-    #demo-modal-box .demo-hint {
-      font-size: 0.76rem; color: #6b7a8d; margin-bottom: 1.2rem;
-    }
-    #demo-modal-box .demo-hint a { color: #c47a4a; }
   </style>
 </head>
 <body>
   <div class="header-bar">
-    <div class="header-brand">
-      <img src="/Logo/applyos-wordmark.svg" alt="ApplyOS" style="height:64px;width:auto;display:block">
-      <div id="header-stats"></div>
+    <div>
+      <h1>Bewerbungsübersicht</h1>
+      <p class="subtitle">Stand: 26.05.2026 &nbsp;&middot;&nbsp; 26 Stelle(n)</p>
     </div>
     <div class="header-actions">
       <button id="btn-suchlauf" class="btn-add-stelle" onclick="startSuchlauf()">🔍 Suchlauf starten</button>
@@ -345,25 +288,6 @@
     </div>
   </div>
   <div id="suchlauf-banner"><span id="suchlauf-banner-text"></span></div>
-
-  <div class="filter-bar">
-    <input id="filter-text" type="text" placeholder="Firma oder Stelle suchen …" oninput="applyFilters()">
-    <select id="filter-status" onchange="applyFilters()">
-      <option value="">Alle Status</option>
-      <option>Offen</option>
-      <option>Interessant</option>
-      <option>Beworben</option>
-      <option>Absage</option>
-      <option>Überspringen</option>
-    </select>
-    <select id="filter-score" onchange="applyFilters()">
-      <option value="0">Alle Scores</option>
-      <option value="5">Score ≥ 5</option>
-      <option value="6">Score ≥ 6</option>
-      <option value="7">Score ≥ 7</option>
-      <option value="8">Score ≥ 8</option>
-    </select>
-  </div>
 
   <!-- Modal -->
   <div id="modal-overlay" onclick="closeModal()"></div>
@@ -385,15 +309,6 @@
       <button class="btn-secondary" onclick="closeConfirm()">Abbrechen</button>
       <button class="btn-primary" onclick="confirmBewerben()">Ja, erstellen</button>
     </div>
-  </div>
-
-  <!-- Demo-Modus Modal -->
-  <div id="demo-modal-overlay" onclick="closeDemoModal()"></div>
-  <div id="demo-modal-box">
-    <div class="demo-icon">👋</div>
-    <p class="demo-msg" id="demo-modal-msg"></p>
-    <p class="demo-hint">Interesse geweckt? <a id="demo-modal-mail" href="mailto:claudia.voetz@gmail.com">claudia.voetz@gmail.com</a></p>
-    <button class="btn-primary" onclick="closeDemoModal()">Verstanden</button>
   </div>
 
   <!-- Add-Stelle Modal -->
@@ -421,14 +336,14 @@
     <table>
       <thead>
         <tr>
-          <th class="c-sm" data-col="0" data-sort="text" onclick="sortTable(this)">Datum</th>
-          <th class="c-stelle" data-col="1" data-sort="text" onclick="sortTable(this)">Stelle / Unternehmen</th>
-          <th class="c-sc" data-col="2" data-sort="num" onclick="sortTable(this)">Score</th>
-          <th class="c-krit-h no-sort" title="E2E">E2E</th><th class="c-krit-h no-sort" title="Roadmap">Roadmap</th><th class="c-krit-h no-sort" title="Auto">Auto</th><th class="c-krit-h no-sort" title="AgentAI">AgentAI</th><th class="c-krit-h no-sort" title="Stakeholder">Stakeholder</th><th class="c-krit-h no-sort" title="Cross">Cross</th><th class="c-krit-h no-sort" title="Engineering">Engineering</th><th class="c-krit-h no-sort" title="Agile">Agile</th><th class="c-krit-h no-sort" title="B2B">B2B</th><th class="c-krit-h no-sort" title="Behörden">Behörden</th><th class="c-krit-h no-sort" title="Sozial">Sozial</th><th class="c-krit-h no-sort" title="Standort">Standort</th><th class="c-krit-h no-sort" title="Gehalt">Gehalt</th>
-          <th class="c-modal no-sort" title="Pro &amp; Con">💬</th>
-          <th class="c-status no-sort">Status</th>
-          <th class="c-datum no-sort">Geändert</th>
-          <th class="c-bew no-sort">Bewerbung</th>
+          <th class="c-sm">Datum</th>
+          <th class="c-stelle">Stelle / Unternehmen</th>
+          <th class="c-sc">Score</th>
+          <th class="c-krit-h" title="E2E">E2E</th><th class="c-krit-h" title="Roadmap">Roadmap</th><th class="c-krit-h" title="Auto">Auto</th><th class="c-krit-h" title="AgentAI">AgentAI</th><th class="c-krit-h" title="Stakeholder">Stakeholder</th><th class="c-krit-h" title="Cross">Cross</th><th class="c-krit-h" title="Engineering">Engineering</th><th class="c-krit-h" title="Agile">Agile</th><th class="c-krit-h" title="B2B">B2B</th><th class="c-krit-h" title="Behörden">Behörden</th><th class="c-krit-h" title="Sozial">Sozial</th><th class="c-krit-h" title="Standort">Standort</th><th class="c-krit-h" title="Gehalt">Gehalt</th>
+          <th class="c-modal" title="Pro &amp; Con">💬</th>
+          <th class="c-status">Status</th>
+          <th class="c-datum">Geändert</th>
+          <th class="c-bew">Bewerbung</th>
         </tr>
       </thead>
       <tbody>
@@ -653,44 +568,44 @@
         <td class="c-bew"><button class="btn-trotzdem" data-key="Mobile App Product Owner (m/f/d)|limango GmbH" data-score="4" onclick="trotzdemBewerben(this.dataset.key, this.dataset.score, this)">📄 Generieren</button></td>
       </tr>
       <tr data-status="Offen">
-        <td class="c-sm">2026-05-11</td>
+        <td class="c-sm">2026-05-26</td>
         <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-head-of-product-154131107" target="_blank">Head of Product (w/m/d)</a><small class="c-firma">Skalar · 20 Min</small></td>
         <td class="c-sc"><span class="score score-low">3/10</span></td>
-<td class="c-krit c-krit-zero" title="E2E: 0/2">0/2</td><td class="c-krit c-krit-zero" title="Roadmap: 0/2">0/2</td><td class="c-krit c-krit-zero" title="Auto: 0/2">0/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-zero" title="Stakeholder: 0/1">0/1</td><td class="c-krit c-krit-zero" title="Cross: 0/1">0/1</td><td class="c-krit c-krit-zero" title="Engineering: 0/2">0/2</td><td class="c-krit c-krit-zero" title="Agile: 0/2">0/2</td><td class="c-krit c-krit-zero" title="B2B: 0/1">0/1</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+<td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td>
         <td class="c-modal"><button class="btn-modal" data-idx="22" onclick="openModal(this.dataset.idx)">💬</button></td>
-        <td class="c-status"><select class="status-sel" data-key="2026-05-11_Skalar_Head of Product (w/m/d)" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
-        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_Skalar_Head of Product (w/m/d)"></span></td>
-        <td class="c-bew"><button class="btn-trotzdem" data-key="Head of Product (w/m/d)|Skalar" data-score="3" onclick="trotzdemBewerben(this.dataset.key, this.dataset.score, this)">📄 Generieren</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-26_Skalar_Head of Product (w/m/d)" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-26_Skalar_Head of Product (w/m/d)"></span></td>
+        <td class="c-bew"><a href="../bewerbungen/2026-05-26_Skalar_Head_of_Product_(wmd)_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-26_Skalar_Head_of_Product_(wmd)_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
       </tr>
       <tr data-status="Offen">
-        <td class="c-sm">2026-05-11</td>
+        <td class="c-sm">2026-05-26</td>
         <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-product-manager-muenchen-product-design-146751614" target="_blank">Product Manager (f/m/d) Munich – Product &amp; Design</a><small class="c-firma">Avi Medical Operations GmbH · Remote</small></td>
         <td class="c-sc"><span class="score score-low">2/10</span></td>
-<td class="c-krit c-krit-zero" title="E2E: 0/2">0/2</td><td class="c-krit c-krit-zero" title="Roadmap: 0/2">0/2</td><td class="c-krit c-krit-zero" title="Auto: 0/2">0/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-zero" title="Stakeholder: 0/1">0/1</td><td class="c-krit c-krit-zero" title="Cross: 0/1">0/1</td><td class="c-krit c-krit-zero" title="Engineering: 0/2">0/2</td><td class="c-krit c-krit-zero" title="Agile: 0/2">0/2</td><td class="c-krit c-krit-zero" title="B2B: 0/1">0/1</td><td class="c-krit c-krit-zero" title="Behörden: 0/0.5">0/0.5</td><td class="c-krit c-krit-zero" title="Sozial: 0/0.5">0/0.5</td><td class="c-krit c-krit-zero" title="Standort: 0/2">0/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+<td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td>
         <td class="c-modal"><button class="btn-modal" data-idx="23" onclick="openModal(this.dataset.idx)">💬</button></td>
-        <td class="c-status"><select class="status-sel" data-key="2026-05-11_Avi Medical Operations GmbH_Product Manager (f/m/d) Munich" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
-        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_Avi Medical Operations GmbH_Product Manager (f/m/d) Munich"></span></td>
-        <td class="c-bew"><button class="btn-trotzdem" data-key="Product Manager (f/m/d) Munich – Product &amp; Design|Avi Medical Operations GmbH" data-score="2" onclick="trotzdemBewerben(this.dataset.key, this.dataset.score, this)">📄 Generieren</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-26_Avi Medical Operations GmbH_Product Manager (f/m/d) Munich" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-26_Avi Medical Operations GmbH_Product Manager (f/m/d) Munich"></span></td>
+        <td class="c-bew"><a href="../bewerbungen/2026-05-26_Avi_Medical_Operations_GmbH_Product_Manager_(fmd)_Munich_–_Product_&amp;_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-26_Avi_Medical_Operations_GmbH_Product_Manager_(fmd)_Munich_–_Product_&amp;_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
       </tr>
       <tr data-status="Offen">
-        <td class="c-sm">2026-05-11</td>
+        <td class="c-sm">2026-05-26</td>
         <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-product-manager-space-152795885" target="_blank">Product Manager - Space</a><small class="c-firma">Helsing · Remote</small></td>
         <td class="c-sc"><span class="score score-low">2/10</span></td>
-<td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+<td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td>
         <td class="c-modal"><button class="btn-modal" data-idx="24" onclick="openModal(this.dataset.idx)">💬</button></td>
-        <td class="c-status"><select class="status-sel" data-key="2026-05-11_Helsing_Product Manager - Space" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
-        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_Helsing_Product Manager - Space"></span></td>
-        <td class="c-bew"><button class="btn-trotzdem" data-key="Product Manager - Space|Helsing" data-score="2" onclick="trotzdemBewerben(this.dataset.key, this.dataset.score, this)">📄 Generieren</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-26_Helsing_Product Manager - Space" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-26_Helsing_Product Manager - Space"></span></td>
+        <td class="c-bew"><a href="../bewerbungen/2026-05-26_Helsing_Product_Manager_-_Space_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-26_Helsing_Product_Manager_-_Space_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
       </tr>
       <tr data-status="Offen">
-        <td class="c-sm">2026-05-13</td>
+        <td class="c-sm">2026-05-26</td>
         <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-product-manager-ai-platform-149489454" target="_blank">Product Manager - AI Platform (m/f/x)</a><small class="c-firma">Scalable GmbH · 25 Min</small></td>
         <td class="c-sc"><span class="score score-low">2/10</span></td>
-<td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-zero" title="Standort: 0/2">0/2</td><td class="c-krit c-krit-na">–</td>
+<td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td>
         <td class="c-modal"><button class="btn-modal" data-idx="25" onclick="openModal(this.dataset.idx)">💬</button></td>
-        <td class="c-status"><select class="status-sel" data-key="2026-05-13_Scalable GmbH_Product Manager - AI Platform " data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
-        <td class="c-datum"><span class="status-datum" id="datum_2026-05-13_Scalable GmbH_Product Manager - AI Platform "></span></td>
-        <td class="c-bew"><button class="btn-trotzdem" data-key="Product Manager - AI Platform (m/f/x)|Scalable GmbH" data-score="2" onclick="trotzdemBewerben(this.dataset.key, this.dataset.score, this)">📄 Generieren</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-26_Scalable GmbH_Product Manager - AI Platform " data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-26_Scalable GmbH_Product Manager - AI Platform "></span></td>
+        <td class="c-bew"><a href="../bewerbungen/2026-05-26_Scalable_GmbH_Product_Manager_-_AI_Platform_(mfx)_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-26_Scalable_GmbH_Product_Manager_-_AI_Platform_(mfx)_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
       </tr>
       </tbody>
     </table>
@@ -1044,7 +959,6 @@
         var row = sel.closest('tr');
         if (row) row.dataset.status = sel.value;
       });
-      updateStats();
     });
 
     // ── Add-Stelle Modal ──
@@ -1162,12 +1076,6 @@
       fetch('/suchlauf-starten', { method: 'POST' })
         .then(function(r) { return r.json(); })
         .then(function(data) {
-          if (data.status === 'demo_modus') {
-            btn.disabled = false;
-            btn.textContent = '🔍 Suchlauf starten';
-            openDemoModal(data.nachricht);
-            return;
-          }
           if (data.fehler) {
             btn.disabled = false;
             btn.textContent = '🔍 Suchlauf starten';
@@ -1226,17 +1134,6 @@
         });
     }
 
-    // ── Demo-Modus Modal ──
-    function openDemoModal(msg) {
-      document.getElementById('demo-modal-msg').textContent = msg || '';
-      document.getElementById('demo-modal-overlay').style.display = 'block';
-      document.getElementById('demo-modal-box').style.display     = 'block';
-    }
-    function closeDemoModal() {
-      document.getElementById('demo-modal-overlay').style.display = 'none';
-      document.getElementById('demo-modal-box').style.display     = 'none';
-    }
-
     // ── 📄 Generieren (Low-Score) ──
     var _confirmKey = null;
     var _confirmBtn = null;
@@ -1263,74 +1160,6 @@
       closeConfirm();
       if (key && btn) {
         generiereUnterlagen(key, btn, '📄 Generieren');
-      }
-    }
-
-    // ── Sortierung ──
-    var _sortCol = null, _sortAsc = true;
-
-    function sortTable(th) {
-      var col  = parseInt(th.dataset.col);
-      var type = th.dataset.sort;
-      if (_sortCol === col) { _sortAsc = !_sortAsc; }
-      else { _sortCol = col; _sortAsc = true; }
-      document.querySelectorAll('thead th').forEach(function(h) {
-        h.classList.remove('sorted-asc', 'sorted-desc');
-      });
-      th.classList.add(_sortAsc ? 'sorted-asc' : 'sorted-desc');
-      var tbody = document.querySelector('tbody');
-      var rows  = Array.from(tbody.querySelectorAll('tr'));
-      rows.sort(function(a, b) {
-        var aCell = a.cells[col], bCell = b.cells[col];
-        if (!aCell || !bCell) return 0;
-        var aVal = aCell.textContent.trim();
-        var bVal = bCell.textContent.trim();
-        var cmp;
-        if (type === 'num') {
-          cmp = (parseFloat(aVal) || 0) - (parseFloat(bVal) || 0);
-        } else {
-          cmp = aVal < bVal ? -1 : aVal > bVal ? 1 : 0;
-        }
-        return _sortAsc ? cmp : -cmp;
-      });
-      rows.forEach(function(r) { tbody.appendChild(r); });
-      updateStats();
-    }
-
-    // ── Filter ──
-    function applyFilters() {
-      var text     = (document.getElementById('filter-text').value || '').toLowerCase();
-      var status   = document.getElementById('filter-status').value;
-      var minScore = parseInt(document.getElementById('filter-score').value) || 0;
-      document.querySelectorAll('tbody tr').forEach(function(row) {
-        var stelle    = row.cells[1] ? row.cells[1].textContent.toLowerCase() : '';
-        var scoreText = row.cells[2] ? row.cells[2].textContent : '0';
-        var score     = parseFloat(scoreText) || 0;
-        var rowStatus = row.dataset.status || '';
-        var textOk    = !text   || stelle.includes(text);
-        var statusOk  = !status || rowStatus === status;
-        var scoreOk   = score >= minScore;
-        row.style.display = (textOk && statusOk && scoreOk) ? '' : 'none';
-      });
-      updateStats();
-    }
-
-    // ── Header-Statistiken ──
-    function updateStats() {
-      var rows      = document.querySelectorAll('tbody tr');
-      var visible   = 0;
-      var beworben  = 0;
-      rows.forEach(function(row) {
-        if (row.style.display === 'none') return;
-        visible++;
-        if ((row.dataset.status || '') === 'Beworben') beworben++;
-      });
-      var el = document.getElementById('header-stats');
-      if (el) {
-        el.textContent =
-          'Stand ' + heuteDatum() +
-          ' · ' + visible + ' Stellen' +
-          ' · ' + beworben + ' beworben';
       }
     }
   </script>
