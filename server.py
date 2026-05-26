@@ -63,9 +63,7 @@ function addGB(){
     b.className='dg btn-primary';b.textContent='Generieren';
     b.onclick=function(){
       b.textContent='⏳';b.disabled=true;
-      var fd=new FormData();
-      fd.append('stelle_key',tit+'|'+co);
-      fetch('/generieren',{method:'POST',body:fd})
+      fetch('/generieren',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({stelle_key:tit+'|'+co})})
       .then(function(r){return r.json();})
       .then(function(d){
         p.innerHTML='';
