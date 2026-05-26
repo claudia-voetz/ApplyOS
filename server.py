@@ -18,6 +18,27 @@ UEBERSICHT_CSV  = Path("output/bewertungen/uebersicht.csv")
 LOGO_DIR        = Path(__file__).parent / "logo"
 SCORE_SCHWELLE  = 6
 
+DEMO_OVERLAY = """
+<style>
+#dmo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:3000;align-items:center;justify-content:center}
+#dmo.on{display:flex}
+#dmo-box{background:#fff;border-radius:12px;padding:36px 40px;max-width:460px;width:90%;text-align:center;font-family:'DM Sans',sans-serif;box-shadow:0 8px 40px rgba(0,0,0,.25)}
+.dmo-icon{font-size:40px;margin-bottom:16px}
+.dmo-msg{font-size:15px;color:#3a3530;line-height:1.7;margin-bottom:18px}
+.dmo-hint{font-size:13px;color:#9a9088;margin-bottom:20px}
+.dmo-hint a{color:#c47a4a;text-decoration:none;font-weight:600}
+.dmo-btn{background:#c47a4a;color:#fff;border:none;border-radius:6px;padding:10px 28px;font-size:14px;font-weight:600;cursor:pointer}
+</style>
+<div id="dmo"><div id="dmo-box">
+  <div class="dmo-icon">👋</div>
+  <p class="dmo-msg" id="dmo-msg"></p>
+  <p class="dmo-hint">Interesse geweckt? <a href="mailto:claudia.voetz@gmail.com">claudia.voetz@gmail.com</a></p>
+  <button class="dmo-btn" onclick="document.getElementById('dmo').classList.remove('on')">Verstanden</button>
+</div></div>
+<script>
+(function(){var f=window.fetch;window.fetch=function(u,o){var p=f.call(this,u,o);if(typeof u==='string'&&u.includes('suchlauf-starten')){return p.then(function(r){return r.clone().json().then(function(d){if(d.status==='demo_modus'){document.getElementById('dmo-msg').textContent=d.nachricht||'';document.getElementById('dmo').classList.add('on');}return r;}).catch(function(){return r;});});}return p;};})();
+</script>"""
+
 # --- Startup-Setup (Demo-Modus / Ordner) ---
 import shutil
 if os.environ.get("DEMO_MODE") == "true" and not Path("output/vorlagen").exists():
@@ -33,9 +54,9 @@ _suchlauf_csv_vor: int   = 0
 @app.route("/")
 def index():
     html = UEBERSICHT_HTML.read_text(encoding="utf-8")
-    # Relative Dateipfade → absolute Server-Pfade umschreiben
-    html = html.replace("../bewerbungen/", "/bewerbungen/")
-    return html, 200, {"Content-Type": "text/html; charset=utf-8"}
+    if os.environ.get("DEMO_MODE") == "true" and "</body>" in html:
+        html = html.replace("</body>", DEMO_OVERLAY + "</body>", 1)
+    return html
 
 
 @app.route("/bewerbungen/<path:filename>")
