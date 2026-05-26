@@ -37,6 +37,47 @@ DEMO_OVERLAY = """
 </div></div>
 <script>
 (function(){var f=window.fetch;window.fetch=function(u,o){var p=f.call(this,u,o);if(typeof u==='string'&&u.includes('suchlauf-starten')){return p.then(function(r){return r.clone().json().then(function(d){if(d.status==='demo_modus'){document.getElementById('dmo-msg').textContent=d.nachricht||'';document.getElementById('dmo').classList.add('on');return new Promise(function(){});}return r;}).catch(function(){return r;});});}return p;};})();
+</script>
+
+<script>
+(function(){try{
+function addGB(){
+  document.querySelectorAll('tbody tr').forEach(function(row){
+    var ls=row.querySelectorAll('a[href*="anschreiben"],a[href*="_cv.html"]');
+    if(!ls.length)return;
+    var tit='',co='';
+    row.querySelectorAll('td').forEach(function(td){
+      if(tit)return;
+      var a=td.querySelector('a');
+      if(a&&a.textContent.trim().length>5){
+        tit=a.textContent.trim();
+        var rest=td.textContent.replace(tit,'').replace(/\s+/g,' ').trim();
+        co=rest.split(' · ')[0].trim();
+      }
+    });
+    if(!tit||!co)return;
+    ls.forEach(function(l){l.style.display='none';});
+    var p=ls[0].parentElement;
+    if(!p||p.querySelector('.dg'))return;
+    var b=document.createElement('button');
+    b.className='dg';b.textContent='Generieren';
+    b.style.cssText='background:#c47a4a;color:#fff;border:none;border-radius:4px;padding:4px 10px;font-size:12px;cursor:pointer;font-family:inherit;';
+    b.onclick=function(){
+      b.textContent='⏳';b.disabled=true;
+      fetch('/generieren',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({stelle_key:tit+'|'+co})})
+      .then(function(r){return r.json();})
+      .then(function(d){
+        if(d.anschreiben_link){
+          b.textContent='📄 Anschreiben';b.disabled=false;
+          b.onclick=function(){window.open(d.anschreiben_link,'_blank');};
+        }else{b.textContent='❌';b.disabled=false;}
+      }).catch(function(){b.textContent='❌';b.disabled=false;});
+    };
+    p.appendChild(b);
+  });
+}
+document.readyState==='loading'?document.addEventListener('DOMContentLoaded',addGB):addGB();
+}catch(e){}})();
 </script>"""
 
 # --- Startup-Setup (Demo-Modus / Ordner) ---
