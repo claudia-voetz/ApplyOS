@@ -52,7 +52,7 @@ function addGB(){
       if(a&&a.textContent.trim().length>5){
         tit=a.textContent.trim();
         var rest=td.textContent.replace(tit,'').replace(/\s+/g,' ').trim();
-        co=rest.split(' · ')[0].trim();
+        co=rest.split('\xb7')[0].trim();
       }
     });
     if(!tit||!co)return;
@@ -60,18 +60,19 @@ function addGB(){
     var p=ls[0].parentElement;
     if(!p||p.querySelector('.dg'))return;
     var b=document.createElement('button');
-    b.className='dg';b.textContent='Generieren';
-    b.style.cssText='background:#c47a4a;color:#fff;border:none;border-radius:4px;padding:4px 10px;font-size:12px;cursor:pointer;font-family:inherit;';
+    b.className='dg btn-primary';b.textContent='Generieren';
     b.onclick=function(){
       b.textContent='⏳';b.disabled=true;
-      fetch('/generieren',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({stelle_key:tit+'|'+co})})
+      var fd=new FormData();
+      fd.append('stelle_key',tit+'|'+co);
+      fetch('/generieren',{method:'POST',body:fd})
       .then(function(r){return r.json();})
       .then(function(d){
-        if(d.anschreiben_link){
-          b.textContent='📄 Anschreiben';b.disabled=false;
-          b.onclick=function(){window.open(d.anschreiben_link,'_blank');};
-        }else{b.textContent='❌';b.disabled=false;}
-      }).catch(function(){b.textContent='❌';b.disabled=false;});
+        p.innerHTML='';
+        if(d.anschreiben_link){var a1=document.createElement('a');a1.href=d.anschreiben_link;a1.target='_blank';a1.textContent='📄 Anschreiben';a1.style.marginRight='6px';p.appendChild(a1);}
+        if(d.cv_link){var a2=document.createElement('a');a2.href=d.cv_link;a2.target='_blank';a2.textContent='📄 CV';p.appendChild(a2);}
+        if(!d.anschreiben_link&&!d.cv_link){p.textContent='❌';}
+      }).catch(function(){p.textContent='❌';});
     };
     p.appendChild(b);
   });
