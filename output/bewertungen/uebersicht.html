@@ -279,24 +279,23 @@
 <body>
   <div class="header-bar">
     <div>
-      <div style="display:flex;align-items:center;gap:2rem;margin-bottom:1.2rem;">
-        <div style="background:#1a2a3a;border-radius:10px;padding:10px 20px;display:inline-flex;align-items:center;">
-          <img src="/Logo/applyos-wordmark-cream-900.png" alt="ApplyOS" style="height:52px;width:auto;">
-        </div>
+      <div style="display:flex;align-items:center;gap:1.5rem;margin-bottom:1.2rem;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300" style="height:72px;width:216px;flex-shrink:0;">
+          <g transform="translate(30 15) scale(1.5)">
+            <g fill="#1a2a3a"><circle cx="70" cy="80" r="26"/><circle cx="95" cy="62" r="24"/><circle cx="122" cy="62" r="24"/><circle cx="146" cy="80" r="22"/><circle cx="135" cy="100" r="24"/><circle cx="108" cy="108" r="26"/><circle cx="80" cy="104" r="22"/></g>
+            <ellipse cx="48" cy="88" rx="22" ry="20" fill="#c47a4a"/>
+            <ellipse cx="42" cy="70" rx="6" ry="9" fill="#c47a4a" transform="rotate(-25 42 70)"/>
+            <circle cx="40" cy="86" r="2.4" fill="#f8f7f5"/>
+            <path d="M 99,88 L 106,96 L 118,80" stroke="#f8f7f5" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="78" y="125" width="6" height="18" rx="2" fill="#1a2a3a"/>
+            <rect x="132" y="125" width="6" height="18" rx="2" fill="#1a2a3a"/>
+          </g>
+          <text x="370" y="151" dominant-baseline="middle" fill="#1a2a3a" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="118" font-weight="700">Apply<tspan fill="#c47a4a">OS</tspan></text>
+        </svg>
         <div style="color:#666;font-size:0.85rem;">
           Stand: <strong id="hdr-stand"></strong> &nbsp;·&nbsp; <strong id="hdr-count"></strong> Stelle(n) &nbsp;·&nbsp; <strong id="hdr-bew"></strong> beworben
         </div>
       </div>
-      <script>
-      document.addEventListener('DOMContentLoaded',function(){
-        var rows=document.querySelectorAll('tbody tr');
-        var bew=Array.from(rows).filter(function(r){var sel=r.querySelector('select');return sel&&sel.options[sel.selectedIndex]&&sel.options[sel.selectedIndex].text.trim()==='Beworben';}).length;
-        var d=new Date();
-        document.getElementById('hdr-stand').textContent=d.toLocaleDateString('de-DE');
-        document.getElementById('hdr-count').textContent=rows.length;
-        document.getElementById('hdr-bew').textContent=bew;
-      });
-      </script>
     </div>
     <div class="header-actions">
       <button id="btn-suchlauf" class="btn-add-stelle" onclick="startSuchlauf()">🔍 Suchlauf starten</button>
@@ -975,6 +974,13 @@
         var row = sel.closest('tr');
         if (row) row.dataset.status = sel.value;
       });
+      // Header Stats – läuft NACH localStorage-Restore damit Beworben-Zählung stimmt
+      var rows = document.querySelectorAll('tbody tr');
+      var bew = Array.from(rows).filter(function(r){var sel=r.querySelector('select');return sel&&sel.value==='Beworben';}).length;
+      var d = new Date(); var el;
+      el=document.getElementById('hdr-stand'); if(el) el.textContent=d.toLocaleDateString('de-DE');
+      el=document.getElementById('hdr-count'); if(el) el.textContent=rows.length;
+      el=document.getElementById('hdr-bew');   if(el) el.textContent=bew;
     });
 
     // ── Add-Stelle Modal ──
