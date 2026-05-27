@@ -229,10 +229,19 @@ def _erstelle_html() -> None:
             slug_file = anschreiben_link.replace("../bewerbungen/", "")
             cv_slug   = slug_file.replace("_anschreiben.html", "_cv.html")
             cv_link   = f"../bewerbungen/{cv_slug}"
+            anschreiben_exists = (BEWERBUNGEN_DIR / slug_file).exists()
             cv_exists = (BEWERBUNGEN_DIR / cv_slug).exists()
-            bew_html  = f'<a href="{_esc(anschreiben_link)}" target="_blank" class="bew-link">📄 Anschreiben</a>'
-            if cv_exists:
-                bew_html += f'<a href="{_esc(cv_link)}" target="_blank" class="bew-link">📋 CV</a>'
+            if anschreiben_exists:
+                bew_html = f'<a href="{_esc(anschreiben_link)}" target="_blank" class="bew-link">📄 Anschreiben</a>'
+                if cv_exists:
+                    bew_html += f'<a href="{_esc(cv_link)}" target="_blank" class="bew-link">📋 CV</a>'
+            else:
+                # Datei existiert nicht (z.B. nach Render-Deploy) → Generieren-Button zeigen
+                stelle_key_esc = _esc(f"{stelle}|{z.get('Unternehmen', '–')}")
+                bew_html = (
+                    f'<button class="btn-gen" data-key="{stelle_key_esc}"'
+                    f' onclick="generiereUnterlagen(this.dataset.key, this)">⚡ Generieren</button>'
+                )
         elif score_int >= 6:
             stelle_key_esc = _esc(f"{stelle}|{z.get('Unternehmen', '–')}")
             bew_html = (
