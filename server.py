@@ -146,7 +146,6 @@ def bewerbungen(filename):
     if not full.exists():
         return "Not found", 404
     content = full.read_bytes()
-    print(f"[DEBUG bew] Serving {full.name}: {len(content)} bytes")
     return Response(content, mimetype="text/html; charset=utf-8")
 
 
@@ -245,11 +244,7 @@ def generieren():
     )
 
     ctx = writer_agent.run(ctx)
-    print(f"[DEBUG generieren] anschreiben_html len={len(ctx.anschreiben_html)} cv_html len={len(ctx.cv_html)}")
-    print(f"[DEBUG writer] einstieg={repr(ctx.einstieg[:80]) if ctx.einstieg else 'LEER'}")
-    print(f"[DEBUG writer] jobtitel={repr(ctx.jobtitel_header)}")
     ctx = output_agent.run(ctx)
-    print(f"[DEBUG generieren] bewerbung_link={ctx.bewerbung_link}")
 
     result = {}
     if ctx.bewerbung_link:
