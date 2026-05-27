@@ -111,6 +111,9 @@ def _aktualisiere_uebersicht(ctx: JobContext, slug: str) -> None:
             # Vorhandener Bewerbungslink bleibt erhalten wenn kein neuer gesetzt
             if not neue_zeile["Bewerbung"] and zeile.get("Bewerbung"):
                 neue_zeile["Bewerbung"] = zeile["Bewerbung"]
+            # ScoreDetails bewahren wenn keine neuen vorhanden (z.B. beim Generieren)
+            if not neue_zeile["ScoreDetails"] and zeile.get("ScoreDetails"):
+                neue_zeile["ScoreDetails"] = zeile["ScoreDetails"]
             zeilen_dicts[i] = neue_zeile
             ersetzt = True
             break
