@@ -127,13 +127,14 @@ _suchlauf_csv_vor: int   = 0
 
 @app.route("/")
 def index():
+    import re as _re
     html = UEBERSICHT_HTML.read_text(encoding="utf-8")
-    # Logo permanent injizieren – überlebt output_agent Neuschreibungen
+    # Alten output_agent Header entfernen
+    html = html.replace('<h1>Bewerbungsübersicht</h1>', '', 1)
+    html = _re.sub(r'<p class="subtitle">.*?</p>', '', html, count=1, flags=_re.DOTALL)
+    # Logo permanent injizieren
     if "<body>" in html:
         html = html.replace("<body>", "<body>" + LOGO_HEADER, 1)
-    elif "<body " in html:
-        import re as _re
-        html = _re.sub(r"(<body[^>]*>)", r"\1" + LOGO_HEADER, html, count=1)
     if os.environ.get("DEMO_MODE") == "true" and "</body>" in html:
         html = html.replace("</body>", DEMO_OVERLAY + "</body>", 1)
     return html
@@ -141,6 +142,8 @@ def index():
 
 @app.route("/bewerbungen/<path:filename>")
 def bewerbungen(filename):
+    full = BEWERBUNGEN_DIR.resolve() / filename
+    print(f"[DEBUG bew] {full.name} exists={full.exists()} size={full.stat().st_size if full.exists() else 'N/A'}")
     return send_from_directory(BEWERBUNGEN_DIR.resolve(), filename)
 
 

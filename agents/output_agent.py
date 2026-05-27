@@ -930,10 +930,10 @@ def _erstelle_html() -> None:
 def _speichere_bewerbungsunterlagen(ctx: JobContext, slug: str) -> None:
     BEWERBUNGEN_DIR.mkdir(parents=True, exist_ok=True)
     if ctx.anschreiben_html:
-        (BEWERBUNGEN_DIR / f"{slug}_anschreiben.html").write_text(
-            ctx.anschreiben_html, encoding="utf-8"
-        )
+        pfad = BEWERBUNGEN_DIR / f"{slug}_anschreiben.html"
+        pfad.write_text(ctx.anschreiben_html, encoding="utf-8")
+        print(f"[DEBUG output] Geschrieben: {pfad.resolve()} ({pfad.stat().st_size} bytes)")
     if ctx.cv_html:
-        (BEWERBUNGEN_DIR / f"{slug}_cv.html").write_text(
-            ctx.cv_html, encoding="utf-8"
-        )
+        pfad = BEWERBUNGEN_DIR / f"{slug}_cv.html"
+        pfad.write_text(ctx.cv_html, encoding="utf-8")
+        print(f"[DEBUG output] Geschrieben: {pfad.resolve()} ({pfad.stat().st_size} bytes)")
