@@ -279,19 +279,18 @@
 <body>
   <div class="header-bar">
     <div>
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
-        <img src="/Logo/applyos-wordmark-cream-900.png" alt="ApplyOS" style="height:56px;">
-        <div style="color:#ccc;font-size:0.82rem;text-align:right;line-height:1.8;">
-          <span id="hdr-stand"></span><br>
-          <span id="hdr-count"></span> Stelle(n)&nbsp;·&nbsp;<span id="hdr-bew"></span> beworben
+      <div style="display:flex;align-items:center;gap:2rem;margin-bottom:1.2rem;">
+        <img src="/Logo/applyos-wordmark-transparent.svg" alt="ApplyOS" style="height:72px;width:auto;">
+        <div style="color:#666;font-size:0.85rem;">
+          Stand: <strong id="hdr-stand"></strong> &nbsp;·&nbsp; <strong id="hdr-count"></strong> Stelle(n) &nbsp;·&nbsp; <strong id="hdr-bew"></strong> beworben
         </div>
       </div>
       <script>
       document.addEventListener('DOMContentLoaded',function(){
         var rows=document.querySelectorAll('tbody tr');
-        var bew=Array.from(rows).filter(function(r){return r.querySelector('td[data-status]')?r.querySelector('td[data-status]').dataset.status==='Beworben':false;}).length;
+        var bew=Array.from(rows).filter(function(r){var s=r.getAttribute('data-status');return s==='Beworben';}).length;
         var d=new Date();
-        document.getElementById('hdr-stand').textContent='Stand: '+d.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'});
+        document.getElementById('hdr-stand').textContent=d.toLocaleDateString('de-DE');
         document.getElementById('hdr-count').textContent=rows.length;
         document.getElementById('hdr-bew').textContent=bew;
       });
