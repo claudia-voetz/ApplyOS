@@ -142,9 +142,13 @@ def index():
 
 @app.route("/bewerbungen/<path:filename>")
 def bewerbungen(filename):
+    from flask import Response
     full = BEWERBUNGEN_DIR.resolve() / filename
-    print(f"[DEBUG bew] {full.name} exists={full.exists()} size={full.stat().st_size if full.exists() else 'N/A'}")
-    return send_from_directory(BEWERBUNGEN_DIR.resolve(), filename)
+    if not full.exists():
+        return "Not found", 404
+    content = full.read_bytes()
+    print(f"[DEBUG bew] Serving {full.name}: {len(content)} bytes")
+    return Response(content, mimetype="text/html; charset=utf-8")
 
 
 @app.route("/Logo/<path:filename>")
