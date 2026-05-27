@@ -18,6 +18,14 @@ UEBERSICHT_CSV  = Path("output/bewertungen/uebersicht.csv")
 LOGO_DIR        = Path(__file__).parent / "logo"
 SCORE_SCHWELLE  = 6
 
+
+def _lade_stellentext(stelle: str, firma: str) -> str:
+    """Lädt gespeicherten Stellentext aus data/stellen/ – leer wenn nicht vorhanden."""
+    safe_key = (stelle + "_" + firma).replace(" ", "_").replace("/", "-")[:80]
+    pfad = Path("data/stellen") / f"{safe_key}.txt"
+    return pfad.read_text(encoding="utf-8") if pfad.exists() else ""
+
+
 DEMO_OVERLAY = """
 <style>
 #dmo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:3000;align-items:center;justify-content:center}
@@ -120,6 +128,13 @@ def stelle_hinzufuegen():
     if not firma or not titel:
         return jsonify({"fehler": "Firma und Titel sind Pflichtfelder."}), 400
 
+    # Stellentext für späteres Generieren speichern
+    if stellentext:
+        stellen_dir = Path("data/stellen")
+        stellen_dir.mkdir(parents=True, exist_ok=True)
+        safe_key = (titel + "_" + firma).replace(" ", "_").replace("/", "-")[:80]
+        (stellen_dir / f"{safe_key}.txt").write_text(stellentext, encoding="utf-8")
+
     from agents import orchestrator
     ctx = orchestrator.run(
         stellentext=stellentext,
@@ -195,7 +210,7 @@ def generieren():
         staerken=[s for s in [pro_1, pro_2, pro_3] if s],
         cons    =[s for s in [con_1, con_2, con_3] if s],
         profil_text=profil_text,
-        stellentext="",
+        stellentext=_lade_stellentext(stelle_name, firma_name),
     )
 
     ctx = writer_agent.run(ctx)
