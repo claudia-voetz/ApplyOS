@@ -176,6 +176,16 @@ def run(ctx: JobContext) -> JobContext:
     staerken = "\n".join(f"- {s}" for s in ctx.staerken)
     cons = "\n".join(f"- {l}" for l in ctx.cons)
 
+    # Wenn kein Stellentext vorhanden: synthetischen Kontext aus Pro/Con bauen
+    stellentext = ctx.stellentext or (
+        f"[Keine Originalanzeige verfügbar. Generiere das Anschreiben "
+        f"ausschließlich auf Basis der Analyst-Bewertung.]\n\n"
+        f"Stelle: {ctx.stellentitel} bei {ctx.firmenname}\n"
+        f"Score: {ctx.score}/10 – {ctx.empfehlung}\n"
+        f"Passende Aspekte laut Analyse:\n{staerken}\n"
+        f"Weniger passend:\n{cons}"
+    )
+
     response = _get_client().messages.create(
         model=MODEL,
         max_tokens=2048,
@@ -198,7 +208,7 @@ def run(ctx: JobContext) -> JobContext:
                     {
                         "type": "text",
                         "text": (
-                            f"\nSTELLENANZEIGE:\n{ctx.stellentext}"
+                            f"\nSTELLENANZEIGE:\n{stellentext}"
                             f"\n\nANALYST-BEWERTUNG:\n"
                             f"Score: {ctx.score}/10 – {ctx.empfehlung}\n"
                             f"Begründung: {ctx.begruendung}\n"
