@@ -129,9 +129,9 @@ _suchlauf_csv_vor: int   = 0
 def index():
     import re as _re
     html = UEBERSICHT_HTML.read_text(encoding="utf-8")
-    # Alten output_agent Header entfernen
-    html = html.replace('<h1>Bewerbungsübersicht</h1>', '', 1)
-    html = _re.sub(r'<p class="subtitle">.*?</p>', '', html, count=1, flags=_re.DOTALL)
+    # Alten output_agent Header entfernen (robust via Regex)
+    html = _re.sub(r'<h1>[^<]*</h1>', '', html, count=1)
+    html = _re.sub(r'<p class="subtitle">[^<]*</p>', '', html, count=1)
     # Logo permanent injizieren
     if "<body>" in html:
         html = html.replace("<body>", "<body>" + LOGO_HEADER, 1)
@@ -247,6 +247,8 @@ def generieren():
 
     ctx = writer_agent.run(ctx)
     print(f"[DEBUG generieren] anschreiben_html len={len(ctx.anschreiben_html)} cv_html len={len(ctx.cv_html)}")
+    print(f"[DEBUG writer] einstieg={repr(ctx.einstieg[:80]) if ctx.einstieg else 'LEER'}")
+    print(f"[DEBUG writer] jobtitel={repr(ctx.jobtitel_header)}")
     ctx = output_agent.run(ctx)
     print(f"[DEBUG generieren] bewerbung_link={ctx.bewerbung_link}")
 
