@@ -57,8 +57,10 @@ def _slug(ctx: JobContext) -> str:
 
 
 def _bereinigen(text: str) -> str:
-    text = re.sub(r'[<>:"/\\|?*]', "", text)
-    text = re.sub(r"\s+", "_", text.strip())
+    # Em-Dash, En-Dash und URL-problematische Zeichen entfernen
+    text = re.sub(r'[\u2013\u2014\u2012<>:"/\\|?*&()\[\]{}]', '', text)
+    text = re.sub(r'\s+', '_', text.strip())
+    text = re.sub(r'_+', '_', text)   # mehrfache _ zusammenführen
     return text[:40]
 
 
