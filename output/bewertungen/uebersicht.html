@@ -280,7 +280,7 @@
   <div class="header-bar">
     <div>
       <div style="display:flex;align-items:center;gap:2rem;margin-bottom:1.2rem;">
-        <img src="/Logo/applyos-wordmark-cream-900.png" alt="ApplyOS" style="height:56px;width:auto;">
+        <img src="/Logo/applyos-wordmark-transparent.svg" alt="ApplyOS" style="height:80px;width:260px;object-fit:contain;">
         <div style="color:#666;font-size:0.85rem;">
           Stand: <strong id="hdr-stand"></strong> &nbsp;·&nbsp; <strong id="hdr-count"></strong> Stelle(n) &nbsp;·&nbsp; <strong id="hdr-bew"></strong> beworben
         </div>
@@ -288,7 +288,7 @@
       <script>
       document.addEventListener('DOMContentLoaded',function(){
         var rows=document.querySelectorAll('tbody tr');
-        var bew=Array.from(rows).filter(function(r){var sel=r.querySelector('select');return sel&&sel.value==='Beworben';}).length;
+        var bew=Array.from(rows).filter(function(r){var sel=r.querySelector('select');return sel&&sel.options[sel.selectedIndex]&&sel.options[sel.selectedIndex].text.trim()==='Beworben';}).length;
         var d=new Date();
         document.getElementById('hdr-stand').textContent=d.toLocaleDateString('de-DE');
         document.getElementById('hdr-count').textContent=rows.length;
