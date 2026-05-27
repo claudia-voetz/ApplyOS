@@ -279,13 +279,23 @@
 <body>
   <div class="header-bar">
     <div>
-      <div style="display:flex;align-items:center;gap:1.2rem;margin-bottom:1.2rem;">
-        <img src="/Logo/applyos-wordmark-cream-900.png" alt="ApplyOS" style="height:48px;">
-        <div style="color:#888;font-size:0.82rem;line-height:1.6;">
-          <span id="header-stand"></span><br>
-          <span id="header-stellen"></span> Stelle(n) &nbsp;·&nbsp; <span id="header-beworben"></span> beworben
+      <div style="background:#1a1a2e;border-radius:10px;padding:14px 20px;margin-bottom:1.2rem;display:flex;align-items:center;justify-content:space-between;">
+        <img src="/Logo/applyos-wordmark-cream-900.png" alt="ApplyOS" style="height:44px;">
+        <div style="color:#ccc;font-size:0.82rem;text-align:right;line-height:1.8;">
+          <span id="hdr-stand"></span><br>
+          <span id="hdr-count"></span> Stelle(n)&nbsp;·&nbsp;<span id="hdr-bew"></span> beworben
         </div>
       </div>
+      <script>
+      document.addEventListener('DOMContentLoaded',function(){
+        var rows=document.querySelectorAll('tbody tr');
+        var bew=Array.from(rows).filter(function(r){return r.querySelector('td[data-status]')?r.querySelector('td[data-status]').dataset.status==='Beworben':false;}).length;
+        var d=new Date();
+        document.getElementById('hdr-stand').textContent='Stand: '+d.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'});
+        document.getElementById('hdr-count').textContent=rows.length;
+        document.getElementById('hdr-bew').textContent=bew;
+      });
+      </script>
     </div>
     <div class="header-actions">
       <button id="btn-suchlauf" class="btn-add-stelle" onclick="startSuchlauf()">🔍 Suchlauf starten</button>
