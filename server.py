@@ -18,13 +18,39 @@ UEBERSICHT_CSV  = Path("output/bewertungen/uebersicht.csv")
 LOGO_DIR        = Path(__file__).parent / "logo"
 SCORE_SCHWELLE  = 6
 
-
-def _lade_stellentext(stelle: str, firma: str) -> str:
-    """Lädt gespeicherten Stellentext aus data/stellen/ – leer wenn nicht vorhanden."""
-    safe_key = (stelle + "_" + firma).replace(" ", "_").replace("/", "-")[:80]
-    pfad = Path("data/stellen") / f"{safe_key}.txt"
-    return pfad.read_text(encoding="utf-8") if pfad.exists() else ""
-
+LOGO_HEADER = """<div style="display:flex;align-items:center;gap:1.5rem;margin-bottom:1.2rem;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300" style="height:72px;width:216px;flex-shrink:0;">
+    <g transform="translate(30 15) scale(1.5)">
+      <g fill="#1a2a3a"><circle cx="70" cy="80" r="26"/><circle cx="95" cy="62" r="24"/><circle cx="122" cy="62" r="24"/><circle cx="146" cy="80" r="22"/><circle cx="135" cy="100" r="24"/><circle cx="108" cy="108" r="26"/><circle cx="80" cy="104" r="22"/></g>
+      <ellipse cx="48" cy="88" rx="22" ry="20" fill="#c47a4a"/>
+      <ellipse cx="42" cy="70" rx="6" ry="9" fill="#c47a4a" transform="rotate(-25 42 70)"/>
+      <circle cx="40" cy="86" r="2.4" fill="#f8f7f5"/>
+      <path d="M 99,88 L 106,96 L 118,80" stroke="#f8f7f5" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="78" y="125" width="6" height="18" rx="2" fill="#1a2a3a"/>
+      <rect x="132" y="125" width="6" height="18" rx="2" fill="#1a2a3a"/>
+    </g>
+    <text x="370" y="151" dominant-baseline="middle" fill="#1a2a3a" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="118" font-weight="700">Apply<tspan fill="#c47a4a">OS</tspan></text>
+  </svg>
+  <div style="color:#666;font-size:0.85rem;">
+    Stand: <strong id="hdr-stand"></strong> &nbsp;·&nbsp; <strong id="hdr-count"></strong> Stelle(n) &nbsp;·&nbsp; <strong id="hdr-bew"></strong> beworben
+  </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  var rows=document.querySelectorAll('tbody tr');
+  var bew=Array.from(rows).filter(function(r){var sel=r.querySelector('select');return sel&&sel.value==='Beworben';}).length;
+  var d=new Date();var el;
+  el=document.getElementById('hdr-stand');if(el)el.textContent=d.toLocaleDateString('de-DE');
+  el=document.getElementById('hdr-count');if(el)el.textContent=rows.length;
+  el=document.getElementById('hdr-bew');if(el)el.textContent=bew;
+  setTimeout(function(){
+    var rows2=document.querySelectorAll('tbody tr');
+    var bew2=Array.from(rows2).filter(function(r){var sel=r.querySelector('select');return sel&&sel.value==='Beworben';}).length;
+    el=document.getElementById('hdr-bew');if(el)el.textContent=bew2;
+    el=document.getElementById('hdr-count');if(el)el.textContent=rows2.length;
+  },500);
+});
+</script>"""
 
 DEMO_OVERLAY = """
 <style>
@@ -102,6 +128,12 @@ _suchlauf_csv_vor: int   = 0
 @app.route("/")
 def index():
     html = UEBERSICHT_HTML.read_text(encoding="utf-8")
+    # Logo permanent injizieren – überlebt output_agent Neuschreibungen
+    if "<body>" in html:
+        html = html.replace("<body>", "<body>" + LOGO_HEADER, 1)
+    elif "<body " in html:
+        import re as _re
+        html = _re.sub(r"(<body[^>]*>)", r"\1" + LOGO_HEADER, html, count=1)
     if os.environ.get("DEMO_MODE") == "true" and "</body>" in html:
         html = html.replace("</body>", DEMO_OVERLAY + "</body>", 1)
     return html
@@ -127,13 +159,6 @@ def stelle_hinzufuegen():
 
     if not firma or not titel:
         return jsonify({"fehler": "Firma und Titel sind Pflichtfelder."}), 400
-
-    # Stellentext für späteres Generieren speichern
-    if stellentext:
-        stellen_dir = Path("data/stellen")
-        stellen_dir.mkdir(parents=True, exist_ok=True)
-        safe_key = (titel + "_" + firma).replace(" ", "_").replace("/", "-")[:80]
-        (stellen_dir / f"{safe_key}.txt").write_text(stellentext, encoding="utf-8")
 
     from agents import orchestrator
     ctx = orchestrator.run(
@@ -210,11 +235,13 @@ def generieren():
         staerken=[s for s in [pro_1, pro_2, pro_3] if s],
         cons    =[s for s in [con_1, con_2, con_3] if s],
         profil_text=profil_text,
-        stellentext=_lade_stellentext(stelle_name, firma_name),
+        stellentext="",
     )
 
     ctx = writer_agent.run(ctx)
+    print(f"[DEBUG generieren] anschreiben_html len={len(ctx.anschreiben_html)} cv_html len={len(ctx.cv_html)}")
     ctx = output_agent.run(ctx)
+    print(f"[DEBUG generieren] bewerbung_link={ctx.bewerbung_link}")
 
     result = {}
     if ctx.bewerbung_link:
