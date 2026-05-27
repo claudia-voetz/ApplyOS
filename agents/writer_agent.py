@@ -211,7 +211,9 @@ def run(ctx: JobContext) -> JobContext:
         ],
     )
 
-    ctx = _parse(ctx, response.content[0].text)
+    raw = response.content[0].text
+    print(f"[DEBUG raw] Erste 400 Zeichen: {repr(raw[:400])}")
+    ctx = _parse(ctx, raw)
     ctx = _befuelle_vorlagen(ctx)
     return ctx
 
