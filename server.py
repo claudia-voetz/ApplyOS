@@ -19,7 +19,7 @@ LOGO_DIR        = Path(__file__).parent / "logo"
 SCORE_SCHWELLE  = 6
 
 LOGO_HEADER_DIV = (
-    '<div style="display:flex;align-items:center;gap:1.5rem;">'
+    '<div style="display:flex;flex-direction:column;gap:0.3rem;">'
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300" style="height:72px;width:216px;flex-shrink:0;">'
     '<g transform="translate(30 15) scale(1.5)">'
     '<g fill="#1a2a3a"><circle cx="70" cy="80" r="26"/><circle cx="95" cy="62" r="24"/><circle cx="122" cy="62" r="24"/><circle cx="146" cy="80" r="22"/><circle cx="135" cy="100" r="24"/><circle cx="108" cy="108" r="26"/><circle cx="80" cy="104" r="22"/></g>'
@@ -32,7 +32,7 @@ LOGO_HEADER_DIV = (
     '</g>'
     '<text x="370" y="151" dominant-baseline="middle" fill="#1a2a3a" font-family="-apple-system,BlinkMacSystemFont,\'Segoe UI\',sans-serif" font-size="118" font-weight="700">Apply<tspan fill="#c47a4a">OS</tspan></text>'
     '</svg>'
-    '<div style="color:#666;font-size:0.85rem;">'
+    '<div style="color:#666;font-size:0.82rem;">'
     'Stand: <strong id="hdr-stand"></strong> &nbsp;&middot;&nbsp; '
     '<strong id="hdr-count"></strong> Stelle(n) &nbsp;&middot;&nbsp; '
     '<strong id="hdr-bew"></strong> beworben'
@@ -127,6 +127,28 @@ _suchlauf_csv_vor: int   = 0
 @app.route("/")
 def index():
     import re as _re
+    if not UEBERSICHT_HTML.exists():
+        return """<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ApplyOS</title>
+        <style>
+          body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+          background:#f0f2f5;display:flex;align-items:center;justify-content:center;
+          height:100vh;margin:0;}
+          .box{background:white;border-radius:12px;padding:48px;text-align:center;
+          box-shadow:0 2px 12px rgba(0,0,0,0.09);max-width:400px;}
+          h2{color:#1a2a3a;margin-bottom:8px;}
+          p{color:#888;font-size:0.9rem;margin-bottom:24px;}
+          button{background:#c47a4a;color:white;border:none;border-radius:6px;
+          padding:12px 28px;font-size:15px;font-weight:600;cursor:pointer;}
+        </style></head><body>
+        <div class="box">
+          <h2>🐑 ApplyOS</h2>
+          <p>Noch keine Stellen vorhanden.<br>Starte einen Suchlauf um zu beginnen.</p>
+          <button onclick="fetch('/suchlauf-starten',{method:'POST'}).then(()=>setTimeout(()=>location.reload(),3000))">
+            🔍 Suchlauf starten
+          </button>
+        </div></body></html>"""
     html = UEBERSICHT_HTML.read_text(encoding="utf-8")
     # Linken Teil von header-bar ersetzen (funktioniert für h1-Version UND alte SVG-Version)
     html = _re.sub(

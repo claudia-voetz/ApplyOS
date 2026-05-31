@@ -165,6 +165,27 @@
     }
     #modal-close:hover { background: #2d2d5e; }
 
+    /* ── Mobile ── */
+    @media (max-width: 640px) {
+      body { padding: 0.8rem; }
+      .header-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.6rem;
+      }
+      .header-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+      .btn-add-stelle {
+        font-size: 0.75rem;
+        padding: 0.35rem 0.7rem;
+      }
+      .table-wrap {
+        max-height: calc(100vh - 160px);
+      }
+    }
+
     /* ── Header Bar ── */
     .header-bar {
       display: flex; align-items: flex-start;
