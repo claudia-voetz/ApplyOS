@@ -279,23 +279,8 @@
 <body>
   <div class="header-bar">
     <div>
-      <div style="display:flex;align-items:center;gap:1.5rem;margin-bottom:1.2rem;">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300" style="height:72px;width:216px;flex-shrink:0;">
-          <g transform="translate(30 15) scale(1.5)">
-            <g fill="#1a2a3a"><circle cx="70" cy="80" r="26"/><circle cx="95" cy="62" r="24"/><circle cx="122" cy="62" r="24"/><circle cx="146" cy="80" r="22"/><circle cx="135" cy="100" r="24"/><circle cx="108" cy="108" r="26"/><circle cx="80" cy="104" r="22"/></g>
-            <ellipse cx="48" cy="88" rx="22" ry="20" fill="#c47a4a"/>
-            <ellipse cx="42" cy="70" rx="6" ry="9" fill="#c47a4a" transform="rotate(-25 42 70)"/>
-            <circle cx="40" cy="86" r="2.4" fill="#f8f7f5"/>
-            <path d="M 99,88 L 106,96 L 118,80" stroke="#f8f7f5" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-            <rect x="78" y="125" width="6" height="18" rx="2" fill="#1a2a3a"/>
-            <rect x="132" y="125" width="6" height="18" rx="2" fill="#1a2a3a"/>
-          </g>
-          <text x="370" y="151" dominant-baseline="middle" fill="#1a2a3a" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="118" font-weight="700">Apply<tspan fill="#c47a4a">OS</tspan></text>
-        </svg>
-        <div style="color:#666;font-size:0.85rem;">
-          Stand: <strong id="hdr-stand"></strong> &nbsp;·&nbsp; <strong id="hdr-count"></strong> Stelle(n) &nbsp;·&nbsp; <strong id="hdr-bew"></strong> beworben
-        </div>
-      </div>
+      <h1>Bewerbungsübersicht</h1>
+      <p class="subtitle">Stand: 27.05.2026 &nbsp;&middot;&nbsp; 12 Stelle(n)</p>
     </div>
     <div class="header-actions">
       <button id="btn-suchlauf" class="btn-add-stelle" onclick="startSuchlauf()">🔍 Suchlauf starten</button>
@@ -363,264 +348,124 @@
       </thead>
       <tbody>
       <tr data-status="Offen">
-        <td class="c-sm">2026-05-11</td>
-        <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-product-manager-ai-strategy-innovation-150398666" target="_blank">Product Manager – AI Strategy &amp; Innovation (w/m/d)</a><small class="c-firma">SupplyOn AG · 35 Min</small></td>
+        <td class="c-sm">2026-05-27</td>
+        <td class="c-stelle"><a href="https://enopai.jobs.personio.com/job/2573717" target="_blank">Senior Product Owner (all genders)</a><small class="c-firma">EnopAI · 10 Min</small></td>
         <td class="c-sc"><span class="score score-high">8/10</span></td>
-<td class="c-krit c-krit-full" title="E2E: 2/2">2/2</td><td class="c-krit c-krit-full" title="Roadmap: 2/2">2/2</td><td class="c-krit c-krit-half" title="Auto: 1/2">1/2</td><td class="c-krit c-krit-full" title="AgentAI: 2/2">2/2</td><td class="c-krit c-krit-full" title="Stakeholder: 1/1">1/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-half" title="Agile: 1/2">1/2</td><td class="c-krit c-krit-full" title="B2B: 1/1">1/1</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+<td class="c-krit c-krit-full" title="E2E: 2/2">2/2</td><td class="c-krit c-krit-full" title="Roadmap: 2/2">2/2</td><td class="c-krit c-krit-half" title="Auto: 1/2">1/2</td><td class="c-krit c-krit-half" title="AgentAI: 1/2">1/2</td><td class="c-krit c-krit-full" title="Stakeholder: 1/1">1/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-full" title="Engineering: 2/2">2/2</td><td class="c-krit c-krit-full" title="Agile: 2/2">2/2</td><td class="c-krit c-krit-full" title="B2B: 1/1">1/1</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
         <td class="c-modal"><button class="btn-modal" data-idx="0" onclick="openModal(this.dataset.idx)">💬</button></td>
-        <td class="c-status"><select class="status-sel" data-key="2026-05-11_SupplyOn AG_Product Manager – AI Strategy " data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
-        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_SupplyOn AG_Product Manager – AI Strategy "></span></td>
-        <td class="c-bew"><a href="../bewerbungen/2026-05-11_SupplyOn_AG_Product_Manager_–_AI_Strategy_&amp;_Innovati_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-11_SupplyOn_AG_Product_Manager_–_AI_Strategy_&amp;_Innovati_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-27_EnopAI_Senior Product Owner (all gend" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-27_EnopAI_Senior Product Owner (all gend"></span></td>
+        <td class="c-bew"><a href="../bewerbungen/2026-05-27_EnopAI_Senior_Product_Owner_all_genders_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-27_EnopAI_Senior_Product_Owner_all_genders_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
       </tr>
       <tr data-status="Offen">
-        <td class="c-sm">2026-05-11</td>
-        <td class="c-stelle"><a href="https://enopai.jobs.personio.com/job/2573717" target="_blank">Senior Product Owner (all genders)</a><small class="c-firma">EnopAI · 12 Min</small></td>
+        <td class="c-sm">2026-05-27</td>
+        <td class="c-stelle"><a href="https://join.com/companies/vispiron-gmbh/16210850-product-owner-m-w-d-fleet-tech-plattform" target="_blank">Product Owner (M/W/D) Fleet Tech Plattform</a><small class="c-firma">VISPIRON GmbH / CARSYNC · 25 Min</small></td>
         <td class="c-sc"><span class="score score-high">8/10</span></td>
-<td class="c-krit c-krit-full" title="E2E: 2/2">2/2</td><td class="c-krit c-krit-full" title="Roadmap: 2/2">2/2</td><td class="c-krit c-krit-half" title="Auto: 1/2">1/2</td><td class="c-krit c-krit-half" title="AgentAI: 1/2">1/2</td><td class="c-krit c-krit-full" title="Stakeholder: 1/1">1/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-full" title="Engineering: 2/2">2/2</td><td class="c-krit c-krit-full" title="Agile: 2/2">2/2</td><td class="c-krit c-krit-full" title="B2B: 1/1">1/1</td><td class="c-krit c-krit-zero" title="Behörden: 0/0.5">0/0.5</td><td class="c-krit c-krit-zero" title="Sozial: 0/0.5">0/0.5</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+<td class="c-krit c-krit-full" title="E2E: 2/2">2/2</td><td class="c-krit c-krit-full" title="Roadmap: 2/2">2/2</td><td class="c-krit c-krit-full" title="Auto: 2/2">2/2</td><td class="c-krit c-krit-half" title="AgentAI: 1/2">1/2</td><td class="c-krit c-krit-full" title="Stakeholder: 1/1">1/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-half" title="Agile: 1/2">1/2</td><td class="c-krit c-krit-full" title="B2B: 1/1">1/1</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
         <td class="c-modal"><button class="btn-modal" data-idx="1" onclick="openModal(this.dataset.idx)">💬</button></td>
-        <td class="c-status"><select class="status-sel" data-key="2026-05-11_EnopAI_Senior Product Owner (all gend" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
-        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_EnopAI_Senior Product Owner (all gend"></span></td>
-        <td class="c-bew"><a href="../bewerbungen/2026-05-11_EnopAI_Senior_Product_Owner_(all_genders)_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-11_EnopAI_Senior_Product_Owner_(all_genders)_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-27_VISPIRON GmbH / CARSYNC_Product Owner (M/W/D) Fleet Te" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-27_VISPIRON GmbH / CARSYNC_Product Owner (M/W/D) Fleet Te"></span></td>
+        <td class="c-bew"><a href="../bewerbungen/2026-05-27_VISPIRON_GmbH_CARSYNC_Product_Owner_MWD_Fleet_Tech_Plattform_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-27_VISPIRON_GmbH_CARSYNC_Product_Owner_MWD_Fleet_Tech_Plattform_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
       </tr>
       <tr data-status="Offen">
-        <td class="c-sm">2026-05-11</td>
-        <td class="c-stelle"><a href="https://join.com/companies/vispiron-gmbh/16139017-product-owner-m-w-d-fleet-tech-plattform" target="_blank">Product Owner (M/W/D) Fleet Tech Plattform</a><small class="c-firma">CARSYNC / VISPIRON GmbH · 25 Min</small></td>
-        <td class="c-sc"><span class="score score-high">8/10</span></td>
-<td class="c-krit c-krit-full" title="E2E: 2/2">2/2</td><td class="c-krit c-krit-full" title="Roadmap: 2/2">2/2</td><td class="c-krit c-krit-full" title="Auto: 2/2">2/2</td><td class="c-krit c-krit-half" title="AgentAI: 1.5/2">1.5/2</td><td class="c-krit c-krit-full" title="Stakeholder: 1/1">1/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-half" title="Agile: 1/2">1/2</td><td class="c-krit c-krit-full" title="B2B: 1/1">1/1</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
-        <td class="c-modal"><button class="btn-modal" data-idx="2" onclick="openModal(this.dataset.idx)">💬</button></td>
-        <td class="c-status"><select class="status-sel" data-key="2026-05-11_CARSYNC / VISPIRON GmbH_Product Owner (M/W/D) Fleet Te" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
-        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_CARSYNC / VISPIRON GmbH_Product Owner (M/W/D) Fleet Te"></span></td>
-        <td class="c-bew"><a href="../bewerbungen/2026-05-11_CARSYNC_VISPIRON_GmbH_Product_Owner_(MWD)_Fleet_Tech_Plattform_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-11_CARSYNC_VISPIRON_GmbH_Product_Owner_(MWD)_Fleet_Tech_Plattform_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
-      </tr>
-      <tr data-status="Offen">
-        <td class="c-sm">2026-05-11</td>
-        <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-lead-product-management-genders-151644541" target="_blank">Lead Product Management (all genders)</a><small class="c-firma">DieProduktMacher GmbH · 25 Min</small></td>
-        <td class="c-sc"><span class="score score-high">7/10</span></td>
-<td class="c-krit c-krit-half" title="E2E: 1/2">1/2</td><td class="c-krit c-krit-full" title="Roadmap: 2/2">2/2</td><td class="c-krit c-krit-half" title="Auto: 0.5/2">0.5/2</td><td class="c-krit c-krit-half" title="AgentAI: 0.5/2">0.5/2</td><td class="c-krit c-krit-full" title="Stakeholder: 1/1">1/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-half" title="Agile: 1/2">1/2</td><td class="c-krit c-krit-half" title="B2B: 0.5/1">0.5/1</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
-        <td class="c-modal"><button class="btn-modal" data-idx="3" onclick="openModal(this.dataset.idx)">💬</button></td>
-        <td class="c-status"><select class="status-sel" data-key="2026-05-11_DieProduktMacher GmbH_Lead Product Management (all g" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
-        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_DieProduktMacher GmbH_Lead Product Management (all g"></span></td>
-        <td class="c-bew"><a href="../bewerbungen/2026-05-11_DieProduktMacher_GmbH_Lead_Product_Management_(all_genders)_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-11_DieProduktMacher_GmbH_Lead_Product_Management_(all_genders)_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
-      </tr>
-      <tr data-status="Offen">
-        <td class="c-sm">2026-05-11</td>
-        <td class="c-stelle"><a href="https://www.bikeleasing.de/karriere/detail/2021384-digital-product-manager-gn" target="_blank">Digital Product Manager (gn)</a><small class="c-firma">Bikeleasing-Service GmbH &amp; Co. KG · Remote</small></td>
-        <td class="c-sc"><span class="score score-high">7/10</span></td>
-<td class="c-krit c-krit-full" title="E2E: 2/2">2/2</td><td class="c-krit c-krit-half" title="Roadmap: 1/2">1/2</td><td class="c-krit c-krit-half" title="Auto: 1/2">1/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-full" title="Stakeholder: 1/1">1/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-half" title="Agile: 1/2">1/2</td><td class="c-krit c-krit-full" title="B2B: 1/1">1/1</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
-        <td class="c-modal"><button class="btn-modal" data-idx="4" onclick="openModal(this.dataset.idx)">💬</button></td>
-        <td class="c-status"><select class="status-sel" data-key="2026-05-11_Bikeleasing-Service GmbH &amp; Co. KG_Digital Product Manager (gn)" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
-        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_Bikeleasing-Service GmbH &amp; Co. KG_Digital Product Manager (gn)"></span></td>
-        <td class="c-bew"><a href="../bewerbungen/2026-05-11_Bikeleasing-Service_GmbH_&amp;_Co._KG_Digital_Product_Manager_(gn)_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-11_Bikeleasing-Service_GmbH_&amp;_Co._KG_Digital_Product_Manager_(gn)_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
-      </tr>
-      <tr data-status="Offen">
-        <td class="c-sm">2026-05-11</td>
+        <td class="c-sm">2026-05-27</td>
         <td class="c-stelle"><a href="https://job.teoresigroup.com/lavoro/product-owner-m-w-d-digitale-b2b-cloud-services/" target="_blank">Product Owner (m/w/d) – Digitale B2B-Cloud-Services</a><small class="c-firma">Teoresi GmbH · Remote</small></td>
-        <td class="c-sc"><span class="score score-high">7/10</span></td>
-<td class="c-krit c-krit-half" title="E2E: 1/2">1/2</td><td class="c-krit c-krit-full" title="Roadmap: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Auto: 0/2">0/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-full" title="Stakeholder: 1/1">1/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-full" title="Agile: 2/2">2/2</td><td class="c-krit c-krit-full" title="B2B: 1/1">1/1</td><td class="c-krit c-krit-zero" title="Behörden: 0/0.5">0/0.5</td><td class="c-krit c-krit-zero" title="Sozial: 0/0.5">0/0.5</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
-        <td class="c-modal"><button class="btn-modal" data-idx="5" onclick="openModal(this.dataset.idx)">💬</button></td>
-        <td class="c-status"><select class="status-sel" data-key="2026-05-11_Teoresi GmbH_Product Owner (m/w/d) – Digita" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
-        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_Teoresi GmbH_Product Owner (m/w/d) – Digita"></span></td>
-        <td class="c-bew"><a href="../bewerbungen/2026-05-11_Teoresi_GmbH_Product_Owner_(mwd)_–_Digitale_B2B-Cloud_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-11_Teoresi_GmbH_Product_Owner_(mwd)_–_Digitale_B2B-Cloud_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
+        <td class="c-sc"><span class="score score-high">8/10</span></td>
+<td class="c-krit c-krit-full" title="E2E: 2/2">2/2</td><td class="c-krit c-krit-full" title="Roadmap: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Auto: 0/2">0/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-full" title="Stakeholder: 1/1">1/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-full" title="Engineering: 2/2">2/2</td><td class="c-krit c-krit-full" title="Agile: 2/2">2/2</td><td class="c-krit c-krit-full" title="B2B: 1/1">1/1</td><td class="c-krit c-krit-zero" title="Behörden: 0/0.5">0/0.5</td><td class="c-krit c-krit-zero" title="Sozial: 0/0.5">0/0.5</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="2" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-27_Teoresi GmbH_Product Owner (m/w/d) – Digita" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-27_Teoresi GmbH_Product Owner (m/w/d) – Digita"></span></td>
+        <td class="c-bew"><a href="../bewerbungen/2026-05-27_Teoresi_GmbH_Product_Owner_mwd_Digitale_B2B-Cloud-Ser_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-27_Teoresi_GmbH_Product_Owner_mwd_Digitale_B2B-Cloud-Ser_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
       </tr>
       <tr data-status="Offen">
-        <td class="c-sm">2026-05-11</td>
-        <td class="c-stelle"><a href="https://karriere.doctarigroup.com/offer/senior-product-owner-m-w-d/54571133-677f-4d31-b626-a7b2be5aea31?showApplicationForm=false" target="_blank">Senior Product Owner (m/w/d)</a><small class="c-firma">Planerio GmbH · 20 Min</small></td>
+        <td class="c-sm">2026-05-27</td>
+        <td class="c-stelle"><a href="https://www.bikeleasing.de/karriere/detail/2644619-product-owner-gn" target="_blank">Product Owner (gn)</a><small class="c-firma">Bikeleasing-Service GmbH &amp; Co. KG · 25 Min</small></td>
         <td class="c-sc"><span class="score score-high">7/10</span></td>
+<td class="c-krit c-krit-half" title="E2E: 1/2">1/2</td><td class="c-krit c-krit-half" title="Roadmap: 1/2">1/2</td><td class="c-krit c-krit-half" title="Auto: 1/2">1/2</td><td class="c-krit c-krit-half" title="AgentAI: 0.5/2">0.5/2</td><td class="c-krit c-krit-half" title="Stakeholder: 0.5/1">0.5/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-full" title="Agile: 2/2">2/2</td><td class="c-krit c-krit-full" title="B2B: 1/1">1/1</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="3" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-27_Bikeleasing-Service GmbH &amp; Co. KG_Product Owner (gn)" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-27_Bikeleasing-Service GmbH &amp; Co. KG_Product Owner (gn)"></span></td>
+        <td class="c-bew"><a href="../bewerbungen/2026-05-27_Bikeleasing-Service_GmbH_Co._KG_Product_Owner_gn_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-27_Bikeleasing-Service_GmbH_Co._KG_Product_Owner_gn_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
+      </tr>
+      <tr data-status="Offen">
+        <td class="c-sm">2026-05-27</td>
+        <td class="c-stelle"><a href="https://karriere.digitalfabrix.de/jobposting/296ef31f793caf3d8189b1c4a9514b149a1d715e" target="_blank">Product Owner DMS für öffentliche Verwaltungen (m/w/d)</a><small class="c-firma">digitalfabriX GmbH · Remote</small></td>
+        <td class="c-sc"><span class="score score-high">7/10</span></td>
+<td class="c-krit c-krit-full" title="E2E: 2/2">2/2</td><td class="c-krit c-krit-full" title="Roadmap: 2/2">2/2</td><td class="c-krit c-krit-half" title="Auto: 1/2">1/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-half" title="Stakeholder: 0.5/1">0.5/1</td><td class="c-krit c-krit-half" title="Cross: 0.5/1">0.5/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-full" title="Agile: 2/2">2/2</td><td class="c-krit c-krit-full" title="B2B: 1/1">1/1</td><td class="c-krit c-krit-full" title="Behörden: 0.5/0.5">0.5/0.5</td><td class="c-krit c-krit-zero" title="Sozial: 0/0.5">0/0.5</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="4" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-27_digitalfabriX GmbH_Product Owner DMS für öffentli" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-27_digitalfabriX GmbH_Product Owner DMS für öffentli"></span></td>
+        <td class="c-bew"><a href="../bewerbungen/2026-05-27_digitalfabriX_GmbH_Product_Owner_DMS_für_öffentliche_Verwal_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-27_digitalfabriX_GmbH_Product_Owner_DMS_für_öffentliche_Verwal_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
+      </tr>
+      <tr data-status="Offen">
+        <td class="c-sm">2026-05-27</td>
+        <td class="c-stelle"><a href="https://www.bluemetering.de/karriere/jobs/senior-solution-owner-m-w-d.php" target="_blank">Senior Solution Owner (m/w/d)</a><small class="c-firma">BlueMetering GmbH · 25 Min</small></td>
+        <td class="c-sc"><span class="score score-high">7/10</span></td>
+<td class="c-krit c-krit-half" title="E2E: 1/2">1/2</td><td class="c-krit c-krit-half" title="Roadmap: 1/2">1/2</td><td class="c-krit c-krit-full" title="Auto: 2/2">2/2</td><td class="c-krit c-krit-half" title="AgentAI: 1/2">1/2</td><td class="c-krit c-krit-full" title="Stakeholder: 1/1">1/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-full" title="Agile: 2/2">2/2</td><td class="c-krit c-krit-zero" title="B2B: 0/1">0/1</td><td class="c-krit c-krit-zero" title="Behörden: 0/0.5">0/0.5</td><td class="c-krit c-krit-zero" title="Sozial: 0/0.5">0/0.5</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="5" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-27_BlueMetering GmbH_Senior Solution Owner (m/w/d)" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-27_BlueMetering GmbH_Senior Solution Owner (m/w/d)"></span></td>
+        <td class="c-bew"><a href="../bewerbungen/2026-05-27_BlueMetering_GmbH_Senior_Solution_Owner_mwd_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-27_BlueMetering_GmbH_Senior_Solution_Owner_mwd_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
+      </tr>
+      <tr data-status="Offen">
+        <td class="c-sm">2026-05-27</td>
+        <td class="c-stelle"><a href="https://www.fabasoft.com/de/karriere/jobs/product-owner-fabasoft-xpublisher" target="_blank">Product Owner - Fabasoft Xpublisher (w/m/d)</a><small class="c-firma">Fabasoft · 15 Min</small></td>
+        <td class="c-sc"><span class="score score-mid">6/10</span></td>
 <td class="c-krit c-krit-half" title="E2E: 1/2">1/2</td><td class="c-krit c-krit-full" title="Roadmap: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Auto: 0/2">0/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-full" title="Stakeholder: 1/1">1/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-full" title="Engineering: 2/2">2/2</td><td class="c-krit c-krit-full" title="Agile: 2/2">2/2</td><td class="c-krit c-krit-full" title="B2B: 1/1">1/1</td><td class="c-krit c-krit-zero" title="Behörden: 0/0.5">0/0.5</td><td class="c-krit c-krit-zero" title="Sozial: 0/0.5">0/0.5</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
         <td class="c-modal"><button class="btn-modal" data-idx="6" onclick="openModal(this.dataset.idx)">💬</button></td>
-        <td class="c-status"><select class="status-sel" data-key="2026-05-11_Planerio GmbH_Senior Product Owner (m/w/d)" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
-        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_Planerio GmbH_Senior Product Owner (m/w/d)"></span></td>
-        <td class="c-bew"><a href="../bewerbungen/2026-05-11_Planerio_GmbH_Senior_Product_Owner_(mwd)_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-11_Planerio_GmbH_Senior_Product_Owner_(mwd)_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-27_Fabasoft_Product Owner - Fabasoft Xpubl" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-27_Fabasoft_Product Owner - Fabasoft Xpubl"></span></td>
+        <td class="c-bew"><a href="../bewerbungen/2026-05-27_Fabasoft_Product_Owner_-_Fabasoft_Xpublisher_wmd_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-27_Fabasoft_Product_Owner_-_Fabasoft_Xpublisher_wmd_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
       </tr>
       <tr data-status="Offen">
-        <td class="c-sm">2026-05-11</td>
-        <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-product-owner-product-manager-digital-tools-153387611" target="_blank">Product Owner / Product Manager Digital Tools (m/w/d)</a><small class="c-firma">meplan GmbH · 20 Min</small></td>
-        <td class="c-sc"><span class="score score-mid">6/10</span></td>
-<td class="c-krit c-krit-half" title="E2E: 1/2">1/2</td><td class="c-krit c-krit-half" title="Roadmap: 1/2">1/2</td><td class="c-krit c-krit-half" title="Auto: 0.5/2">0.5/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-full" title="Stakeholder: 1/1">1/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-half" title="Agile: 1/2">1/2</td><td class="c-krit c-krit-half" title="B2B: 0.5/1">0.5/1</td><td class="c-krit c-krit-zero" title="Behörden: 0/0.5">0/0.5</td><td class="c-krit c-krit-zero" title="Sozial: 0/0.5">0/0.5</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
-        <td class="c-modal"><button class="btn-modal" data-idx="7" onclick="openModal(this.dataset.idx)">💬</button></td>
-        <td class="c-status"><select class="status-sel" data-key="2026-05-11_meplan GmbH_Product Owner / Product Manage" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
-        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_meplan GmbH_Product Owner / Product Manage"></span></td>
-        <td class="c-bew"><a href="../bewerbungen/2026-05-11_meplan_GmbH_Product_Owner_Product_Manager_Digital_To_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-11_meplan_GmbH_Product_Owner_Product_Manager_Digital_To_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
-      </tr>
-      <tr data-status="Offen">
-        <td class="c-sm">2026-05-11</td>
-        <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-senior-product-manager-153319234" target="_blank">Senior Product Manager (w/m/d)</a><small class="c-firma">SupplyOn AG · 35 Min</small></td>
-        <td class="c-sc"><span class="score score-mid">6/10</span></td>
-<td class="c-krit c-krit-half" title="E2E: 1/2">1/2</td><td class="c-krit c-krit-half" title="Roadmap: 1/2">1/2</td><td class="c-krit c-krit-half" title="Auto: 1/2">1/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-full" title="Stakeholder: 1/1">1/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-half" title="Agile: 1/2">1/2</td><td class="c-krit c-krit-full" title="B2B: 1/1">1/1</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
-        <td class="c-modal"><button class="btn-modal" data-idx="8" onclick="openModal(this.dataset.idx)">💬</button></td>
-        <td class="c-status"><select class="status-sel" data-key="2026-05-11_SupplyOn AG_Senior Product Manager (w/m/d)" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
-        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_SupplyOn AG_Senior Product Manager (w/m/d)"></span></td>
-        <td class="c-bew"><a href="../bewerbungen/2026-05-11_SupplyOn_AG_Senior_Product_Manager_(wmd)_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-11_SupplyOn_AG_Senior_Product_Manager_(wmd)_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
-      </tr>
-      <tr data-status="Offen">
-        <td class="c-sm">2026-05-11</td>
-        <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-product-manager-all-genders-developer-platform-system-integrations-153304269" target="_blank">Product Manager (all genders) - Developer Platform &amp; System Integrations</a><small class="c-firma">ValueNet · 20 Min</small></td>
-        <td class="c-sc"><span class="score score-mid">6/10</span></td>
-<td class="c-krit c-krit-half" title="E2E: 1/2">1/2</td><td class="c-krit c-krit-half" title="Roadmap: 1/2">1/2</td><td class="c-krit c-krit-zero" title="Auto: 0/2">0/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-full" title="Stakeholder: 1/1">1/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-half" title="Agile: 1/2">1/2</td><td class="c-krit c-krit-full" title="B2B: 1/1">1/1</td><td class="c-krit c-krit-zero" title="Behörden: 0/0.5">0/0.5</td><td class="c-krit c-krit-zero" title="Sozial: 0/0.5">0/0.5</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
-        <td class="c-modal"><button class="btn-modal" data-idx="9" onclick="openModal(this.dataset.idx)">💬</button></td>
-        <td class="c-status"><select class="status-sel" data-key="2026-05-11_ValueNet_Product Manager (all genders) " data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
-        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_ValueNet_Product Manager (all genders) "></span></td>
-        <td class="c-bew"><a href="../bewerbungen/2026-05-11_ValueNet_Product_Manager_(all_genders)_-_Develope_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-11_ValueNet_Product_Manager_(all_genders)_-_Develope_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
-      </tr>
-      <tr data-status="Offen">
-        <td class="c-sm">2026-05-11</td>
+        <td class="c-sm">2026-05-27</td>
         <td class="c-stelle"><a href="https://careers.epam.com/en/vacancy/senior-product-manager-m-f-d-digital-data-ai-solutions-blt12dzul2qmrzmsjiz_en" target="_blank">Senior Product Manager (m/f/d) Digital, Data &amp; AI Solutions</a><small class="c-firma">EPAM Systems · Remote</small></td>
         <td class="c-sc"><span class="score score-mid">6/10</span></td>
-<td class="c-krit c-krit-zero" title="E2E: 0/2">0/2</td><td class="c-krit c-krit-half" title="Roadmap: 0.5/2">0.5/2</td><td class="c-krit c-krit-half" title="Auto: 1/2">1/2</td><td class="c-krit c-krit-half" title="AgentAI: 1/2">1/2</td><td class="c-krit c-krit-half" title="Stakeholder: 0.5/1">0.5/1</td><td class="c-krit c-krit-half" title="Cross: 0.5/1">0.5/1</td><td class="c-krit c-krit-zero" title="Engineering: 0/2">0/2</td><td class="c-krit c-krit-zero" title="Agile: 0/2">0/2</td><td class="c-krit c-krit-half" title="B2B: 0.5/1">0.5/1</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
-        <td class="c-modal"><button class="btn-modal" data-idx="10" onclick="openModal(this.dataset.idx)">💬</button></td>
-        <td class="c-status"><select class="status-sel" data-key="2026-05-11_EPAM Systems_Senior Product Manager (m/f/d)" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
-        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_EPAM Systems_Senior Product Manager (m/f/d)"></span></td>
-        <td class="c-bew"><a href="../bewerbungen/2026-05-11_EPAM_Systems_Senior_Product_Manager_(mfd)_Digital,_Da_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-11_EPAM_Systems_Senior_Product_Manager_(mfd)_Digital,_Da_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
+<td class="c-krit c-krit-half" title="E2E: 1/2">1/2</td><td class="c-krit c-krit-half" title="Roadmap: 1/2">1/2</td><td class="c-krit c-krit-full" title="Auto: 2/2">2/2</td><td class="c-krit c-krit-full" title="AgentAI: 2/2">2/2</td><td class="c-krit c-krit-full" title="Stakeholder: 1/1">1/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-half" title="Agile: 1/2">1/2</td><td class="c-krit c-krit-zero" title="B2B: 0/1">0/1</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="7" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-27_EPAM Systems_Senior Product Manager (m/f/d)" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-27_EPAM Systems_Senior Product Manager (m/f/d)"></span></td>
+        <td class="c-bew"><a href="../bewerbungen/2026-05-27_EPAM_Systems_Senior_Product_Manager_mfd_Digital,_Data_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-27_EPAM_Systems_Senior_Product_Manager_mfd_Digital,_Data_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
       </tr>
       <tr data-status="Offen">
-        <td class="c-sm">2026-05-11</td>
-        <td class="c-stelle"><a href="https://www.bluemetering.de/karriere/jobs/senior-solution-owner-m-w-d.php" target="_blank">Senior Solution Owner (m/w/d)</a><small class="c-firma">BlueMetering GmbH · Remote</small></td>
+        <td class="c-sm">2026-05-27</td>
+        <td class="c-stelle"><a href="https://www.bikeleasing.de/karriere/detail/2021384-digital-product-manager-gn" target="_blank">Digital Product Manager (gn)</a><small class="c-firma">Bikeleasing-Service GmbH &amp; Co. KG · 20 Min</small></td>
         <td class="c-sc"><span class="score score-mid">6/10</span></td>
-<td class="c-krit c-krit-half" title="E2E: 1/2">1/2</td><td class="c-krit c-krit-half" title="Roadmap: 1/2">1/2</td><td class="c-krit c-krit-full" title="Auto: 2/2">2/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-half" title="Stakeholder: 0.5/1">0.5/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-full" title="Agile: 2/2">2/2</td><td class="c-krit c-krit-full" title="B2B: 1/1">1/1</td><td class="c-krit c-krit-zero" title="Behörden: 0/0.5">0/0.5</td><td class="c-krit c-krit-zero" title="Sozial: 0/0.5">0/0.5</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
-        <td class="c-modal"><button class="btn-modal" data-idx="11" onclick="openModal(this.dataset.idx)">💬</button></td>
-        <td class="c-status"><select class="status-sel" data-key="2026-05-11_BlueMetering GmbH_Senior Solution Owner (m/w/d)" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
-        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_BlueMetering GmbH_Senior Solution Owner (m/w/d)"></span></td>
-        <td class="c-bew"><a href="../bewerbungen/2026-05-11_BlueMetering_GmbH_Senior_Solution_Owner_(mwd)_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-11_BlueMetering_GmbH_Senior_Solution_Owner_(mwd)_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
+<td class="c-krit c-krit-full" title="E2E: 2/2">2/2</td><td class="c-krit c-krit-half" title="Roadmap: 1/2">1/2</td><td class="c-krit c-krit-zero" title="Auto: 0/2">0/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-full" title="Stakeholder: 1/1">1/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-half" title="Agile: 0.5/2">0.5/2</td><td class="c-krit c-krit-half" title="B2B: 0.5/1">0.5/1</td><td class="c-krit c-krit-zero" title="Behörden: 0/0.5">0/0.5</td><td class="c-krit c-krit-zero" title="Sozial: 0/0.5">0/0.5</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="8" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-27_Bikeleasing-Service GmbH &amp; Co. KG_Digital Product Manager (gn)" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-27_Bikeleasing-Service GmbH &amp; Co. KG_Digital Product Manager (gn)"></span></td>
+        <td class="c-bew"><a href="../bewerbungen/2026-05-27_Bikeleasing-Service_GmbH_Co._KG_Digital_Product_Manager_gn_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-27_Bikeleasing-Service_GmbH_Co._KG_Digital_Product_Manager_gn_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
       </tr>
       <tr data-status="Offen">
-        <td class="c-sm">2026-05-11</td>
-        <td class="c-stelle"><a href="https://karriere.doctarigroup.com/category/it-product-technologies/aa1d59e2-e198-5a6b-90db-71c4d43d51e0" target="_blank">Senior Product Manager (m/w/d)</a><small class="c-firma">Planerio GmbH · 25 Min</small></td>
+        <td class="c-sm">2026-05-27</td>
+        <td class="c-stelle"><a href="https://karriere.doctarigroup.com/category/it-product-technologies/aa1d59e2-e198-5a6b-90db-71c4d43d51e0" target="_blank">Senior Product Owner (m/w/d)</a><small class="c-firma">Planerio GmbH · 25 Min</small></td>
         <td class="c-sc"><span class="score score-mid">6/10</span></td>
-<td class="c-krit c-krit-zero" title="E2E: 0/2">0/2</td><td class="c-krit c-krit-zero" title="Roadmap: 0/2">0/2</td><td class="c-krit c-krit-half" title="Auto: 1/2">1/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-zero" title="Stakeholder: 0/1">0/1</td><td class="c-krit c-krit-half" title="Cross: 0.5/1">0.5/1</td><td class="c-krit c-krit-half" title="Engineering: 0.5/2">0.5/2</td><td class="c-krit c-krit-zero" title="Agile: 0/2">0/2</td><td class="c-krit c-krit-full" title="B2B: 1/1">1/1</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-full" title="Sozial: 0.5/0.5">0.5/0.5</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
-        <td class="c-modal"><button class="btn-modal" data-idx="12" onclick="openModal(this.dataset.idx)">💬</button></td>
-        <td class="c-status"><select class="status-sel" data-key="2026-05-11_Planerio GmbH_Senior Product Manager (m/w/d)" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
-        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_Planerio GmbH_Senior Product Manager (m/w/d)"></span></td>
-        <td class="c-bew"><a href="../bewerbungen/2026-05-11_Planerio_GmbH_Senior_Product_Manager_(mwd)_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-11_Planerio_GmbH_Senior_Product_Manager_(mwd)_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
+<td class="c-krit c-krit-half" title="E2E: 1/2">1/2</td><td class="c-krit c-krit-half" title="Roadmap: 1/2">1/2</td><td class="c-krit c-krit-half" title="Auto: 1/2">1/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-half" title="Stakeholder: 0.5/1">0.5/1</td><td class="c-krit c-krit-half" title="Cross: 0.5/1">0.5/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-half" title="Agile: 1/2">1/2</td><td class="c-krit c-krit-full" title="B2B: 1/1">1/1</td><td class="c-krit c-krit-zero" title="Behörden: 0/0.5">0/0.5</td><td class="c-krit c-krit-full" title="Sozial: 0.5/0.5">0.5/0.5</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="9" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-27_Planerio GmbH_Senior Product Owner (m/w/d)" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-27_Planerio GmbH_Senior Product Owner (m/w/d)"></span></td>
+        <td class="c-bew"><a href="../bewerbungen/2026-05-27_Planerio_GmbH_Senior_Product_Owner_mwd_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-27_Planerio_GmbH_Senior_Product_Owner_mwd_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
       </tr>
       <tr data-status="Offen">
-        <td class="c-sm">2026-05-11</td>
-        <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-senior-product-manager-energy-emobility-all-genders-reev-151024078" target="_blank">(Senior) Product Manager - Energy x eMobility (all genders) für Reev</a><small class="c-firma">Future Energy Ventures · 25 Min</small></td>
-        <td class="c-sc"><span class="score score-mid">6/10</span></td>
-<td class="c-krit c-krit-full" title="E2E: 2/2">2/2</td><td class="c-krit c-krit-full" title="Roadmap: 2/2">2/2</td><td class="c-krit c-krit-half" title="Auto: 0.5/2">0.5/2</td><td class="c-krit c-krit-half" title="AgentAI: 0.5/2">0.5/2</td><td class="c-krit c-krit-half" title="Stakeholder: 0.5/1">0.5/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-full" title="Engineering: 2/2">2/2</td><td class="c-krit c-krit-half" title="Agile: 1/2">1/2</td><td class="c-krit c-krit-full" title="B2B: 1/1">1/1</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-half" title="Standort: 1/2">1/2</td><td class="c-krit c-krit-full" title="Gehalt: 1/1">1/1</td>
-        <td class="c-modal"><button class="btn-modal" data-idx="13" onclick="openModal(this.dataset.idx)">💬</button></td>
-        <td class="c-status"><select class="status-sel" data-key="2026-05-11_Future Energy Ventures_(Senior) Product Manager - Ene" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
-        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_Future Energy Ventures_(Senior) Product Manager - Ene"></span></td>
-        <td class="c-bew"><a href="../bewerbungen/2026-05-11_Future_Energy_Ventures_(Senior)_Product_Manager_-_Energy_x_eMob_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-11_Future_Energy_Ventures_(Senior)_Product_Manager_-_Energy_x_eMob_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
-      </tr>
-      <tr data-status="Offen">
-        <td class="c-sm">2026-05-26</td>
-        <td class="c-stelle"><a href="https://www.fabasoft.com/de/karriere/jobs/product-owner-fabasoft-xpublisher" target="_blank">Product Owner - Fabasoft Xpublisher (w/m/d)</a><small class="c-firma">Fabasoft · 15 Min</small></td>
-        <td class="c-sc"><span class="score score-mid">5/10</span></td>
-<td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td>
-        <td class="c-modal"><button class="btn-modal" data-idx="14" onclick="openModal(this.dataset.idx)">💬</button></td>
-        <td class="c-status"><select class="status-sel" data-key="2026-05-26_Fabasoft_Product Owner - Fabasoft Xpubl" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
-        <td class="c-datum"><span class="status-datum" id="datum_2026-05-26_Fabasoft_Product Owner - Fabasoft Xpubl"></span></td>
-        <td class="c-bew"><a href="../bewerbungen/2026-05-26_Fabasoft_Product_Owner_-_Fabasoft_Xpublisher_(wmd_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-26_Fabasoft_Product_Owner_-_Fabasoft_Xpublisher_(wmd_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
-      </tr>
-      <tr data-status="Offen">
-        <td class="c-sm">2026-05-26</td>
+        <td class="c-sm">2026-05-27</td>
         <td class="c-stelle"><a href="https://jobs.ashbyhq.com/munich-electrification/7a10f170-0636-4601-af80-1923a9af588c" target="_blank">Software Product Owner (f/m/d)</a><small class="c-firma">Munich Electrification · 25 Min</small></td>
-        <td class="c-sc"><span class="score score-mid">5/10</span></td>
-<td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td>
-        <td class="c-modal"><button class="btn-modal" data-idx="15" onclick="openModal(this.dataset.idx)">💬</button></td>
-        <td class="c-status"><select class="status-sel" data-key="2026-05-26_Munich Electrification_Software Product Owner (f/m/d)" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
-        <td class="c-datum"><span class="status-datum" id="datum_2026-05-26_Munich Electrification_Software Product Owner (f/m/d)"></span></td>
-        <td class="c-bew"><a href="../bewerbungen/2026-05-26_Munich_Electrification_Software_Product_Owner_(fmd)_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-26_Munich_Electrification_Software_Product_Owner_(fmd)_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
+        <td class="c-sc"><span class="score score-mid">6/10</span></td>
+<td class="c-krit c-krit-half" title="E2E: 1/2">1/2</td><td class="c-krit c-krit-full" title="Roadmap: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Auto: 0/2">0/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-full" title="Stakeholder: 1/1">1/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-full" title="Agile: 2/2">2/2</td><td class="c-krit c-krit-zero" title="B2B: 0/1">0/1</td><td class="c-krit c-krit-zero" title="Behörden: 0/0.5">0/0.5</td><td class="c-krit c-krit-zero" title="Sozial: 0/0.5">0/0.5</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="10" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-27_Munich Electrification_Software Product Owner (f/m/d)" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-27_Munich Electrification_Software Product Owner (f/m/d)"></span></td>
+        <td class="c-bew"><a href="../bewerbungen/2026-05-27_Munich_Electrification_Software_Product_Owner_fmd_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-27_Munich_Electrification_Software_Product_Owner_fmd_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
       </tr>
       <tr data-status="Offen">
-        <td class="c-sm">2026-05-26</td>
-        <td class="c-stelle"><a href="https://www.pilot.de/job/head-of-product-go-to-market-m-w-d-x/" target="_blank">Head of Product &amp; Go-to-Market (m/w/d/x)</a><small class="c-firma">pilot Agenturgruppe · 25 Min</small></td>
-        <td class="c-sc"><span class="score score-mid">5/10</span></td>
-<td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td>
-        <td class="c-modal"><button class="btn-modal" data-idx="16" onclick="openModal(this.dataset.idx)">💬</button></td>
-        <td class="c-status"><select class="status-sel" data-key="2026-05-26_pilot Agenturgruppe_Head of Product &amp; Go-to-Market" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
-        <td class="c-datum"><span class="status-datum" id="datum_2026-05-26_pilot Agenturgruppe_Head of Product &amp; Go-to-Market"></span></td>
-        <td class="c-bew"><a href="../bewerbungen/2026-05-26_pilot_Agenturgruppe_Head_of_Product_&amp;_Go-to-Market_(mwdx)_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-26_pilot_Agenturgruppe_Head_of_Product_&amp;_Go-to-Market_(mwdx)_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
-      </tr>
-      <tr data-status="Offen">
-        <td class="c-sm">2026-05-26</td>
-        <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-head-product-asset-flexibility-commercialization-152551374" target="_blank">Head of Product (m/f/d) Asset Flexibility Commercialization</a><small class="c-firma">The Mobility House · 25 Min</small></td>
+        <td class="c-sm">2026-05-27</td>
+        <td class="c-stelle"><a href="https://www.pilot.de/job/head-of-product-go-to-market-m-w-d-x/" target="_blank">Head of Product &amp; Go-to-Market (m/w/d/x)</a><small class="c-firma">pilot Agenturgruppe · 20 Min</small></td>
         <td class="c-sc"><span class="score score-low">4/10</span></td>
-<td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td>
-        <td class="c-modal"><button class="btn-modal" data-idx="17" onclick="openModal(this.dataset.idx)">💬</button></td>
-        <td class="c-status"><select class="status-sel" data-key="2026-05-26_The Mobility House_Head of Product (m/f/d) Asset " data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
-        <td class="c-datum"><span class="status-datum" id="datum_2026-05-26_The Mobility House_Head of Product (m/f/d) Asset "></span></td>
-        <td class="c-bew"><a href="../bewerbungen/2026-05-26_The_Mobility_House_Head_of_Product_(mfd)_Asset_Flexibility__anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-26_The_Mobility_House_Head_of_Product_(mfd)_Asset_Flexibility__cv.html" target="_blank" class="bew-link">📋 CV</a></td>
-      </tr>
-      <tr data-status="Offen">
-        <td class="c-sm">2026-05-26</td>
-        <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-product-manager-all-genders-154098076" target="_blank">Product Manager (all genders)</a><small class="c-firma">Finanztip Verbraucherinformation GmbH · 25 Min</small></td>
-        <td class="c-sc"><span class="score score-low">4/10</span></td>
-<td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td>
-        <td class="c-modal"><button class="btn-modal" data-idx="18" onclick="openModal(this.dataset.idx)">💬</button></td>
-        <td class="c-status"><select class="status-sel" data-key="2026-05-26_Finanztip Verbraucherinformation GmbH_Product Manager (all genders)" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
-        <td class="c-datum"><span class="status-datum" id="datum_2026-05-26_Finanztip Verbraucherinformation GmbH_Product Manager (all genders)"></span></td>
-        <td class="c-bew"><a href="../bewerbungen/2026-05-26_Finanztip_Verbraucherinformation_GmbH_Product_Manager_(all_genders)_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-26_Finanztip_Verbraucherinformation_GmbH_Product_Manager_(all_genders)_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
-      </tr>
-      <tr data-status="Offen">
-        <td class="c-sm">2026-05-11</td>
-        <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-product-manager-153687678" target="_blank">Product Manager (f/m/x)</a><small class="c-firma">Tanso · 30 Min</small></td>
-        <td class="c-sc"><span class="score score-low">4/10</span></td>
-<td class="c-krit c-krit-full" title="E2E: 2/2">2/2</td><td class="c-krit c-krit-full" title="Roadmap: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Auto: 0/2">0/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-half" title="Stakeholder: 0.5/1">0.5/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-half" title="Agile: 0.5/2">0.5/2</td><td class="c-krit c-krit-full" title="B2B: 1/1">1/1</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
-        <td class="c-modal"><button class="btn-modal" data-idx="19" onclick="openModal(this.dataset.idx)">💬</button></td>
-        <td class="c-status"><select class="status-sel" data-key="2026-05-11_Tanso_Product Manager (f/m/x)" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
-        <td class="c-datum"><span class="status-datum" id="datum_2026-05-11_Tanso_Product Manager (f/m/x)"></span></td>
-        <td class="c-bew"><button class="btn-trotzdem" data-key="Product Manager (f/m/x)|Tanso" data-score="4" onclick="trotzdemBewerben(this.dataset.key, this.dataset.score, this)">📄 Generieren</button></td>
-      </tr>
-      <tr data-status="Offen">
-        <td class="c-sm">2026-05-13</td>
-        <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-product-manager-porduct-owner-vgi-154090839" target="_blank">Product Manager / Product Owner (m/f/d) VGI</a><small class="c-firma">The Mobility House · 20 Min</small></td>
-        <td class="c-sc"><span class="score score-low">4/10</span></td>
-<td class="c-krit c-krit-half" title="E2E: 1/2">1/2</td><td class="c-krit c-krit-half" title="Roadmap: 1/2">1/2</td><td class="c-krit c-krit-zero" title="Auto: 0/2">0/2</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td>
-        <td class="c-modal"><button class="btn-modal" data-idx="20" onclick="openModal(this.dataset.idx)">💬</button></td>
-        <td class="c-status"><select class="status-sel" data-key="2026-05-13_The Mobility House_Product Manager / Product Owne" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
-        <td class="c-datum"><span class="status-datum" id="datum_2026-05-13_The Mobility House_Product Manager / Product Owne"></span></td>
-        <td class="c-bew"><button class="btn-trotzdem" data-key="Product Manager / Product Owner (m/f/d) VGI|The Mobility House" data-score="4" onclick="trotzdemBewerben(this.dataset.key, this.dataset.score, this)">📄 Generieren</button></td>
-      </tr>
-      <tr data-status="Offen">
-        <td class="c-sm">2026-05-13</td>
-        <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-mobile-app-product-owner-154270673" target="_blank">Mobile App Product Owner (m/f/d)</a><small class="c-firma">limango GmbH · 20 Min</small></td>
-        <td class="c-sc"><span class="score score-low">4/10</span></td>
-<td class="c-krit c-krit-half" title="E2E: 1/2">1/2</td><td class="c-krit c-krit-half" title="Roadmap: 1/2">1/2</td><td class="c-krit c-krit-zero" title="Auto: 0/2">0/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-zero" title="Stakeholder: 0/1">0/1</td><td class="c-krit c-krit-full" title="Cross: 1/1">1/1</td><td class="c-krit c-krit-half" title="Engineering: 1/2">1/2</td><td class="c-krit c-krit-half" title="Agile: 1/2">1/2</td><td class="c-krit c-krit-zero" title="B2B: 0/1">0/1</td><td class="c-krit c-krit-zero" title="Behörden: 0/0.5">0/0.5</td><td class="c-krit c-krit-zero" title="Sozial: 0/0.5">0/0.5</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
-        <td class="c-modal"><button class="btn-modal" data-idx="21" onclick="openModal(this.dataset.idx)">💬</button></td>
-        <td class="c-status"><select class="status-sel" data-key="2026-05-13_limango GmbH_Mobile App Product Owner (m/f/" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
-        <td class="c-datum"><span class="status-datum" id="datum_2026-05-13_limango GmbH_Mobile App Product Owner (m/f/"></span></td>
-        <td class="c-bew"><button class="btn-trotzdem" data-key="Mobile App Product Owner (m/f/d)|limango GmbH" data-score="4" onclick="trotzdemBewerben(this.dataset.key, this.dataset.score, this)">📄 Generieren</button></td>
-      </tr>
-      <tr data-status="Offen">
-        <td class="c-sm">2026-05-26</td>
-        <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-head-of-product-154131107" target="_blank">Head of Product (w/m/d)</a><small class="c-firma">Skalar · 20 Min</small></td>
-        <td class="c-sc"><span class="score score-low">3/10</span></td>
-<td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td>
-        <td class="c-modal"><button class="btn-modal" data-idx="22" onclick="openModal(this.dataset.idx)">💬</button></td>
-        <td class="c-status"><select class="status-sel" data-key="2026-05-26_Skalar_Head of Product (w/m/d)" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
-        <td class="c-datum"><span class="status-datum" id="datum_2026-05-26_Skalar_Head of Product (w/m/d)"></span></td>
-        <td class="c-bew"><a href="../bewerbungen/2026-05-26_Skalar_Head_of_Product_(wmd)_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-26_Skalar_Head_of_Product_(wmd)_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
-      </tr>
-      <tr data-status="Offen">
-        <td class="c-sm">2026-05-26</td>
-        <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-product-manager-muenchen-product-design-146751614" target="_blank">Product Manager (f/m/d) Munich – Product &amp; Design</a><small class="c-firma">Avi Medical Operations GmbH · Remote</small></td>
-        <td class="c-sc"><span class="score score-low">2/10</span></td>
-<td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td>
-        <td class="c-modal"><button class="btn-modal" data-idx="23" onclick="openModal(this.dataset.idx)">💬</button></td>
-        <td class="c-status"><select class="status-sel" data-key="2026-05-26_Avi Medical Operations GmbH_Product Manager (f/m/d) Munich" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
-        <td class="c-datum"><span class="status-datum" id="datum_2026-05-26_Avi Medical Operations GmbH_Product Manager (f/m/d) Munich"></span></td>
-        <td class="c-bew"><a href="../bewerbungen/2026-05-26_Avi_Medical_Operations_GmbH_Product_Manager_(fmd)_Munich_–_Product_&amp;_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-26_Avi_Medical_Operations_GmbH_Product_Manager_(fmd)_Munich_–_Product_&amp;_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
-      </tr>
-      <tr data-status="Offen">
-        <td class="c-sm">2026-05-26</td>
-        <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-product-manager-space-152795885" target="_blank">Product Manager - Space</a><small class="c-firma">Helsing · Remote</small></td>
-        <td class="c-sc"><span class="score score-low">2/10</span></td>
-<td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td>
-        <td class="c-modal"><button class="btn-modal" data-idx="24" onclick="openModal(this.dataset.idx)">💬</button></td>
-        <td class="c-status"><select class="status-sel" data-key="2026-05-26_Helsing_Product Manager - Space" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
-        <td class="c-datum"><span class="status-datum" id="datum_2026-05-26_Helsing_Product Manager - Space"></span></td>
-        <td class="c-bew"><a href="../bewerbungen/2026-05-26_Helsing_Product_Manager_-_Space_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-26_Helsing_Product_Manager_-_Space_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
-      </tr>
-      <tr data-status="Offen">
-        <td class="c-sm">2026-05-26</td>
-        <td class="c-stelle"><a href="https://www.xing.com/jobs/muenchen-product-manager-ai-platform-149489454" target="_blank">Product Manager - AI Platform (m/f/x)</a><small class="c-firma">Scalable GmbH · 25 Min</small></td>
-        <td class="c-sc"><span class="score score-low">2/10</span></td>
-<td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td><td class="c-krit c-krit-na">–</td>
-        <td class="c-modal"><button class="btn-modal" data-idx="25" onclick="openModal(this.dataset.idx)">💬</button></td>
-        <td class="c-status"><select class="status-sel" data-key="2026-05-26_Scalable GmbH_Product Manager - AI Platform " data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
-        <td class="c-datum"><span class="status-datum" id="datum_2026-05-26_Scalable GmbH_Product Manager - AI Platform "></span></td>
-        <td class="c-bew"><a href="../bewerbungen/2026-05-26_Scalable_GmbH_Product_Manager_-_AI_Platform_(mfx)_anschreiben.html" target="_blank" class="bew-link">📄 Anschreiben</a><a href="../bewerbungen/2026-05-26_Scalable_GmbH_Product_Manager_-_AI_Platform_(mfx)_cv.html" target="_blank" class="bew-link">📋 CV</a></td>
+<td class="c-krit c-krit-half" title="E2E: 1/2">1/2</td><td class="c-krit c-krit-half" title="Roadmap: 1/2">1/2</td><td class="c-krit c-krit-zero" title="Auto: 0/2">0/2</td><td class="c-krit c-krit-zero" title="AgentAI: 0/2">0/2</td><td class="c-krit c-krit-full" title="Stakeholder: 1/1">1/1</td><td class="c-krit c-krit-half" title="Cross: 0.5/1">0.5/1</td><td class="c-krit c-krit-zero" title="Engineering: 0/2">0/2</td><td class="c-krit c-krit-zero" title="Agile: 0/2">0/2</td><td class="c-krit c-krit-zero" title="B2B: 0/1">0/1</td><td class="c-krit c-krit-zero" title="Behörden: 0/0.5">0/0.5</td><td class="c-krit c-krit-zero" title="Sozial: 0/0.5">0/0.5</td><td class="c-krit c-krit-full" title="Standort: 2/2">2/2</td><td class="c-krit c-krit-zero" title="Gehalt: 0/1">0/1</td>
+        <td class="c-modal"><button class="btn-modal" data-idx="11" onclick="openModal(this.dataset.idx)">💬</button></td>
+        <td class="c-status"><select class="status-sel" data-key="2026-05-27_pilot Agenturgruppe_Head of Product &amp; Go-to-Market" data-status="Offen" onchange="saveStatus(this)"><option  selected>Offen</option><option>Interessant</option><option>Beworben</option><option>Absage</option><option>Überspringen</option></select></td>
+        <td class="c-datum"><span class="status-datum" id="datum_2026-05-27_pilot Agenturgruppe_Head of Product &amp; Go-to-Market"></span></td>
+        <td class="c-bew"><button class="btn-trotzdem" data-key="Head of Product &amp; Go-to-Market (m/w/d/x)|pilot Agenturgruppe" data-score="4" onclick="trotzdemBewerben(this.dataset.key, this.dataset.score, this)">📄 Generieren</button></td>
       </tr>
       </tbody>
     </table>
@@ -629,290 +474,136 @@
   <script>
     var MD = {
   "0": {
-    "stelle": "Product Manager – AI Strategy & Innovation (w/m/d)",
-    "firma": "SupplyOn AG",
-    "fz": "35 Min",
-    "pro1": "AI Strategy & Innovation als Kernthema passt perfekt zu Claudias hands-on AI-Erfahrung (Agentic AI, Multi-Agent) und Zertifizierung als AI-Powered PO.",
-    "pro2": "B2B-Plattform mit End-to-End Produktverantwortung – deckt sich exakt mit Claudias Stärken und Wunschprofil (Discovery bis Launch, Roadmap-Ownership).",
-    "pro3": "Cross-funktionale Zusammenarbeit mit Engineering, Stakeholder-Management auf Senior-Ebene – beides nachweislich gelebt bei Accor in internationalen Teams.",
-    "con1": "Kein explizites Gehalt genannt – XING-Schätzung (71.000–98.500 €) deutet auf Erreichbarkeit hin, aber keine Sicherheit für Claudias 80K-Minimum.",
-    "con2": "Standort Hallbergmoos (Hauptsitz) – liegt nahe München, Fahrtzeit per MVV aber an oberer Grenze; Hybrid-Modell unklar in Details.",
-    "con3": "Branchenfokus Supply Chain / Industrie ist neu für Claudia – kein direkter Domänennachweis, könnte im Gespräch eine Hürde sein."
-  },
-  "1": {
     "stelle": "Senior Product Owner (all genders)",
     "firma": "EnopAI",
-    "fz": "12 Min",
-    "pro1": "B2B SaaS mit AI/ML-Produktverantwortung trifft Claudias Kernkompetenz und Wunschprofil exakt",
-    "pro2": "Standort Goetheplatz ist ~12 Min. von Laim/Westend — ideal",
-    "pro3": "Home-Office-Flexibilität explizit genannt, Hybrid-Modell akzeptiert",
-    "con1": "Energiebranche ist Claudia fremd — kein Domain-Know-how nachweisbar, könnte als Schwäche gesehen werden",
-    "con2": "Gehalt nicht explizit genannt — Erfüllung der 80.000 €-Grenze unklar",
-    "con3": "Automation/Digitalisierung und Agentic AI nicht explizit erwähnt — nur implizit über ML/AI ableitbar"
+    "fz": "10 Min",
+    "pro1": "B2B SaaS mit AI/ML-Fokus trifft Claudias Kernprofil – End-to-End PO-Verantwortung für digitale Produkte mit KI-Komponente.",
+    "pro2": "Büro am Goetheplatz (10 Min. per Rad von Laim/Westend) mit Home-Office-Flexibilität – ideal für Hybrid-Modell.",
+    "pro3": "Cross-funktionale Zusammenarbeit mit ML/Data Science und Fullstack-Teams deckt sich mit Claudias Engineering-Erfahrung und CSPO-Profil.",
+    "con1": "Gehalt nicht explizit genannt – ob ≥ 80.000 € erfüllt ist, bleibt unklar.",
+    "con2": "Energiebereich-Hintergrund wird als „ideal\" erwähnt – Claudia hat keinen direkten Branchenbezug.",
+    "con3": "ML/Data Science als Stakeholder-Domäne – Claudias AI-Kenntnisse sind hands-on, aber nicht spezifisch im ML-Engineering-Kontext."
+  },
+  "1": {
+    "stelle": "Product Owner (M/W/D) Fleet Tech Plattform",
+    "firma": "VISPIRON GmbH / CARSYNC",
+    "fz": "25 Min",
+    "pro1": "Klare End-to-End Produktverantwortung in einer B2B SaaS-Plattform — perfekt zur Wunsch-Jobbeschreibung passend.",
+    "pro2": "KI & Automatisierung explizit im Fokus — deckt sich direkt mit Claudias AI-Profil und Hands-on-Erfahrung.",
+    "pro3": "Hybrides Arbeitsmodell in München — Standort und Arbeitsweise vollständig kompatibel.",
+    "con1": "Gehalt nicht explizit genannt — unklar ob ≥ 80.000 € erreichbar.",
+    "con2": "Flottenmanagement-Branche ist branchenfremd — kein direkter Domänen-Fit, aber kein Ausschlusskriterium.",
+    "con3": "Agile Methoden / Scrum nicht explizit erwähnt — nur impliziert durch PO-Rolle."
   },
   "2": {
-    "stelle": "Product Owner (M/W/D) Fleet Tech Plattform",
-    "firma": "CARSYNC / VISPIRON GmbH",
-    "fz": "25 Min",
-    "pro1": "KI-gestützte SaaS-Plattform mit Automatisierungsfokus trifft exakt Claudias AI/Automation-Schwerpunkt und aktives Hands-on-Wissen.",
-    "pro2": "Vollständige End-to-End-Produktverantwortung inkl. Roadmap und Produktvision — deckt sich mit Wunschjob und Erfahrung.",
-    "pro3": "Hybrid in München, ca. 25 Min. von Laim — standorttechnisch ideal.",
-    "con1": "Mobility-/Flottenbranche ist neu für Claudia — kein direkter Domänen-Fit, Einarbeitung nötig.",
-    "con2": "Gehalt nicht explizit genannt — offen, ob ≥ 80.000 € erreichbar.",
-    "con3": "Stellenanzeige sehr kurz/zusammengefasst — Tiefe der Engineering-Zusammenarbeit und Agilität unklar."
-  },
-  "3": {
-    "stelle": "Lead Product Management (all genders)",
-    "firma": "DieProduktMacher GmbH",
-    "fz": "25 Min",
-    "pro1": "Lead-Rolle mit Roadmap-Ownership, Produktvision und Beratungsverantwortung für diverse Klienten – passt zu Claudias End-to-End-Anspruch.",
-    "pro2": "Cross-funktionale Zusammenarbeit und Stakeholder-Management auf Senior-Ebene explizit gefordert – exakter Match zum Profil.",
-    "pro3": "München Hybrid – erfüllt Standort- und Arbeitsmodell-Anforderung vollständig.",
-    "con1": "Consulting-Agentur ohne klar erkennbares eigenes digitales SaaS-Produkt – Produktverantwortung liegt bei Klienten, nicht intern.",
-    "con2": "Kein expliziter AI/Automation-Fokus erkennbar – zentrales Wunschkriterium von Claudia nur schwach erfüllt.",
-    "con3": "Gehalt nur XING-geschätzt (75.500–98.500 €), nicht vom Arbeitgeber bestätigt – Mindestgehalt von 80.000 € nicht gesichert."
-  },
-  "4": {
-    "stelle": "Digital Product Manager (gn)",
-    "firma": "Bikeleasing-Service GmbH & Co. KG",
-    "fz": "Remote",
-    "pro1": "End-to-End-Verantwortung von Discovery bis Go-Live explizit genannt – passt exakt zur Wunschrolle",
-    "pro2": "Remote möglich – kein Standortnachteil, volle Flexibilität",
-    "pro3": "B2B-Fokus mit Stakeholder-Management und KPI-Ownership – deckt sich mit Claudias Kernprofil",
-    "con1": "Kein Gehalt genannt – Einordnung ab 80.000 € unklar, Risiko nach unten",
-    "con2": "Kein expliziter AI/Automation-Fokus erkennbar – Custom Portals und Websites kein starkes AI-Signal",
-    "con3": "Neu entstehendes Team – möglicherweise wenig Struktur, kein klares Engineering-Team-Setup beschrieben"
-  },
-  "5": {
     "stelle": "Product Owner (m/w/d) – Digitale B2B-Cloud-Services",
     "firma": "Teoresi GmbH",
     "fz": "Remote",
-    "pro1": "End-to-End-Verantwortung für Strategie, Vision und Weiterentwicklung digitaler B2B-Services – exakt Claudias Stärke",
-    "pro2": "Remote/Home-Office möglich – kein Standort-Nachteil, volle Flexibilität",
-    "pro3": "Agile Entwicklungsteams und Business Cases passen direkt zu CSPO-Zertifizierung und PO-Erfahrung",
-    "con1": "Kein Gehalt genannt – ob ≥ 80.000 € erreicht wird, ist völlig unklar",
-    "con2": "Kein Hinweis auf AI, Automation oder Agentic AI – zentrales Differenzierungsmerkmal von Claudia bleibt ungenutzt",
-    "con3": "Stellenanzeige sehr knapp – Mandat, Teamgröße, Produkttiefe und Branche von Teoresi unklar"
+    "pro1": "End-to-End Produktverantwortung inkl. Vision, Strategie und Roadmap – exakt Claudias Kernkompetenz",
+    "pro2": "B2B Cloud Services entspricht ihrem Wunschprofil SaaS/Plattform/Tools für andere Unternehmen",
+    "pro3": "Homeoffice möglich + Standort Deutschland – passt zu Hybrid-Präferenz ohne Abzug",
+    "con1": "Kein Gehalt genannt – Erreichung von 80.000 € unklar",
+    "con2": "AI/Automation nicht erwähnt – zwei der stärksten Differenzierungsmerkmale Claudias bleiben ungenutzt",
+    "con3": "Kein konkretes Unternehmen/keine Branche erkennbar – Impact und Kulturfit kaum einschätzbar"
   },
-  "6": {
-    "stelle": "Senior Product Owner (m/w/d)",
-    "firma": "Planerio GmbH",
-    "fz": "20 Min",
-    "pro1": "Klare PO-Rolle im B2B-SaaS mit Roadmap-Ownership, Backlog-Priorisierung und Delivery-Verantwortung – passt exakt zum Wunschprofil.",
-    "pro2": "Enge Zusammenarbeit mit Engineering, Sales, CS und externen Partnern – deckt Claudias cross-funktionale Stärken vollständig ab.",
-    "pro3": "München-Standort mit flexiblen Arbeitszeitmodellen – Pendelziel erfüllt, Hybrid-Arbeitsmodell impliziert.",
-    "con1": "Kein Gehalt genannt – ob ≥ 80.000 € erreicht wird, ist vollständig unklar, kein Punkt vergeben.",
-    "con2": "Kein expliziter AI/Automation-Fokus erkennbar – Claudias stärkste Differenzierung (Agentic AI, Multi-Agent) bleibt ungenutzt.",
-    "con3": "Keine End-to-End-Vision/Discovery explizit erwähnt – Rolle wirkt eher execution-seitig als strategisch-visionär."
+  "3": {
+    "stelle": "Product Owner (gn)",
+    "firma": "Bikeleasing-Service GmbH & Co. KG",
+    "fz": "25 Min",
+    "pro1": "Hybrides Arbeitsmodell mit Münchner Standort – perfekt im Pendelradius von Laim.",
+    "pro2": "Klare Backlog-Ownership und agile Produktverantwortung entsprechen Claudias CSPO-Profil.",
+    "pro3": "Digitale B2B-Plattform mit Skalierungsfokus deckt sich mit Claudias Erfahrung in der paneuropäischen Produkt-Skalierung.",
+    "con1": "KI-Tools nur als Prozessunterstützung erwähnt – kein echtes Agentic AI / KI-Produktmandat erkennbar.",
+    "con2": "Gehalt nicht genannt – ob ≥ 80.000 € erreicht wird, bleibt unklar.",
+    "con3": "End-to-End-Mandat (Discovery bis Launch) und Produktvision-Ownership nicht explizit beschrieben – Tiefe der Verantwortung unklar."
   },
-  "7": {
-    "stelle": "Product Owner / Product Manager Digital Tools (m/w/d)",
-    "firma": "meplan GmbH",
-    "fz": "20 Min",
-    "pro1": "München Hybrid – Standort und Arbeitsmodell passen perfekt zu Claudias Präferenz",
-    "pro2": "Cross-funktionale Zusammenarbeit mit Engineering, Design und Business explizit im Beratungskontext erkennbar",
-    "pro3": "Digital Tools / interne Plattformen im Fokus – passt zu Claudias Erfahrung mit digitalen Produkten und SaaS",
-    "con1": "Kein Gehalt explizit genannt – XING-Schätzung 58k–80k liegt teils unter Claudias Mindestgehalt von 80k",
-    "con2": "Consulting-Kontext unklar – kein eigenes digitales Produkt oder klares PO-Mandat eindeutig erkennbar",
-    "con3": "Kein Hinweis auf AI, Automation oder Agentic AI – Claudias Kernkompetenz findet keinen Widerhall"
-  },
-  "8": {
-    "stelle": "Senior Product Manager (w/m/d)",
-    "firma": "SupplyOn AG",
-    "fz": "35 Min",
-    "pro1": "B2B SaaS-Plattform für industrielle Supply Chains – passt zu Claudias Wunschprofil digitale Plattformen & Tools",
-    "pro2": "Standort Hallbergmoos/München mit Hybrid – innerhalb der Pendelgrenze erreichbar",
-    "pro3": "Senior-Level mit geschätztem Gehaltsband bis 94.500 € – passt zum Mindestgehalt",
-    "con1": "Kein expliziter AI/Agentic AI Fokus erkennbar – Kernkompetenz von Claudia bleibt ungenutzt",
-    "con2": "Gehalt nicht explizit genannt (nur XING-Schätzung) – kein Punkt nach Scoring-Kriterien",
-    "con3": "Automation/Digitalisierung nur impliziert, Supply-Chain-Domäne ist fachfremd für Claudia"
-  },
-  "9": {
-    "stelle": "Product Manager (all genders) - Developer Platform & System Integrations",
-    "firma": "ValueNet",
-    "fz": "20 Min",
-    "pro1": "B2B-Plattformprodukt mit Developer-Focus – passt zu Claudias Erfahrung in digitalen Plattformen und technischer Integration",
-    "pro2": "Standort München Hybrid – klar akzeptiert, keine Einschränkung",
-    "pro3": "Geschätztes Gehalt bis 82.000 € – bewegt sich knapp im Zielbereich",
-    "con1": "Kein Gehalt explizit genannt – nur XING-Schätzung (61k–82k), damit kein Punkt für Gehalt ≥ 80k",
-    "con2": "Kein erkennbarer AI/Automation-Fokus in der Stellenbeschreibung – zwei wichtige Kriterien (Agentic AI, Automatisierung) unklar oder nicht adressiert",
-    "con3": "Stellenanzeige stark gekürzt – vollständige Bewertung von End-to-End-Mandat, Roadmap-Ownership und agiler Arbeitsweise nur eingeschränkt möglich"
-  },
-  "10": {
-    "stelle": "Senior Product Manager (m/f/d) Digital, Data & AI Solutions",
-    "firma": "EPAM Systems",
+  "4": {
+    "stelle": "Product Owner DMS für öffentliche Verwaltungen (m/w/d)",
+    "firma": "digitalfabriX GmbH",
     "fz": "Remote",
-    "pro1": "AI-Fokus (GenAI-Produktopportunitäten) passt direkt zu Claudias AI-Zertifizierungen und praktischer Multi-Agent-Erfahrung.",
-    "pro2": "Hybrid in Deutschland (München explizit genannt) – Standort vollständig kompatibel.",
-    "pro3": "Senior-Level mit mind. 10 Jahren Erfahrung passt zu Claudias Profil und schließt Junior-Ausschluss aus.",
-    "con1": "Pre-Sales und Business Development deuten auf starke Sales-Komponente hin – nahe am Ausschlusskriterium \"Reine Sales-Rolle\".",
-    "con2": "Kein Produkt-Ownership oder Roadmap-Mandat erkennbar – eher Consulting/Advisory als End-to-End-Produktverantwortung.",
-    "con3": "Kein Gehalt genannt – ob ≥ 80.000 € erfüllt ist, bleibt unklar."
+    "pro1": "Öffentlicher Sektor / E-Government trifft Claudias expliziten Wunsch, auch für Behörden zu arbeiten.",
+    "pro2": "Produktvision, Roadmap-Ownership und Backlog-Management klar gefordert – passt 1:1 zu Claudias CSPO/A-CSPO-Profil.",
+    "pro3": "Standort München oder Remote explizit genannt – kein Abzug, volle Standortpunkte.",
+    "con1": "Kein Gehalt genannt – unklar ob ≥ 80.000 € erreichbar, gerade im öffentlichen Sektor oft limitiert.",
+    "con2": "DMS-Domäne ist klassische Dokumentenverwaltung – kein AI/Automation-Fokus erkennbar, Kernmotivator fehlt.",
+    "con3": "Keine explizite Erwähnung von Engineering-Anbindung oder cross-funktionaler Delivery-Struktur."
   },
-  "11": {
+  "5": {
     "stelle": "Senior Solution Owner (m/w/d)",
     "firma": "BlueMetering GmbH",
-    "fz": "Remote",
-    "pro1": "Agile Backlog-Ownership und Anforderungsmanagement decken sich direkt mit Claudias CSPO-Zertifizierung und Praxiserfahrung.",
-    "pro2": "B2B-Umfeld mit Digitalisierungsfokus (Smart Metering) passt zur Branchen- und Produktpräferenz.",
-    "pro3": "Remote/Hybrid möglich – Standortkriterium erfüllt, kein Abzug.",
-    "con1": "Kein erkennbarer AI/Agentic-AI-Bezug – zentrales Wunschkriterium von Claudia nicht abgedeckt.",
-    "con2": "\"Solution Owner\" statt Product Owner – Mandat und End-to-End-Verantwortung (Discovery bis Launch) unklar bzw. nur impliziert.",
-    "con3": "Gehalt nicht genannt – Mindestgrenze von 80.000 € nicht verifizierbar."
-  },
-  "12": {
-    "stelle": "Senior Product Manager (m/w/d)",
-    "firma": "Planerio GmbH",
     "fz": "25 Min",
-    "pro1": "Senior Product Owner & Senior Product Manager Stellen in München – direkt passend zum angestrebten Level und Rollentyp.",
-    "pro2": "Planerio ist ein digitales B2B-SaaS-Produkt im Gesundheits-/Personalplanungsbereich – trifft Claudias Branchenpräferenz (digital, plattformbasiert, sozial relevant).",
-    "pro3": "Münchner Standort mit Hinweis auf mobiles/flexibles Arbeiten – Hybrid-Modell wahrscheinlich, Fahrzeit unter 30 Min. von Laim.",
-    "con1": "Stellenanzeige enthält keine Stellenbeschreibung – keine Aussage zu Roadmap-Ownership, Discovery, AI oder Automation möglich; alle inhaltlichen Kriterien unklar.",
-    "con2": "Kein Gehalt genannt – ob ≥ 80.000 € erreicht wird, ist völlig offen.",
-    "con3": "Kein Hinweis auf AI, Automation oder Agentic AI – zwei der stärksten Matching-Kriterien bleiben unbewertet."
+    "pro1": "Standort München mit mobilem Arbeiten – ideal erreichbar von Laim/Westend",
+    "pro2": "Backlog-Steuerung & Anforderungsmanagement deckt sich direkt mit Claudias CSPO-Profil und Roadmap-Ownership",
+    "pro3": "KI-Einsatz im Anforderungsmanagement & Prototyping passt zu Claudias hands-on AI-Erfahrung (Agentic AI, Prompt Engineering)",
+    "con1": "Kein explizites Gehalt genannt – ob ≥ 80.000 € erreicht wird, ist unklar",
+    "con2": "Rolle heißt \"Solution Owner\" statt Product Owner – Mandat und End-to-End-Verantwortung nicht klar definiert",
+    "con3": "Smart Metering / Messwesen ist eine sehr spezifische Nischenbranche – kein B2B SaaS, kein digitales Plattformprodukt im klassischen Sinne"
   },
-  "13": {
-    "stelle": "(Senior) Product Manager - Energy x eMobility (all genders) für Reev",
-    "firma": "Future Energy Ventures",
-    "fz": "25 Min",
-    "pro1": "B2B SaaS-Plattform mit klarer End-to-End Produktverantwortung von Discovery bis Delivery — passt exakt zu Claudias Wunschprofil.",
-    "pro2": "München-Standort innerhalb der Pendelgrenze, Gehaltsspanne bis 96.500 € überschreitet die Mindestgrenze.",
-    "pro3": "Cross-funktionale Zusammenarbeit mit Engineering und AI-Tooling explizit gefordert — deckt sich mit Claudias Skills.",
-    "con1": "Stelle ist \"Vor Ort\" ohne Remote-Erwähnung — Hybrid nicht bestätigt, potenziell 5-Tage-Office.",
-    "con2": "Domänenwissen eMobility / Energiewirtschaft nicht in Claudias Profil vorhanden — fachliche Lücke.",
-    "con3": "Kein Automation- oder Agentic-AI-Fokus erkennbar — AI nur als \"Tooling\" erwähnt, kein eigenständiges KI-Produktmandat."
-  },
-  "14": {
+  "6": {
     "stelle": "Product Owner - Fabasoft Xpublisher (w/m/d)",
     "firma": "Fabasoft",
     "fz": "15 Min",
-    "pro1": "Klare Product-Owner-Rolle mit Backlog-Ownership und fachlicher Verantwortung für ein etabliertes B2B-SaaS-Produkt in München",
-    "pro2": "Enge Zusammenarbeit mit Scrum-Team, Entwicklung und Stakeholdern – passt zu Claudias cross-funktionalem Arbeitsstil",
-    "pro3": "Standort München Hackerbrücke – ca. 15 Min. von Laim, Homeoffice-Option vorhanden",
-    "con1": "Anforderung \"mehrjährige Erfahrung in der Softwareentwicklung & OOP (Java)\" – Claudia hat keinen technischen Entwicklungshintergrund, das ist ein erheblicher Mismatch",
-    "con2": "Kein AI/Automation-Fokus erkennbar – Publishing-System ohne KI-Komponente, Claudias Kernstärke AI/Agentic bleibt ungenutzt",
-    "con3": "Gehalt nicht genannt – kein Punkt vergeben, Risiko unter 80.000 € unklar"
+    "pro1": "Vollständige Product-Owner-Rolle mit Backlog-Ownership, Priorisierung und Scrum-Team-Führung — passt direkt auf Claudias CSPO-Profil.",
+    "pro2": "Münchner Standort an der Hackerbrücke mit Homeoffice-Option — geografisch ideal, innerhalb 15 Min. von Laim.",
+    "pro3": "Cross-funktionale Zusammenarbeit mit Entwicklung, Kunden und Geschäftsführung — entspricht Claudias Stärken im Stakeholder-Management.",
+    "con1": "Anforderung \"mehrjährige Erfahrung in Softwareentwicklung & objektorientierter Programmierung (Java)\" — Claudia hat keine Coding-/Entwicklungserfahrung, das ist ein substanzieller Gap.",
+    "con2": "Kein Bezug zu AI/Automation/Digitalisierung — zwei der stärksten Differenzierungsmerkmale von Claudia bleiben ungenutzt.",
+    "con3": "Gehalt nicht genannt — kein Punkt, und Publishing-Branche zahlt typischerweise unter Claudias Mindestwunsch von 80.000 €."
   },
-  "15": {
+  "7": {
+    "stelle": "Senior Product Manager (m/f/d) Digital, Data & AI Solutions",
+    "firma": "EPAM Systems",
+    "fz": "Remote",
+    "pro1": "KI-Fokus (GenAI) trifft Claudias Hands-on-AI-Erfahrung (Agentic AI, Multi-Agent) direkt",
+    "pro2": "Hybrid in Deutschland akzeptiert – Remote-kompatibel, kein Standortabzug",
+    "pro3": "Senior-Level mit 10+ Jahren PM-Anforderung passt zu Claudias Erfahrungstiefe",
+    "con1": "Consulting + Pre-Sales-Anteil = teilweise reine Sales-Verantwortung ohne klares Produktmandat – Ausschlussrisiko",
+    "con2": "Kein eigenes digitales Produkt erkennbar – Kundenprojekte statt internes Produkt / SaaS-Ownership",
+    "con3": "Gehalt nicht explizit genannt – kein Punkt vergeben"
+  },
+  "8": {
+    "stelle": "Digital Product Manager (gn)",
+    "firma": "Bikeleasing-Service GmbH & Co. KG",
+    "fz": "20 Min",
+    "pro1": "End-to-End-Verantwortung von Discovery bis Go-Live ist explizit genannt – passt direkt zu Claudias Kernstärke.",
+    "pro2": "Stakeholder-Management und KPI-Definition sind klar im Mandat enthalten – Claudia bringt beides auf Senior-Level mit.",
+    "pro3": "Münchner Standort mit Hybrid-Modell – Pendelzeit gut im Rahmen.",
+    "con1": "Kein Hinweis auf AI, Agentic AI oder Automatisierung – zentrales Differenzierungsmerkmal Claudias bleibt ungenutzt.",
+    "con2": "Gehalt nicht genannt – unklar ob ≥ 80.000 € erreichbar, Risiko unter Wunschgrenze.",
+    "con3": "Custom Portals & Websites klingen nach Agentur-/Projektgeschäft, kein eigenes SaaS-Produkt oder Plattform erkennbar – passt nicht ideal zum Wunschprofil."
+  },
+  "9": {
+    "stelle": "Senior Product Owner (m/w/d)",
+    "firma": "Planerio GmbH",
+    "fz": "25 Min",
+    "pro1": "Senior Product Owner / Senior Product Manager in München – passt exakt auf Claudias gesuchtes Level und Rolle",
+    "pro2": "Planerio ist eine digitale B2B-Plattform (Dienstplanung für Gesundheitswesen) – trifft Claudias Branchenpräferenz für digitale Tools/Plattformen",
+    "pro3": "München-Standort mit flexiblem Arbeiten / mobilem Arbeiten erwähnt – Hybrid akzeptiert",
+    "con1": "Kein Gehalt genannt – unklar ob ≥ 80.000 € erreichbar",
+    "con2": "Stellenanzeige ist eine Jobliste ohne Detailbeschreibung – keine Aussage zu AI, Automation, Roadmap-Ownership oder agilen Methoden erkennbar",
+    "con3": "Kein Hinweis auf Agentic AI, KI-Produkte oder Automatisierungsmandat – Claudias stärkste Differenzierungsmerkmale werden nicht adressiert"
+  },
+  "10": {
     "stelle": "Software Product Owner (f/m/d)",
     "firma": "Munich Electrification",
     "fz": "25 Min",
-    "pro1": "Roadmap-Ownership und Backlog-Verantwortung explizit genannt — trifft Claudias Kernkompetenz.",
-    "pro2": "Agile Lieferung und Stakeholder-Kommunikation entsprechen ihrem Erfahrungsprofil.",
-    "pro3": "Hybrides Arbeitsmodell in München — Standort passt.",
-    "con1": "Kein digitales B2B-SaaS oder Plattformprodukt — BMS-Software ist Embedded/Hardware-nah, sehr fachfremd.",
-    "con2": "Kein AI-, Automation- oder Digitalisierungsfokus erkennbar — zentrale Wunschkriterien nicht erfüllt.",
-    "con3": "Gehalt nicht genannt; Automotive-Domänenkenntnisse fehlen komplett, Einstiegshürde hoch."
+    "pro1": "Hybrid in München – ideale Pendelentfernung von Laim/Westend",
+    "pro2": "Roadmap-Ownership und Backlog-Verantwortung klar benannt – passt zu Claudias CSPO/A-CSPO-Profil",
+    "pro3": "Stakeholder-Management und agile Zeremonien explizit gefordert – direkte Überschneidung mit Kernkompetenzen",
+    "con1": "Battery Management System (BMS) ist Embedded/Hardware-Software – kein B2B SaaS, kein digitales Plattformprodukt",
+    "con2": "Kein Bezug zu AI, Automation oder Digitalisierung erkennbar – zentrale Wunschkriterien nicht erfüllt",
+    "con3": "Kein Gehalt genannt – unklar ob ≥ 80.000 € erreicht wird"
   },
-  "16": {
+  "11": {
     "stelle": "Head of Product & Go-to-Market (m/w/d/x)",
     "firma": "pilot Agenturgruppe",
-    "fz": "25 Min",
-    "pro1": "Hybrid-Modell mit Münchner Standort erfüllt Standortkriterium problemlos.",
-    "pro2": "B2B-Kontext und Portfoliosteuerung passen zu Claudias End-to-End-Produkterfahrung.",
-    "pro3": "GTM-Erfahrung aus Accor (Partner-Onboarding, Vertriebsaufbau, internationale Märkte) ist direkt anwendbar.",
-    "con1": "Medien-/Werbeumfeld ist branchenfremd – kein SaaS, keine digitale Plattform, kein AI-Fokus erkennbar.",
-    "con2": "\"Head of\"-Rolle impliziert Personalführung als Kernaufgabe – kein klares PO-Mandat, kein Engineering-Fokus.",
-    "con3": "Kein Gehalt genannt; 60% Büropflicht liegt über Claudias bevorzugtem Hybrid-Modell (2–3 Tage Office)."
-  },
-  "17": {
-    "stelle": "Head of Product (m/f/d) Asset Flexibility Commercialization",
-    "firma": "The Mobility House",
-    "fz": "25 Min",
-    "pro1": "München-basiert, Vollzeit vor Ort, gut erreichbar von Laim/Westend",
-    "pro2": "Head of Product Rolle mit Roadmap-Verantwortung und cross-funktionaler Zusammenarbeit",
-    "pro3": "Wachsendes, innovatives Unternehmen mit klarem Technologiefokus (EV-Ladeinfrastruktur, Energiemarkt)",
-    "con1": "100% Vor Ort – kein Remote/Hybrid erkennbar, entspricht nicht Claudias Mindestanforderung (2 Tage HO)",
-    "con2": "Gehalt geschätzt 73.000–89.000 € (XING-Schätzung) – explizites Gehalt ≥ 80.000 € nicht bestätigt, Mindestgehalt möglicherweise unterschritten",
-    "con3": "Kein AI/Automation-Fokus erkennbar; Energie-/Flexibilitätsmarkt ist fachfremdes Domänenwissen für Claudia"
-  },
-  "18": {
-    "stelle": "Product Manager (all genders)",
-    "firma": "Finanztip Verbraucherinformation GmbH",
-    "fz": "25 Min",
-    "pro1": "München-Standort, gut erreichbar von Laim per MVV (ca. 25 Min.)",
-    "pro2": "Cross-funktionale Zusammenarbeit mit UX, Entwicklung und QA klar beschrieben",
-    "pro3": "Gesellschaftlich orientiertes Unternehmen (gemeinnützige Stiftung) trifft Claudias Impact-Wunsch",
-    "con1": "Finanztip ist ein Finanzratgeber – inhaltlich FinTech-nah, harte Ausschluss-Grenze wird berührt",
-    "con2": "Gehalt laut XING-Schätzung max. 82.000 € – kein explizit bestätigtes Gehalt über 80.000 €, untere Bandbreite (60k) klar unter Schwelle",
-    "con3": "Keine Erwähnung von AI, Automation oder Agentic AI – Kernwunsch-Kriterien nicht erfüllt"
-  },
-  "19": {
-    "stelle": "Product Manager (f/m/x)",
-    "firma": "Tanso",
-    "fz": "30 Min",
-    "pro1": "München-Standort, End-to-End-Verantwortung von Discovery bis Delivery explizit genannt.",
-    "pro2": "Cross-funktionale Zusammenarbeit mit Engineering, Design und Business klar beschrieben.",
-    "pro3": "B2B SaaS-Plattform im Sustainability-Bereich – kein FinTech, gesellschaftlich relevant.",
-    "con1": "Gehalt laut XING-Schätzung 56.500–72.000 € – deutlich unter Claudias Minimum von 80.000 €.",
-    "con2": "Stelle ist \"Vor Ort\" ohne erkennbare Remote- oder Hybrid-Option – nur 2 Punkte Standort, kein Abzug aber eingeschränkte Flexibilität.",
-    "con3": "Kein Hinweis auf Automation, Agentic AI oder KI-Produkte – Claudias stärkste Differenzierungsmerkmale bleiben ungenutzt."
-  },
-  "20": {
-    "stelle": "Product Manager / Product Owner (m/f/d) VGI",
-    "firma": "The Mobility House",
     "fz": "20 Min",
-    "pro1": "München-Standort mit Mobile Working – Standortkriterium erfüllt",
-    "pro2": "Cross-funktionale Zusammenarbeit mit Engineering und Partnern impliziert",
-    "pro3": "Impact-orientiertes Unternehmen (emissionsfreie Mobilität / Energiewende)",
-    "con1": "Geschätztes Gehalt max. ~75.500 € – unter Claudias Mindestwunsch, kein expliziter Wert genannt",
-    "con2": "Kein AI/Automation-Fokus erkennbar – zentrales Kriterium aus Claudias Profil nicht erfüllt",
-    "con3": "VGI-Produkt hardware- und energietechnisch sehr nischig – kein B2B SaaS / digitale Plattform"
-  },
-  "21": {
-    "stelle": "Mobile App Product Owner (m/f/d)",
-    "firma": "limango GmbH",
-    "fz": "20 Min",
-    "pro1": "Standort München, hybrid – optimal erreichbar von Laim/Westend.",
-    "pro2": "Product-Owner-Rolle mit Backlog-Ownership und cross-funktionaler Zusammenarbeit impliziert.",
-    "pro3": "Familienorientiertes Unternehmen mit klarer Produktfokus-Kultur und internationalem Kontext.",
-    "con1": "Gehalt laut XING-Schätzung nur 57.500–69.500 € – deutlich unter Claudias Mindestgehalt von 80.000 €, hartes Ausschlusskriterium.",
-    "con2": "Kein Hinweis auf AI, Automation oder Agentic AI – Claudias Kernkompetenz und Wunschfeld nicht adressiert.",
-    "con3": "Mobile App Fokus (Consumer/B2C) – kein B2B SaaS / Plattform / Tool, passt nicht zum Wunschprofil."
-  },
-  "22": {
-    "stelle": "Head of Product (w/m/d)",
-    "firma": "Skalar",
-    "fz": "20 Min",
-    "pro1": "Explizit genanntes Gehalt (84.000–97.500 €) liegt über Claudias Mindestgrenze von 80.000 €.",
-    "pro2": "End-to-End Produktverantwortung von Vision bis Launch klar beschrieben – passt zum Wunschprofil.",
-    "pro3": "AI-nativer Produktfokus und B2B-Umfeld decken sich mit Claudias AI- und Automatisierungserfahrung.",
-    "con1": "FinTech/Finance/Tax-Branche ist ein hartes Ausschlusskriterium – Stelle explizit in Steuerberatung/FinTech positioniert.",
-    "con2": "Rolle ist \"Vor Ort\" ohne Remote-Option – Standort München zwar akzeptiert, aber kein hybrides Modell erkennbar.",
-    "con3": "\"Head of Product\" als erste PM-Stelle ist ein Mismatch – Claudia sucht Senior PO/PM, nicht Führungsebene ohne PM-Grundlage."
-  },
-  "23": {
-    "stelle": "Product Manager (f/m/d) Munich – Product & Design",
-    "firma": "Avi Medical Operations GmbH",
-    "fz": "Remote",
-    "pro1": "Keine erkennbaren Vorteile für Claudias Profil",
-    "pro2": "–",
-    "pro3": "–",
-    "con1": "Kein konkreter Job, keine Stellenanzeige — nur eine generische Karriereseite ohne offene Position",
-    "con2": "US-amerikanisches Unternehmen mit Fokus auf Homeland Security / Defense — kein passender Branchenmatch",
-    "con3": "Kein Standort, kein Arbeitsmodell, kein Gehalt, keine Rollendetails erkennbar"
-  },
-  "24": {
-    "stelle": "Product Manager - Space",
-    "firma": "Helsing",
-    "fz": "Remote",
-    "pro1": "Standort München, Hybrid-Modell verfügbar",
-    "pro2": "AI-Bezug im Unternehmen vorhanden",
-    "pro3": "Produktverantwortung mit Vision und Roadmap erkennbar",
-    "con1": "Rüstungsunternehmen / Defence-Bereich – nicht mit Claudias Werteprofil vereinbar (Impact-orientiert, sozial engagiert)",
-    "con2": "Gehalt geschätzt 50.000–65.000 € – deutlich unter Mindestanforderung von 80.000 €, harte Ausschlussbedingung",
-    "con3": "Space/SAR-Satellit-Domäne ohne erkennbaren B2B SaaS / Plattform-Bezug"
-  },
-  "25": {
-    "stelle": "Product Manager - AI Platform (m/f/x)",
-    "firma": "Scalable GmbH",
-    "fz": "25 Min",
-    "pro1": "Starker AI-Fokus der Rolle passt zu Claudias AI-Produktkompetenz",
-    "pro2": "München-Standort, gut erreichbar von Laim",
-    "pro3": "Senior-Level-Rolle mit Plattformverantwortung",
-    "con1": "Hartes Ausschlusskriterium: Scalable Capital ist explizit eine Banking- und FinTech-Plattform",
-    "con2": "Krypto/Trading/Brokerage direkt im Produktportfolio erwähnt — eindeutiger FinTech-Ausschluss",
-    "con3": "Keine Remote-Option erkennbar, nur On-Site"
+    "pro1": "München-Standort mit Hybrid-Modell ist geografisch akzeptabel (ca. 20 Min. von Laim)",
+    "pro2": "Go-to-Market- und Portfolioverantwortung passt zu Claudias GTM-Erfahrung aus Accor",
+    "pro3": "Produktlaunches und Erfolgsmessung (KPIs) sind klar in Claudias Profil verankert",
+    "con1": "Kein digitales Produkt / keine SaaS-Plattform – klassische Mediaagentur-Stelle ohne Software-/Tech-Fokus",
+    "con2": "Kein Hinweis auf Engineering-Zusammenarbeit, Agile, Backlog oder technisches Produktmanagement",
+    "con3": "Kein Gehalt genannt; Rolle wirkt eher wie Produkt-Marketing/Sales-Enablement als echtes PO-Mandat"
   }
 };
 
@@ -974,13 +665,6 @@
         var row = sel.closest('tr');
         if (row) row.dataset.status = sel.value;
       });
-      // Header Stats – läuft NACH localStorage-Restore damit Beworben-Zählung stimmt
-      var rows = document.querySelectorAll('tbody tr');
-      var bew = Array.from(rows).filter(function(r){var sel=r.querySelector('select');return sel&&sel.value==='Beworben';}).length;
-      var d = new Date(); var el;
-      el=document.getElementById('hdr-stand'); if(el) el.textContent=d.toLocaleDateString('de-DE');
-      el=document.getElementById('hdr-count'); if(el) el.textContent=rows.length;
-      el=document.getElementById('hdr-bew');   if(el) el.textContent=bew;
     });
 
     // ── Add-Stelle Modal ──

@@ -115,47 +115,26 @@ SUCH_URLS = [
     "https://www.stepstone.de/jobs/product-owner/in-muenchen.html",
     "https://www.stepstone.de/jobs/product-manager/in-muenchen.html",
     "https://www.stepstone.de/jobs/ai-product-owner/in-muenchen.html",
-    "https://www.stepstone.de/jobs/automation-product-manager/in-muenchen.html",
-    "https://www.stepstone.de/jobs/agentic-ai-product/in-muenchen.html",
     "https://www.stepstone.de/jobs/head-of-product/in-muenchen.html",
-    # StepStone Remote (Deutschland)
-    "https://www.stepstone.de/jobs/product-owner/in-deutschland.html",
-    "https://www.stepstone.de/jobs/product-manager/in-deutschland.html",
-    "https://www.stepstone.de/jobs/ai-product-owner/in-deutschland.html",
-    "https://www.stepstone.de/jobs/head-of-product/in-deutschland.html",
+    "https://www.stepstone.de/jobs/digitalisierung-behoerden/in-muenchen.html",
+    "https://www.stepstone.de/jobs/e-government/in-muenchen.html",
     # Indeed München
     "https://de.indeed.com/jobs?q=product+owner&l=M%C3%BCnchen%2C+Bayern",
     "https://de.indeed.com/jobs?q=product+manager&l=M%C3%BCnchen%2C+Bayern",
     "https://de.indeed.com/jobs?q=ai+product+owner&l=M%C3%BCnchen%2C+Bayern",
-    "https://de.indeed.com/jobs?q=automation+product+manager&l=M%C3%BCnchen%2C+Bayern",
     "https://de.indeed.com/jobs?q=head+of+product&l=M%C3%BCnchen%2C+Bayern",
-    # Indeed Remote
-    "https://de.indeed.com/jobs?q=product+owner&remotejob=032b3046-06a3-4876-8dfd-474eb5e7ed11",
-    "https://de.indeed.com/jobs?q=product+manager&remotejob=032b3046-06a3-4876-8dfd-474eb5e7ed11",
-    "https://de.indeed.com/jobs?q=ai+product+owner&remotejob=032b3046-06a3-4876-8dfd-474eb5e7ed11",
-    "https://de.indeed.com/jobs?q=head+of+product&remotejob=032b3046-06a3-4876-8dfd-474eb5e7ed11",
+    "https://de.indeed.com/jobs?q=digitalisierung+%C3%B6ffentliche+verwaltung&l=M%C3%BCnchen%2C+Bayern",
+    "https://de.indeed.com/jobs?q=e-government+product+owner&l=M%C3%BCnchen%2C+Bayern",
     # Personio
     "https://jobs.personio.de/search?query=product+owner&location=M%C3%BCnchen",
     "https://jobs.personio.de/search?query=product+manager&location=M%C3%BCnchen",
-    "https://jobs.personio.de/search?query=head+of+product&location=M%C3%BCnchen",
-    # Experteer
-    "https://www.experteer.de/jobs?search_query=product+owner&search_location=M%C3%BCnchen",
-    "https://www.experteer.de/jobs?search_query=product+manager&search_location=M%C3%BCnchen",
-    "https://www.experteer.de/jobs?search_query=head+of+product&search_location=M%C3%BCnchen",
     # Glassdoor
     "https://www.glassdoor.de/Job/munchen-product-owner-jobs-SRCH_IL.0,7_IC2640729_KO8,21.htm",
     "https://www.glassdoor.de/Job/munchen-product-manager-jobs-SRCH_IL.0,7_IC2640729_KO8,23.htm",
     # Arbeitsagentur
     "https://jobboerse.arbeitsagentur.de/vamJB/stellenangebote.html?what=Product+Owner&where=M%C3%BCnchen&umkreis=25",
     "https://jobboerse.arbeitsagentur.de/vamJB/stellenangebote.html?what=Product+Manager&where=M%C3%BCnchen&umkreis=25",
-    "https://jobboerse.arbeitsagentur.de/vamJB/stellenangebote.html?what=Head+of+Product&where=M%C3%BCnchen&umkreis=25",
-    # Xing (am Ende)
-    "https://www.xing.com/jobs/search?keywords=product+owner&location=M%C3%BCnchen",
-    "https://www.xing.com/jobs/search?keywords=product+manager&location=M%C3%BCnchen",
-    "https://www.xing.com/jobs/search?keywords=ai+product+owner&location=M%C3%BCnchen",
-    "https://www.xing.com/jobs/search?keywords=automation+product+manager&location=M%C3%BCnchen",
-    "https://www.xing.com/jobs/search?keywords=agentic+ai+product&location=M%C3%BCnchen",
-    "https://www.xing.com/jobs/search?keywords=head+of+product&location=M%C3%BCnchen",
+    "https://jobboerse.arbeitsagentur.de/vamJB/stellenangebote.html?what=E-Government+Product+Owner&umkreis=25",
 ]
 
 # ── Direkte Firmen-Karriereseiten ──────────────────────────────────────────
@@ -184,6 +163,13 @@ FIRMEN_KARRIERE_URLS = [
     "https://jobs.ashbyhq.com/munich-electrification/7a10f170-0636-4601-af80-1923a9af588c",
     "https://www.bluemetering.de/karriere/jobs/senior-solution-owner-m-w-d.php",
     "https://jobportal.brunata-muenchen.de/senior-solution-owner-mwd-de-f1026.html",
+    # Public Sector & Verwaltungsdigitalisierung (München)
+    "https://karriere.digitalfabrix.de/",
+    "https://karriere.digitalfabrix.de/jobposting/296ef31f793caf3d8189b1c4a9514b149a1d715e",
+    "https://www.akdb.de/karriere/",
+    "https://www.adesso.de/de/jobs/",
+    "https://www.sopra-steria.de/karriere/",
+    "https://www.mach.de/karriere/",
 ]
 
 # ── LinkedIn (Firmennamen-Extraktion, nicht Job-Links) ────────────────────
@@ -191,6 +177,8 @@ LINKEDIN_SUCH_URLS = [
     "https://www.linkedin.com/jobs/search/?keywords=product+owner&location=M%C3%BCnchen",
     "https://www.linkedin.com/jobs/search/?keywords=ai+product+owner&location=M%C3%BCnchen",
     "https://www.linkedin.com/jobs/search/?keywords=head+of+product&location=M%C3%BCnchen",
+    "https://www.linkedin.com/jobs/search/?keywords=e-government+product+owner",
+    "https://www.linkedin.com/jobs/search/?keywords=digitalisierung+beh%C3%B6rden+product+owner",
 ]
 
 SYSTEM_PROMPT = """\
@@ -204,10 +192,14 @@ Gesuchte Stellen:
   Automation Product Manager, Head of Product,
   Agentic AI Product Manager, Digital Product Owner,
   Solution Owner, Solution Manager,
-  Solution Owner, Solution Manager
+  E-Government Product Owner, Digitalisierungsmanager,
+  Product Owner Verwaltung, Product Owner öffentlicher Dienst
 - Standort: München ODER Remote (Deutschland, 100%)
 - Bevorzugte Branchen: B2B SaaS, Plattformen, Tools, HealthTech, InsurTech,
-  Travel, Mobility, Consulting mit digitalem Produktfokus, Behörden, Soziales
+  Travel, Mobility, Consulting mit digitalem Produktfokus,
+  Öffentliche Verwaltung / Behörden / E-Government / GovTech,
+  Soziales / Non-Profit / NGO,
+  AI Solutions, Automatisierung, Digitalisierung
 - Ausschluss: reine PM-Rollen ohne Produktverantwortung,
   vollständig On-Site, Associate/Junior-Level
 
