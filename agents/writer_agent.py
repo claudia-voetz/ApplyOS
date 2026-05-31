@@ -84,10 +84,12 @@ KEINE WIEDERHOLUNGEN – STRIKTE REGEL:
 FOKUS_ENTWICKLUNG (2–3 Bullet Points als HTML-Liste):
   → Aktuelle Weiterbildung, AI-Praxis, Multi-Agent-System
   → REGEL: max. 10 Wörter pro Bullet. Kein Verb nötig. Keine Nebensätze.
+  → Der dritte Bullet IMMER mit Demo-Link (exakt so formatieren):
+     <li>Live Demo: <a class="demo-link" href="https://applyos.onrender.com/" target="_blank">applyos.onrender.com</a> <span class="demo-hint">(Aufruf dauert einige Sekunden – Render Free-Tier)</span></li>
   → ❌ SCHLECHT: "Hands-on-Aufbau eines eigenen Multi-Agent-Systems mit Agentic AI und Vibe Coding – täglicher Einsatz zur Automatisierung operativer Prozesse"
-  → ✅ GUT: "Multi-Agent-System im Einsatz – automatisiert täglich operative Prozesse"
-  → ✅ GUT: "Advanced Product Ownership, UX, KI-getriebene Entwicklung"
-  → Format: <ul><li>...</li><li>...</li></ul>
+  → ✅ GUT: "Weiterbildung in Advanced Product Ownership, UX, Agentic AI und AI-gestützter Produktentwicklung"
+  → ✅ GUT: "Entwicklung einer AI-gestützten Web-App (Multi-Agent-System) – Automatisierung des Bewerbungsprozesses"
+  → Format: <ul><li>...</li><li>...</li><li>DEMO-LINK wie oben</li></ul>
 
 ERFAHRUNG_STAERKE (2–3 Bullet Points als HTML-Liste):
   → Revenue Management, BI, B2B SaaS, Systemintegration – mit Zahlen
@@ -183,7 +185,10 @@ def run(ctx: JobContext) -> JobContext:
         f"Stelle: {ctx.stellentitel} bei {ctx.firmenname}\n"
         f"Score: {ctx.score}/10 – {ctx.empfehlung}\n"
         f"Passende Aspekte laut Analyse:\n{staerken}\n"
-        f"Weniger passend:\n{cons}"
+        f"Weniger passend:\n{cons}\n\n"
+        f"WICHTIG: Im FOKUS_ENTWICKLUNG-Block IMMER als letzten Bullet einfügen:\n"
+        f'<li>Live Demo: <a class="demo-link" href="https://applyos.onrender.com/" target="_blank">applyos.onrender.com</a> '
+        f'<span class="demo-hint">(Aufruf dauert einige Sekunden – Render Free-Tier)</span></li>'
     )
 
     response = _get_client().messages.create(
