@@ -553,6 +553,22 @@ def _erstelle_html() -> None:
     }}
     .add-result-box p {{ margin-bottom: 0.35rem; }}
 
+    /* ── Filter-Bar ── */
+    .filter-bar {{
+      display: flex; gap: 0.6rem; flex-wrap: wrap;
+      margin-bottom: 0.8rem; align-items: center;
+    }}
+    .filter-bar input {{
+      flex: 1; min-width: 200px; max-width: 340px;
+      padding: 6px 10px; border: 1px solid #ccc;
+      border-radius: 6px; font-size: 0.82rem;
+    }}
+    .filter-bar select {{
+      padding: 6px 8px; border: 1px solid #ccc;
+      border-radius: 6px; font-size: 0.82rem;
+      background: white; cursor: pointer;
+    }}
+
     /* ── Suchlauf ── */
     .header-actions {{
       display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
@@ -603,6 +619,23 @@ def _erstelle_html() -> None:
       <button id="btn-suchlauf" class="btn-add-stelle" onclick="startSuchlauf()">🔍 Suchlauf starten</button>
       <button class="btn-add-stelle" onclick="openAddModal()">➕ Stelle hinzufügen</button>
     </div>
+  </div>
+  <div class="filter-bar">
+    <input type="text" id="suche" placeholder="🔍 Stelle oder Firma suchen …" oninput="filterTabelle()" />
+    <select id="filter-status" onchange="filterTabelle()">
+      <option value="">Alle Status</option>
+      <option value="Offen">Offen</option>
+      <option value="Interessant">Interessant</option>
+      <option value="Beworben">Beworben</option>
+      <option value="Absage">Absage</option>
+      <option value="Überspringen">Überspringen</option>
+    </select>
+    <select id="filter-score" onchange="filterTabelle()">
+      <option value="">Alle Scores</option>
+      <option value="8">Score ≥ 8</option>
+      <option value="7">Score ≥ 7</option>
+      <option value="6">Score ≥ 6</option>
+    </select>
   </div>
   <div id="suchlauf-banner"><span id="suchlauf-banner-text"></span></div>
 
@@ -932,6 +965,23 @@ def _erstelle_html() -> None:
         generiereUnterlagen(key, btn, '📄 Generieren');
       }}
     }}
+    // ── 🔍 Filter ──
+    function filterTabelle() {{
+      var suche    = document.getElementById('suche').value.toLowerCase();
+      var status   = document.getElementById('filter-status').value;
+      var minScore = parseInt(document.getElementById('filter-score').value) || 0;
+      document.querySelectorAll('tbody tr').forEach(function(row) {{
+        var text      = row.textContent.toLowerCase();
+        var rowStatus = row.dataset.status || '';
+        var scoreEl   = row.querySelector('.score');
+        var rowScore  = scoreEl ? parseInt(scoreEl.textContent) : 0;
+        var ok = (!suche || text.includes(suche))
+              && (!status || rowStatus === status)
+              && (rowScore >= minScore);
+        row.style.display = ok ? '' : 'none';
+      }});
+    }}
+
   </script>
 </body>
 </html>"""
