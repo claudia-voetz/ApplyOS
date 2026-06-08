@@ -6,3 +6,4 @@ output/
 __pycache__/
 .claude/
 stelle.txt
+!output/bewertungen/uebersicht.csv
